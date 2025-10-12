@@ -40,6 +40,12 @@ import PartnersList from "@/admin/pages/partners/PartnersList";
 import PartnerDetail from "@/admin/pages/partners/PartnerDetail";
 import Reports from "./admin/pages/Reports";
 import Settings from "./admin/pages/Settings";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import BlogList from "./admin/pages/blog/BlogList";
+import BlogCreate from "./admin/pages/blog/BlogCreate";
+import BlogEdit from "./admin/pages/blog/BlogEdit";
+import BlogSettings from "./admin/pages/blog/BlogSettings";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +69,10 @@ const App = () => (
             <Route path="/packages/:id" element={<PackageDetail />} />
             <Route path="/events" element={<Events />} />
             <Route path="/events/:id" element={<EventDetail />} />
+            
+            {/* Blog Pages */}
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             
             {/* Legal Pages */}
             <Route path="/terms" element={<Terms />} />
@@ -105,6 +115,10 @@ const App = () => (
               <Route path="users/:id" element={<UserDetail />} />
               <Route path="partners" element={<PartnersList />} />
               <Route path="partners/:id" element={<PartnerDetail />} />
+              <Route path="blog" element={<BlogList />} />
+              <Route path="blog/create" element={<BlogCreate />} />
+              <Route path="blog/edit/:id" element={<BlogEdit />} />
+              <Route path="blog/settings" element={<BlogSettings />} />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<Settings />} />
             </Route>

@@ -6,7 +6,8 @@ import {
   Users, 
   Handshake, 
   BarChart3, 
-  Settings 
+  Settings,
+  FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +17,7 @@ const menuItems = [
   { path: "/admin/bookings", label: "Bookings", icon: Calendar },
   { path: "/admin/users", label: "Users", icon: Users },
   { path: "/admin/partners", label: "Partners", icon: Handshake },
+  { path: "/admin/blog", label: "Blog", icon: FileText },
   { path: "/admin/reports", label: "Reports", icon: BarChart3 },
   { path: "/admin/settings", label: "Settings", icon: Settings },
 ];
