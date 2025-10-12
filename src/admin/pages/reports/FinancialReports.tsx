@@ -16,9 +16,42 @@ export default function FinancialReports() {
     return <Skeleton className="h-96 w-full" />;
   }
 
+  // Prepare export data
+  const exportData = financialData ? [
+    {
+      metric: "Total Revenue",
+      value: financialData.totalRevenue || 0,
+      growth: `${financialData.revenueGrowth?.toFixed(1) || 0}%`
+    },
+    {
+      metric: "Average Booking Value",
+      value: financialData.avgBookingValue?.toFixed(2) || 0,
+      bookings: financialData.bookings || 0
+    },
+    {
+      metric: "Total Commissions",
+      value: financialData.totalCommissions || 0,
+      unpaid: financialData.unpaidCommissions || 0
+    },
+    {
+      metric: "Total Refunds",
+      value: financialData.totalRefunds || 0,
+      rate: `${financialData.refundRate?.toFixed(1) || 0}%`
+    },
+    ...((financialData.revenueByType || []) as Array<{ name: string; value: number }>).map(item => ({
+      metric: `Revenue - ${item.name}`,
+      value: item.value
+    }))
+  ] : [];
+
   return (
     <div className="space-y-6">
-      <ReportFilters dateRange={dateRange} onDateRangeChange={setDateRange} />
+      <ReportFilters 
+        dateRange={dateRange} 
+        onDateRangeChange={setDateRange}
+        exportData={exportData}
+        exportFilename="financial-report"
+      />
       
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>

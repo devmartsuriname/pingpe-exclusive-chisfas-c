@@ -15,9 +15,42 @@ export default function PerformanceReports() {
     return <Skeleton className="h-96 w-full" />;
   }
 
+  // Prepare export data
+  const exportData = performanceData ? [
+    {
+      metric: "Top Host Revenue",
+      host: performanceData.topHostName || 'N/A',
+      value: performanceData.topHostRevenue || 0
+    },
+    {
+      metric: "Average Rating",
+      value: performanceData.avgRating?.toFixed(1) || 0
+    },
+    {
+      metric: "Active Hosts",
+      value: performanceData.activeHosts || 0
+    },
+    {
+      metric: "Average Occupancy Rate",
+      value: `${performanceData.avgOccupancy?.toFixed(1) || 0}%`
+    },
+    ...(performanceData.topPerformers || []).map((performer, index) => ({
+      rank: index + 1,
+      host: performer.name,
+      revenue: performer.revenue,
+      bookings: performer.bookings,
+      avgPerBooking: (performer.revenue / performer.bookings).toFixed(2)
+    }))
+  ] : [];
+
   return (
     <div className="space-y-6">
-      <ReportFilters dateRange={dateRange} onDateRangeChange={setDateRange} />
+      <ReportFilters 
+        dateRange={dateRange} 
+        onDateRangeChange={setDateRange}
+        exportData={exportData}
+        exportFilename="performance-report"
+      />
       
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>

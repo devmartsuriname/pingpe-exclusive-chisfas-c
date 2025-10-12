@@ -5,16 +5,38 @@ import { CalendarIcon, Download } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
+import { exportToCSV } from "@/admin/utils/exportCSV";
+import { toast } from "sonner";
 
 interface ReportFiltersProps {
   dateRange: { from: Date; to: Date };
   onDateRangeChange: (range: { from: Date; to: Date }) => void;
+  exportData?: any[];
+  exportFilename?: string;
 }
 
-export default function ReportFilters({ dateRange, onDateRangeChange }: ReportFiltersProps) {
+export default function ReportFilters({ 
+  dateRange, 
+  onDateRangeChange, 
+  exportData = [], 
+  exportFilename = "report" 
+}: ReportFiltersProps) {
   const handleExport = () => {
-    // TODO: Implement CSV export
-    console.log("Exporting report data...");
+    if (!exportData || exportData.length === 0) {
+      toast.error("No data available to export");
+      return;
+    }
+    
+    try {
+      exportToCSV({ 
+        filename: exportFilename, 
+        data: exportData 
+      });
+      toast.success("Report exported successfully");
+    } catch (error) {
+      console.error("Export failed:", error);
+      toast.error("Failed to export report");
+    }
   };
 
   return (

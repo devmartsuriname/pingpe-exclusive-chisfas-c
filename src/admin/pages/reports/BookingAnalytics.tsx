@@ -16,9 +16,41 @@ export default function BookingAnalytics() {
     return <Skeleton className="h-96 w-full" />;
   }
 
+  // Prepare export data
+  const exportData = analyticsData ? [
+    {
+      metric: "Total Bookings",
+      value: analyticsData.totalBookings || 0,
+      growth: `${analyticsData.bookingGrowth?.toFixed(1) || 0}%`
+    },
+    {
+      metric: "Completed Bookings",
+      value: analyticsData.completed || 0,
+      rate: `${((analyticsData.completed / analyticsData.totalBookings) * 100 || 0).toFixed(1)}%`
+    },
+    {
+      metric: "Pending Bookings",
+      value: analyticsData.pending || 0
+    },
+    {
+      metric: "Cancelled Bookings",
+      value: analyticsData.cancelled || 0,
+      rate: `${((analyticsData.cancelled / analyticsData.totalBookings) * 100 || 0).toFixed(1)}%`
+    },
+    ...(analyticsData.statusBreakdown || []).map(item => ({
+      status: item.name,
+      count: item.value
+    }))
+  ] : [];
+
   return (
     <div className="space-y-6">
-      <ReportFilters dateRange={dateRange} onDateRangeChange={setDateRange} />
+      <ReportFilters 
+        dateRange={dateRange} 
+        onDateRangeChange={setDateRange}
+        exportData={exportData}
+        exportFilename="booking-analytics"
+      />
       
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
