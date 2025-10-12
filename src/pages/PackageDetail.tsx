@@ -126,8 +126,10 @@ export default function PackageDetail() {
               />
               <HostProfileCard
                 hostId={pkg.creator_id}
-                hostName="Creator"
-                joinedDate={pkg.created_at}
+                hostName={(pkg as any).profiles?.full_name || "Creator"}
+                hostAvatar={(pkg as any).profiles?.avatar_url}
+                hostBio={(pkg as any).profiles?.bio}
+                joinedDate={(pkg as any).profiles?.created_at || pkg.created_at}
               />
             </div>
           </div>

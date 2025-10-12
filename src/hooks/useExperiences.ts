@@ -54,7 +54,16 @@ export const useExperienceDetail = (id: string) => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("experiences")
-        .select("*")
+        .select(`
+          *,
+          profiles:host_id (
+            user_id,
+            full_name,
+            avatar_url,
+            bio,
+            created_at
+          )
+        `)
         .eq("id", id)
         .single();
 

@@ -52,7 +52,16 @@ export const usePackageDetail = (id: string) => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("packages")
-        .select("*")
+        .select(`
+          *,
+          profiles:creator_id (
+            user_id,
+            full_name,
+            avatar_url,
+            bio,
+            created_at
+          )
+        `)
         .eq("id", id)
         .single();
 

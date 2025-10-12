@@ -52,7 +52,16 @@ export const useEventDetail = (id: string) => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("events")
-        .select("*")
+        .select(`
+          *,
+          profiles:organizer_id (
+            user_id,
+            full_name,
+            avatar_url,
+            bio,
+            created_at
+          )
+        `)
         .eq("id", id)
         .single();
 

@@ -54,7 +54,16 @@ export const useTransportDetail = (id: string) => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("transport")
-        .select("*")
+        .select(`
+          *,
+          profiles:provider_id (
+            user_id,
+            full_name,
+            avatar_url,
+            bio,
+            created_at
+          )
+        `)
         .eq("id", id)
         .single();
 

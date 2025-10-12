@@ -63,7 +63,35 @@ export const usePropertyDetail = (id: string) => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("properties")
-        .select("*")
+        .select(`
+          *,
+          profiles:host_id (
+            user_id,
+            full_name,
+            avatar_url,
+            bio,
+            created_at
+          ),
+          property_amenities (
+            amenities (
+              id,
+              name,
+              icon,
+              category
+            )
+          ),
+          reviews (
+            id,
+            rating,
+            comment,
+            created_at,
+            profiles:reviewer_id (
+              user_id,
+              full_name,
+              avatar_url
+            )
+          )
+        `)
         .eq("id", id)
         .single();
 
