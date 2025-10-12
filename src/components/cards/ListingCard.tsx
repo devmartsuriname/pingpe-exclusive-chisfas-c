@@ -142,8 +142,8 @@ export function ListingCard({
           >
             <Heart
               className={cn(
-                "h-5 w-5 transition-colors",
-                isFavorite && "fill-destructive text-destructive"
+                "h-5 w-5 transition-all",
+                isFavorite ? "fill-red-500 text-red-500" : "text-foreground/70"
               )}
             />
           </Button>
