@@ -21,9 +21,15 @@ interface ListingCardProps {
   metadata?: {
     guests?: number;
     bedrooms?: number;
-    duration?: string;
+    beds?: number;
+    bathrooms?: number;
+    duration?: string | number;
     difficulty?: string;
     capacity?: number;
+    maxParticipants?: number;
+    durationDays?: number;
+    maxAttendees?: number;
+    date?: string;
   };
   isFavorite?: boolean;
   onFavoriteToggle?: () => void;
