@@ -676,6 +676,80 @@ export type Database = {
         }
         Relationships: []
       }
+      page_sections: {
+        Row: {
+          content: Json
+          created_at: string
+          id: string
+          is_visible: boolean
+          page_id: string
+          position: number
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          content?: Json
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          page_id: string
+          position: number
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          page_id?: string
+          position?: number
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "page_sections_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pages: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          seo_meta: Json | null
+          slug: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          seo_meta?: Json | null
+          slug: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          seo_meta?: Json | null
+          slug?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       partner_bookings: {
         Row: {
           booking_id: string
