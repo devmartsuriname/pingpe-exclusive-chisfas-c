@@ -35,6 +35,89 @@ export type Database = {
         }
         Relationships: []
       }
+      availability: {
+        Row: {
+          booked: number | null
+          capacity: number | null
+          created_at: string | null
+          date: string
+          id: string
+          inventory_id: string
+          inventory_type: Database["public"]["Enums"]["inventory_type"]
+          is_blocked: boolean | null
+          notes: string | null
+          price_override: number | null
+        }
+        Insert: {
+          booked?: number | null
+          capacity?: number | null
+          created_at?: string | null
+          date: string
+          id?: string
+          inventory_id: string
+          inventory_type: Database["public"]["Enums"]["inventory_type"]
+          is_blocked?: boolean | null
+          notes?: string | null
+          price_override?: number | null
+        }
+        Update: {
+          booked?: number | null
+          capacity?: number | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          inventory_id?: string
+          inventory_type?: Database["public"]["Enums"]["inventory_type"]
+          is_blocked?: boolean | null
+          notes?: string | null
+          price_override?: number | null
+        }
+        Relationships: []
+      }
+      booking_items: {
+        Row: {
+          booking_id: string
+          date: string | null
+          id: string
+          inventory_id: string
+          inventory_type: Database["public"]["Enums"]["inventory_type"]
+          notes: string | null
+          price_per_unit: number
+          quantity: number | null
+          subtotal: number
+        }
+        Insert: {
+          booking_id: string
+          date?: string | null
+          id?: string
+          inventory_id: string
+          inventory_type: Database["public"]["Enums"]["inventory_type"]
+          notes?: string | null
+          price_per_unit: number
+          quantity?: number | null
+          subtotal: number
+        }
+        Update: {
+          booking_id?: string
+          date?: string | null
+          id?: string
+          inventory_id?: string
+          inventory_type?: Database["public"]["Enums"]["inventory_type"]
+          notes?: string | null
+          price_per_unit?: number
+          quantity?: number | null
+          subtotal?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_items_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
           check_in: string
@@ -43,6 +126,8 @@ export type Database = {
           guest_id: string
           guests: number
           id: string
+          inventory_id: string | null
+          inventory_type: Database["public"]["Enums"]["inventory_type"] | null
           property_id: string
           status: Database["public"]["Enums"]["booking_status"] | null
           total_price: number
@@ -55,6 +140,8 @@ export type Database = {
           guest_id: string
           guests: number
           id?: string
+          inventory_id?: string | null
+          inventory_type?: Database["public"]["Enums"]["inventory_type"] | null
           property_id: string
           status?: Database["public"]["Enums"]["booking_status"] | null
           total_price: number
@@ -67,6 +154,8 @@ export type Database = {
           guest_id?: string
           guests?: number
           id?: string
+          inventory_id?: string | null
+          inventory_type?: Database["public"]["Enums"]["inventory_type"] | null
           property_id?: string
           status?: Database["public"]["Enums"]["booking_status"] | null
           total_price?: number
@@ -81,6 +170,135 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      events: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          description: string | null
+          duration_hours: number | null
+          event_date: string
+          id: string
+          images: string[] | null
+          includes: string[] | null
+          is_active: boolean | null
+          latitude: number | null
+          location: string
+          longitude: number | null
+          max_attendees: number | null
+          organizer_id: string
+          price_per_person: number
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration_hours?: number | null
+          event_date: string
+          id?: string
+          images?: string[] | null
+          includes?: string[] | null
+          is_active?: boolean | null
+          latitude?: number | null
+          location: string
+          longitude?: number | null
+          max_attendees?: number | null
+          organizer_id: string
+          price_per_person: number
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration_hours?: number | null
+          event_date?: string
+          id?: string
+          images?: string[] | null
+          includes?: string[] | null
+          is_active?: boolean | null
+          latitude?: number | null
+          location?: string
+          longitude?: number | null
+          max_attendees?: number | null
+          organizer_id?: string
+          price_per_person?: number
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      experiences: {
+        Row: {
+          age_restriction: number | null
+          created_at: string | null
+          description: string | null
+          difficulty_level: string | null
+          duration_hours: number
+          host_id: string
+          id: string
+          images: string[] | null
+          includes: string[] | null
+          is_active: boolean | null
+          language: string[] | null
+          latitude: number | null
+          longitude: number | null
+          max_participants: number
+          meeting_point: string
+          min_participants: number | null
+          price_per_person: number
+          title: string
+          updated_at: string | null
+          what_to_bring: string[] | null
+        }
+        Insert: {
+          age_restriction?: number | null
+          created_at?: string | null
+          description?: string | null
+          difficulty_level?: string | null
+          duration_hours: number
+          host_id: string
+          id?: string
+          images?: string[] | null
+          includes?: string[] | null
+          is_active?: boolean | null
+          language?: string[] | null
+          latitude?: number | null
+          longitude?: number | null
+          max_participants: number
+          meeting_point: string
+          min_participants?: number | null
+          price_per_person: number
+          title: string
+          updated_at?: string | null
+          what_to_bring?: string[] | null
+        }
+        Update: {
+          age_restriction?: number | null
+          created_at?: string | null
+          description?: string | null
+          difficulty_level?: string | null
+          duration_hours?: number
+          host_id?: string
+          id?: string
+          images?: string[] | null
+          includes?: string[] | null
+          is_active?: boolean | null
+          language?: string[] | null
+          latitude?: number | null
+          longitude?: number | null
+          max_participants?: number
+          meeting_point?: string
+          min_participants?: number | null
+          price_per_person?: number
+          title?: string
+          updated_at?: string | null
+          what_to_bring?: string[] | null
+        }
+        Relationships: []
       }
       favorites: {
         Row: {
@@ -143,6 +361,220 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          booking_id: string | null
+          channel: string | null
+          error_message: string | null
+          external_id: string | null
+          id: string
+          message: string
+          sent_at: string | null
+          status: string | null
+          subject: string | null
+          user_id: string
+        }
+        Insert: {
+          booking_id?: string | null
+          channel?: string | null
+          error_message?: string | null
+          external_id?: string | null
+          id?: string
+          message: string
+          sent_at?: string | null
+          status?: string | null
+          subject?: string | null
+          user_id: string
+        }
+        Update: {
+          booking_id?: string | null
+          channel?: string | null
+          error_message?: string | null
+          external_id?: string | null
+          id?: string
+          message?: string
+          sent_at?: string | null
+          status?: string | null
+          subject?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      package_items: {
+        Row: {
+          day_number: number | null
+          inventory_id: string
+          inventory_type: Database["public"]["Enums"]["inventory_type"]
+          notes: string | null
+          package_id: string
+          quantity: number | null
+        }
+        Insert: {
+          day_number?: number | null
+          inventory_id: string
+          inventory_type: Database["public"]["Enums"]["inventory_type"]
+          notes?: string | null
+          package_id: string
+          quantity?: number | null
+        }
+        Update: {
+          day_number?: number | null
+          inventory_id?: string
+          inventory_type?: Database["public"]["Enums"]["inventory_type"]
+          notes?: string | null
+          package_id?: string
+          quantity?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "package_items_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "packages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      packages: {
+        Row: {
+          created_at: string | null
+          creator_id: string
+          description: string | null
+          discount_percentage: number | null
+          duration_days: number
+          id: string
+          images: string[] | null
+          includes_summary: string[] | null
+          is_active: boolean | null
+          max_participants: number
+          price_total: number
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          creator_id: string
+          description?: string | null
+          discount_percentage?: number | null
+          duration_days: number
+          id?: string
+          images?: string[] | null
+          includes_summary?: string[] | null
+          is_active?: boolean | null
+          max_participants: number
+          price_total: number
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          creator_id?: string
+          description?: string | null
+          discount_percentage?: number | null
+          duration_days?: number
+          id?: string
+          images?: string[] | null
+          includes_summary?: string[] | null
+          is_active?: boolean | null
+          max_participants?: number
+          price_total?: number
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      partner_bookings: {
+        Row: {
+          booking_id: string
+          commission_amount: number
+          commission_paid: boolean | null
+          commission_paid_date: string | null
+          notes: string | null
+          partner_id: string
+        }
+        Insert: {
+          booking_id: string
+          commission_amount: number
+          commission_paid?: boolean | null
+          commission_paid_date?: string | null
+          notes?: string | null
+          partner_id: string
+        }
+        Update: {
+          booking_id?: string
+          commission_amount?: number
+          commission_paid?: boolean | null
+          commission_paid_date?: string | null
+          notes?: string | null
+          partner_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_bookings_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partner_bookings_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partners: {
+        Row: {
+          address: string | null
+          commission_rate: number
+          contact_email: string
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          payment_terms: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          commission_rate: number
+          contact_email: string
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          payment_terms?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          commission_rate?: number
+          contact_email?: string
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          payment_terms?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -186,6 +618,66 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      price_rules: {
+        Row: {
+          created_at: string | null
+          date_end: string | null
+          date_start: string | null
+          day_of_week: number[] | null
+          discount_fixed: number | null
+          discount_percentage: number | null
+          id: string
+          inventory_id: string
+          inventory_type: Database["public"]["Enums"]["inventory_type"]
+          is_active: boolean | null
+          max_participants: number | null
+          min_participants: number | null
+          price_multiplier: number | null
+          priority: number | null
+          promo_code: string | null
+          rule_name: string
+          rule_type: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date_end?: string | null
+          date_start?: string | null
+          day_of_week?: number[] | null
+          discount_fixed?: number | null
+          discount_percentage?: number | null
+          id?: string
+          inventory_id: string
+          inventory_type: Database["public"]["Enums"]["inventory_type"]
+          is_active?: boolean | null
+          max_participants?: number | null
+          min_participants?: number | null
+          price_multiplier?: number | null
+          priority?: number | null
+          promo_code?: string | null
+          rule_name: string
+          rule_type?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date_end?: string | null
+          date_start?: string | null
+          day_of_week?: number[] | null
+          discount_fixed?: number | null
+          discount_percentage?: number | null
+          id?: string
+          inventory_id?: string
+          inventory_type?: Database["public"]["Enums"]["inventory_type"]
+          is_active?: boolean | null
+          max_participants?: number | null
+          min_participants?: number | null
+          price_multiplier?: number | null
+          priority?: number | null
+          promo_code?: string | null
+          rule_name?: string
+          rule_type?: string | null
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -316,6 +808,75 @@ export type Database = {
           },
         ]
       }
+      refunds: {
+        Row: {
+          amount: number
+          approved_by: string | null
+          booking_id: string
+          created_at: string | null
+          id: string
+          notes: string | null
+          payment_id: string | null
+          processed_at: string | null
+          reason: string
+          refund_method: string | null
+          requested_by: string | null
+          status: string | null
+          updated_at: string | null
+          voucher_code: string | null
+          voucher_expires_at: string | null
+        }
+        Insert: {
+          amount: number
+          approved_by?: string | null
+          booking_id: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          payment_id?: string | null
+          processed_at?: string | null
+          reason: string
+          refund_method?: string | null
+          requested_by?: string | null
+          status?: string | null
+          updated_at?: string | null
+          voucher_code?: string | null
+          voucher_expires_at?: string | null
+        }
+        Update: {
+          amount?: number
+          approved_by?: string | null
+          booking_id?: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          payment_id?: string | null
+          processed_at?: string | null
+          reason?: string
+          refund_method?: string | null
+          requested_by?: string | null
+          status?: string | null
+          updated_at?: string | null
+          voucher_code?: string | null
+          voucher_expires_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "refunds_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "refunds_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           booking_id: string
@@ -361,6 +922,90 @@ export type Database = {
           },
         ]
       }
+      settings: {
+        Row: {
+          description: string | null
+          key: string
+          updated_at: string | null
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          description?: string | null
+          key: string
+          updated_at?: string | null
+          updated_by?: string | null
+          value: Json
+        }
+        Update: {
+          description?: string | null
+          key?: string
+          updated_at?: string | null
+          updated_by?: string | null
+          value?: Json
+        }
+        Relationships: []
+      }
+      transport: {
+        Row: {
+          amenities: string[] | null
+          capacity: number
+          created_at: string | null
+          description: string | null
+          duration_hours: number | null
+          id: string
+          images: string[] | null
+          is_active: boolean | null
+          luggage_allowance: string | null
+          price_per_group: number | null
+          price_per_person: number
+          provider_id: string
+          route_from: string
+          route_to: string
+          title: string
+          updated_at: string | null
+          vehicle_type: string
+        }
+        Insert: {
+          amenities?: string[] | null
+          capacity: number
+          created_at?: string | null
+          description?: string | null
+          duration_hours?: number | null
+          id?: string
+          images?: string[] | null
+          is_active?: boolean | null
+          luggage_allowance?: string | null
+          price_per_group?: number | null
+          price_per_person: number
+          provider_id: string
+          route_from: string
+          route_to: string
+          title: string
+          updated_at?: string | null
+          vehicle_type: string
+        }
+        Update: {
+          amenities?: string[] | null
+          capacity?: number
+          created_at?: string | null
+          description?: string | null
+          duration_hours?: number | null
+          id?: string
+          images?: string[] | null
+          is_active?: boolean | null
+          luggage_allowance?: string | null
+          price_per_group?: number | null
+          price_per_person?: number
+          provider_id?: string
+          route_from?: string
+          route_to?: string
+          title?: string
+          updated_at?: string | null
+          vehicle_type?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -397,7 +1042,15 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "host" | "guest"
-      booking_status: "pending" | "confirmed" | "cancelled" | "completed"
+      booking_status:
+        | "pending"
+        | "confirmed"
+        | "cancelled"
+        | "completed"
+        | "payment_intent"
+        | "pending_approval"
+        | "refunded"
+      inventory_type: "stay" | "experience" | "transport" | "package" | "event"
       payment_status: "pending" | "paid" | "refunded" | "failed"
       property_type:
         | "hotel"
@@ -534,7 +1187,16 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "host", "guest"],
-      booking_status: ["pending", "confirmed", "cancelled", "completed"],
+      booking_status: [
+        "pending",
+        "confirmed",
+        "cancelled",
+        "completed",
+        "payment_intent",
+        "pending_approval",
+        "refunded",
+      ],
+      inventory_type: ["stay", "experience", "transport", "package", "event"],
       payment_status: ["pending", "paid", "refunded", "failed"],
       property_type: [
         "hotel",
