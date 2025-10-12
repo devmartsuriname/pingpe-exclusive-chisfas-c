@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
 import { HeroSearchBar } from "@/components/search/HeroSearchBar";
 import { ListingCard } from "@/components/cards/ListingCard";
 import { CategoryCard } from "@/components/cards/CategoryCard";
@@ -20,9 +21,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import heroImage1 from "@/assets/hero-1.jpg";
-import heroImage2 from "@/assets/hero-2.jpg";
-import heroImage3 from "@/assets/hero-3.jpg";
+import heroImage1 from "@/assets/pingpe-waterfall.jpg";
+import heroImage2 from "@/assets/pingpe-river.jpg";
+import heroImage3 from "@/assets/pingpe-ananasberg.jpg";
 import categoryEcolodges from "@/assets/category-ecolodges.jpg";
 import categoryRivertours from "@/assets/category-rivertours.jpg";
 import categoryCultural from "@/assets/category-cultural.jpg";
@@ -157,6 +158,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Jungle Resort PingPe - Authentic Upper Suriname Rainforest Adventures"
+        description="Experience authentic rainforest adventures at Jungle Resort PingPe. Eco-friendly lodges, guided jungle tours, and immersive Saramaccan cultural experiences in Upper Suriname."
+        url="https://www.jungleresortpingpe.com"
+      />
       <Header />
 
       {/* Hero Section - Split Design */}

@@ -3,6 +3,7 @@ import PlatformSettings from "./settings/PlatformSettings";
 import NotificationSettings from "./settings/NotificationSettings";
 import RoleSettings from "./settings/RoleSettings";
 import IntegrationSettings from "./settings/IntegrationSettings";
+import PaymentSettings from "./settings/PaymentSettings";
 
 export default function Settings() {
   return (
@@ -15,6 +16,7 @@ export default function Settings() {
       <Tabs defaultValue="platform" className="w-full">
         <TabsList>
           <TabsTrigger value="platform">Platform</TabsTrigger>
+          <TabsTrigger value="payments">Payments</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
           <TabsTrigger value="roles">Roles & Permissions</TabsTrigger>
           <TabsTrigger value="integrations">Integrations</TabsTrigger>
@@ -22,6 +24,10 @@ export default function Settings() {
 
         <TabsContent value="platform">
           <PlatformSettings />
+        </TabsContent>
+
+        <TabsContent value="payments">
+          <PaymentSettings />
         </TabsContent>
 
         <TabsContent value="notifications">
