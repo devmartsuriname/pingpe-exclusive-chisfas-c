@@ -46,6 +46,7 @@ import BlogList from "./admin/pages/blog/BlogList";
 import BlogCreate from "./admin/pages/blog/BlogCreate";
 import BlogEdit from "./admin/pages/blog/BlogEdit";
 import BlogSettings from "./admin/pages/blog/BlogSettings";
+import MediaLibrary from "./admin/pages/media/MediaLibrary";
 
 const queryClient = new QueryClient();
 
@@ -119,6 +120,7 @@ const App = () => (
               <Route path="blog/create" element={<BlogCreate />} />
               <Route path="blog/edit/:id" element={<BlogEdit />} />
               <Route path="blog/settings" element={<BlogSettings />} />
+              <Route path="media" element={<MediaLibrary />} />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<Settings />} />
             </Route>

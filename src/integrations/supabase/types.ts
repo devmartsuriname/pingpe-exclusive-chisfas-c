@@ -463,6 +463,57 @@ export type Database = {
           },
         ]
       }
+      media_library: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          file_size: number
+          file_type: string
+          folder: string | null
+          height: number | null
+          id: string
+          name: string
+          tags: string[] | null
+          thumbnail_url: string | null
+          updated_at: string
+          uploaded_by: string
+          url: string
+          width: number | null
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          file_size: number
+          file_type: string
+          folder?: string | null
+          height?: number | null
+          id?: string
+          name: string
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          updated_at?: string
+          uploaded_by: string
+          url: string
+          width?: number | null
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          file_size?: number
+          file_type?: string
+          folder?: string | null
+          height?: number | null
+          id?: string
+          name?: string
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          updated_at?: string
+          uploaded_by?: string
+          url?: string
+          width?: number | null
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           booking_id: string
