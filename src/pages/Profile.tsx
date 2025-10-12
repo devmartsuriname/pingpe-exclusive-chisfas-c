@@ -39,7 +39,7 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 type PasswordFormData = z.infer<typeof passwordSchema>;
 
 export default function Profile() {
-  const { user, role, signOut, updatePassword } = useAuth();
+  const { user, roles, signOut, updatePassword } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -166,7 +166,11 @@ export default function Profile() {
                 <div>
                   <CardTitle>{profile?.full_name || "User"}</CardTitle>
                   <CardDescription>{user?.email}</CardDescription>
-                  <Badge variant="secondary" className="mt-2">{role}</Badge>
+                  <div className="mt-2 flex gap-2">
+                    {roles.map((role) => (
+                      <Badge key={role} variant="secondary">{role}</Badge>
+                    ))}
+                  </div>
                 </div>
               </div>
             </CardHeader>

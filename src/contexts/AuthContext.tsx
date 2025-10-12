@@ -7,7 +7,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  role: string | null;
+  roles: string[];
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState<string | null>(null);
+  const [roles, setRoles] = useState<string[]>([]);
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -30,18 +30,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Fetch user role after session change
+        // Fetch user roles after session change
         if (session?.user) {
           setTimeout(async () => {
             const { data } = await supabase
               .from('user_roles')
               .select('role')
-              .eq('user_id', session.user.id)
-              .single();
-            setRole(data?.role ?? 'guest');
+              .eq('user_id', session.user.id);
+            setRoles(data?.map(r => r.role) ?? []);
           }, 0);
         } else {
-          setRole(null);
+          setRoles([]);
         }
       }
     );
@@ -51,15 +50,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(session);
       setUser(session?.user ?? null);
       
-      // Fetch user role
+      // Fetch user roles
       if (session?.user) {
         supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', session.user.id)
-          .single()
           .then(({ data }) => {
-            setRole(data?.role ?? 'guest');
+            setRoles(data?.map(r => r.role) ?? []);
             setLoading(false);
           });
       } else {
@@ -98,7 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signOut();
     setUser(null);
     setSession(null);
-    setRole(null);
+    setRoles([]);
   };
 
   const resetPassword = async (email: string) => {
@@ -123,7 +121,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         session,
         loading,
-        role,
+        roles,
         signIn,
         signUp,
         signOut,
@@ -158,18 +156,18 @@ export function useRequireAuth() {
 }
 
 export function useRequireRole(requiredRole: string) {
-  const { user, role, loading } = useAuth();
+  const { user, roles, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!loading) {
       if (!user) {
         navigate("/auth/sign-in");
-      } else if (role && role !== requiredRole) {
+      } else if (!roles.includes(requiredRole)) {
         navigate("/unauthorized");
       }
     }
-  }, [user, role, loading, requiredRole, navigate]);
+  }, [user, roles, loading, requiredRole, navigate]);
 
-  return { user, role, loading };
+  return { user, roles, loading };
 }

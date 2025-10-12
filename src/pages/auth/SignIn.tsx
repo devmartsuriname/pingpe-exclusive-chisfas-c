@@ -18,7 +18,7 @@ const signInSchema = z.object({
 type SignInFormData = z.infer<typeof signInSchema>;
 
 export default function SignIn() {
-  const { signIn, user, role, loading: authLoading } = useAuth();
+  const { signIn, user, roles, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -33,13 +33,13 @@ export default function SignIn() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      if (role === "admin") {
+      if (roles.includes("admin")) {
         navigate("/admin/dashboard");
       } else {
         navigate("/profile");
       }
     }
-  }, [user, role, authLoading, navigate]);
+  }, [user, roles, authLoading, navigate]);
 
   const onSubmit = async (data: SignInFormData) => {
     setLoading(true);

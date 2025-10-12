@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [profile, setProfile] = useState<any>(null);
-  const { user, role, signOut } = useAuth();
+  const { user, roles, signOut } = useAuth();
   const navigate = useNavigate();
 
   const navigation = [
@@ -108,7 +108,7 @@ export function Header() {
                         Profile
                       </Link>
                     </DropdownMenuItem>
-                    {role === "admin" && (
+                    {roles.includes("admin") && (
                       <DropdownMenuItem asChild>
                         <Link to="/admin/dashboard" className="cursor-pointer">
                           <Shield className="w-4 h-4 mr-2" />
@@ -175,7 +175,7 @@ export function Header() {
                   <User className="w-4 h-4" />
                   Profile
                 </Link>
-                {role === "admin" && (
+                {roles.includes("admin") && (
                   <Link
                     to="/admin/dashboard"
                     className="flex items-center gap-2 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg px-2 transition-colors"
