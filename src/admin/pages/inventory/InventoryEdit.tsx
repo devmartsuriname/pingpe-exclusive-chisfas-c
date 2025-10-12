@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { PropertyForm } from "@/admin/components/forms/PropertyForm";
 import { ExperienceForm } from "@/admin/components/forms/ExperienceForm";
 import { TransportForm } from "@/admin/components/forms/TransportForm";
+import { PackageForm } from "@/admin/components/forms/PackageForm";
+import { EventForm } from "@/admin/components/forms/EventForm";
 
 export default function InventoryEdit() {
   const { type, id } = useParams();
@@ -20,6 +22,8 @@ export default function InventoryEdit() {
       case "stay": return "properties";
       case "experience": return "experiences";
       case "transport": return "transport";
+      case "package": return "packages";
+      case "event": return "events";
       default: return null;
     }
   };
@@ -91,6 +95,22 @@ export default function InventoryEdit() {
       case "transport":
         return (
           <TransportForm
+            defaultValues={item}
+            onSubmit={(data) => updateMutation.mutate(data)}
+            isLoading={updateMutation.isPending}
+          />
+        );
+      case "package":
+        return (
+          <PackageForm
+            defaultValues={item}
+            onSubmit={(data) => updateMutation.mutate(data)}
+            isLoading={updateMutation.isPending}
+          />
+        );
+      case "event":
+        return (
+          <EventForm
             defaultValues={item}
             onSubmit={(data) => updateMutation.mutate(data)}
             isLoading={updateMutation.isPending}

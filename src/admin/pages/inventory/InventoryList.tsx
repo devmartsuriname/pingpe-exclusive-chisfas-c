@@ -158,6 +158,158 @@ export default function InventoryList() {
     },
   ];
 
+  const transportColumns = [
+    {
+      key: "images",
+      label: "Image",
+      render: (item: any) => (
+        <img src={item.images?.[0]} alt={item.title} className="h-12 w-16 rounded object-cover" />
+      ),
+    },
+    { key: "title", label: "Title" },
+    {
+      key: "is_active",
+      label: "Status",
+      render: (item: any) => (
+        <Badge variant={item.is_active ? "default" : "secondary"}>
+          {item.is_active ? "Active" : "Inactive"}
+        </Badge>
+      ),
+    },
+    {
+      key: "vehicle_type",
+      label: "Type",
+      render: (item: any) => item.vehicle_type,
+    },
+    {
+      key: "route_from",
+      label: "Route",
+      render: (item: any) => `${item.route_from} → ${item.route_to}`,
+    },
+    {
+      key: "price_per_person",
+      label: "Price",
+      render: (item: any) => `$${item.price_per_person}/person`,
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      render: (item: any) => (
+        <div className="flex gap-2">
+          <Button size="sm" variant="outline" asChild>
+            <Link to={`/admin/inventory/edit/transport/${item.id}`}>
+              <Edit className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button size="sm" variant="outline" onClick={() => handleDelete("transport", item.id, item.title)}>
+            <Trash2 className="h-4 w-4 text-destructive" />
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
+  const packagesColumns = [
+    {
+      key: "images",
+      label: "Image",
+      render: (item: any) => (
+        <img src={item.images?.[0]} alt={item.title} className="h-12 w-16 rounded object-cover" />
+      ),
+    },
+    { key: "title", label: "Title" },
+    {
+      key: "is_active",
+      label: "Status",
+      render: (item: any) => (
+        <Badge variant={item.is_active ? "default" : "secondary"}>
+          {item.is_active ? "Active" : "Inactive"}
+        </Badge>
+      ),
+    },
+    {
+      key: "duration_days",
+      label: "Duration",
+      render: (item: any) => `${item.duration_days} days`,
+    },
+    {
+      key: "price_total",
+      label: "Price",
+      render: (item: any) => `$${item.price_total}`,
+    },
+    {
+      key: "discount_percentage",
+      label: "Discount",
+      render: (item: any) => item.discount_percentage ? `${item.discount_percentage}%` : "-",
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      render: (item: any) => (
+        <div className="flex gap-2">
+          <Button size="sm" variant="outline" asChild>
+            <Link to={`/admin/inventory/edit/package/${item.id}`}>
+              <Edit className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button size="sm" variant="outline" onClick={() => handleDelete("package", item.id, item.title)}>
+            <Trash2 className="h-4 w-4 text-destructive" />
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
+  const eventsColumns = [
+    {
+      key: "images",
+      label: "Image",
+      render: (item: any) => (
+        <img src={item.images?.[0]} alt={item.title} className="h-12 w-16 rounded object-cover" />
+      ),
+    },
+    { key: "title", label: "Title" },
+    {
+      key: "is_active",
+      label: "Status",
+      render: (item: any) => (
+        <Badge variant={item.is_active ? "default" : "secondary"}>
+          {item.is_active ? "Active" : "Inactive"}
+        </Badge>
+      ),
+    },
+    {
+      key: "event_date",
+      label: "Event Date",
+      render: (item: any) => new Date(item.event_date).toLocaleDateString(),
+    },
+    {
+      key: "location",
+      label: "Location",
+    },
+    {
+      key: "price_per_person",
+      label: "Price",
+      render: (item: any) => `$${item.price_per_person}/person`,
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      render: (item: any) => (
+        <div className="flex gap-2">
+          <Button size="sm" variant="outline" asChild>
+            <Link to={`/admin/inventory/edit/event/${item.id}`}>
+              <Edit className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button size="sm" variant="outline" onClick={() => handleDelete("event", item.id, item.title)}>
+            <Trash2 className="h-4 w-4 text-destructive" />
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -201,7 +353,7 @@ export default function InventoryList() {
         <TabsContent value="transport" className="space-y-4">
           <DataTable
             data={transport || []}
-            columns={experiencesColumns}
+            columns={transportColumns}
             searchPlaceholder="Search transport..."
           />
         </TabsContent>
@@ -209,7 +361,7 @@ export default function InventoryList() {
         <TabsContent value="packages" className="space-y-4">
           <DataTable
             data={packages || []}
-            columns={experiencesColumns}
+            columns={packagesColumns}
             searchPlaceholder="Search packages..."
           />
         </TabsContent>
@@ -217,7 +369,7 @@ export default function InventoryList() {
         <TabsContent value="events" className="space-y-4">
           <DataTable
             data={events || []}
-            columns={experiencesColumns}
+            columns={eventsColumns}
             searchPlaceholder="Search events..."
           />
         </TabsContent>

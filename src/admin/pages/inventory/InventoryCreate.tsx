@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { PropertyForm } from "@/admin/components/forms/PropertyForm";
 import { ExperienceForm } from "@/admin/components/forms/ExperienceForm";
 import { TransportForm } from "@/admin/components/forms/TransportForm";
+import { PackageForm } from "@/admin/components/forms/PackageForm";
+import { EventForm } from "@/admin/components/forms/EventForm";
 
 export default function InventoryCreate() {
   const { type } = useParams();
@@ -20,7 +22,7 @@ export default function InventoryCreate() {
       const user = await supabase.auth.getUser();
       if (!user.data.user) throw new Error("Not authenticated");
 
-      let table: "properties" | "experiences" | "transport" = "properties";
+      let table: "properties" | "experiences" | "transport" | "packages" | "events" = "properties";
       let payload: any = { ...data };
 
       if (type === "stay") {
@@ -34,6 +36,14 @@ export default function InventoryCreate() {
       } else if (type === "transport") {
         table = "transport";
         payload.provider_id = user.data.user.id;
+        payload.is_active = true;
+      } else if (type === "package") {
+        table = "packages";
+        payload.creator_id = user.data.user.id;
+        payload.is_active = true;
+      } else if (type === "event") {
+        table = "events";
+        payload.organizer_id = user.data.user.id;
         payload.is_active = true;
       } else {
         throw new Error("Invalid inventory type");
@@ -79,10 +89,24 @@ export default function InventoryCreate() {
             isLoading={createMutation.isPending}
           />
         );
+      case "package":
+        return (
+          <PackageForm
+            onSubmit={(data) => createMutation.mutate(data)}
+            isLoading={createMutation.isPending}
+          />
+        );
+      case "event":
+        return (
+          <EventForm
+            onSubmit={(data) => createMutation.mutate(data)}
+            isLoading={createMutation.isPending}
+          />
+        );
       default:
         return (
           <p className="text-muted-foreground">
-            Form for {type} is not yet implemented. Supported types: stay, experience, transport.
+            Form for {type} is not yet implemented. Supported types: stay, experience, transport, package, event.
           </p>
         );
     }
