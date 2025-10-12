@@ -143,15 +143,11 @@ export default function ExperienceDetail() {
                 inventoryType="experience"
                 maxCapacity={experience.max_participants}
               />
-              {experience.profiles && (
-                <HostProfileCard
-                  hostId={experience.profiles.id}
-                  hostName={experience.profiles.full_name || "Host"}
-                  hostAvatar={experience.profiles.avatar_url}
-                  hostBio={experience.profiles.bio}
-                  joinedDate={experience.profiles.created_at}
-                />
-              )}
+              <HostProfileCard
+                hostId={experience.host_id}
+                hostName="Host"
+                joinedDate={experience.created_at}
+              />
             </div>
           </div>
         </div>

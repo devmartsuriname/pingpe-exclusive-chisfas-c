@@ -137,15 +137,11 @@ export default function EventDetail() {
                 inventoryType="event"
                 maxCapacity={event.max_attendees || 50}
               />
-              {event.profiles && (
-                <HostProfileCard
-                  hostId={event.profiles.id}
-                  hostName={event.profiles.full_name || "Organizer"}
-                  hostAvatar={event.profiles.avatar_url}
-                  hostBio={event.profiles.bio}
-                  joinedDate={event.profiles.created_at}
-                />
-              )}
+              <HostProfileCard
+                hostId={event.organizer_id}
+                hostName="Organizer"
+                joinedDate={event.created_at}
+              />
             </div>
           </div>
         </div>

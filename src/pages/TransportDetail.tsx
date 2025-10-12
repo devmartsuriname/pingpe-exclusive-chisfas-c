@@ -130,15 +130,11 @@ export default function TransportDetail() {
                 inventoryType="transport"
                 maxCapacity={transport.capacity}
               />
-              {transport.profiles && (
-                <HostProfileCard
-                  hostId={transport.profiles.id}
-                  hostName={transport.profiles.full_name || "Provider"}
-                  hostAvatar={transport.profiles.avatar_url}
-                  hostBio={transport.profiles.bio}
-                  joinedDate={transport.profiles.created_at}
-                />
-              )}
+              <HostProfileCard
+                hostId={transport.provider_id}
+                hostName="Provider"
+                joinedDate={transport.created_at}
+              />
             </div>
           </div>
         </div>

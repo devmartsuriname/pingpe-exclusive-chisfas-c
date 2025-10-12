@@ -124,15 +124,11 @@ export default function PackageDetail() {
                 inventoryType="package"
                 maxCapacity={pkg.max_participants}
               />
-              {pkg.profiles && (
-                <HostProfileCard
-                  hostId={pkg.profiles.id}
-                  hostName={pkg.profiles.full_name || "Creator"}
-                  hostAvatar={pkg.profiles.avatar_url}
-                  hostBio={pkg.profiles.bio}
-                  joinedDate={pkg.profiles.created_at}
-                />
-              )}
+              <HostProfileCard
+                hostId={pkg.creator_id}
+                hostName="Creator"
+                joinedDate={pkg.created_at}
+              />
             </div>
           </div>
         </div>

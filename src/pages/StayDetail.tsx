@@ -121,45 +121,10 @@ export default function StayDetail() {
 
               <Separator />
 
-              {/* Amenities */}
-              {property.property_amenities && property.property_amenities.length > 0 && (
-                <div>
-                  <h2 className="text-2xl font-bold mb-4">Amenities</h2>
-                  <div className="grid grid-cols-2 gap-4">
-                    {property.property_amenities.map((item: any) => (
-                      <div key={item.amenities.id} className="flex items-center gap-2">
-                        <span className="text-2xl">{item.amenities.icon || "✓"}</span>
-                        <span>{item.amenities.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <Separator />
-
               {/* Reviews */}
               <div>
                 <h2 className="text-2xl font-bold mb-4">Reviews</h2>
-                {property.reviews && property.reviews.length > 0 ? (
-                  <div className="space-y-4">
-                    {property.reviews.slice(0, 3).map((review: any) => (
-                      <div key={review.id} className="border border-border rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="flex items-center gap-1">
-                            {Array.from({ length: review.rating }).map((_, i) => (
-                              <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                            ))}
-                          </div>
-                          <span className="font-medium">{review.profiles?.full_name}</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">{review.comment}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-muted-foreground">No reviews yet</p>
-                )}
+                <p className="text-muted-foreground">No reviews yet</p>
               </div>
             </div>
 
@@ -171,15 +136,11 @@ export default function StayDetail() {
                 inventoryType="stay"
                 maxCapacity={property.guests}
               />
-              {property.profiles && (
-                <HostProfileCard
-                  hostId={property.profiles.id}
-                  hostName={property.profiles.full_name || "Host"}
-                  hostAvatar={property.profiles.avatar_url}
-                  hostBio={property.profiles.bio}
-                  joinedDate={property.profiles.created_at}
-                />
-              )}
+              <HostProfileCard
+                hostId={property.host_id}
+                hostName="Host"
+                joinedDate={property.created_at}
+              />
             </div>
           </div>
         </div>
