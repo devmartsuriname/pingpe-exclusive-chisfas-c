@@ -112,13 +112,13 @@ export default function Privacy() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">11. Contact Us</h2>
               <p>
-                If you have questions about this Privacy Policy or our data practices, please contact us at:
+              If you have questions about this Privacy Policy or our data practices, please contact us at:
                 <br />
-                Email: privacy@jungleresortpingpe.com
+                Email: info@jungleresortpingpe.com
                 <br />
-                Phone: +597 123-4567
+                Phone: +597 8858525
                 <br />
-                Address: Upper Suriname River, Suriname
+                Address: Jungle Resort PingPe, Boven Suriname
               </p>
             </section>
           </div>

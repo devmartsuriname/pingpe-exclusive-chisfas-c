@@ -139,11 +139,11 @@ export default function Cookies() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">8. Contact Us</h2>
               <p>
-                If you have questions about our use of cookies, please contact us at:
+              If you have questions about our use of cookies, please contact us at:
                 <br />
-                Email: privacy@jungleresortpingpe.com
+                Email: info@jungleresortpingpe.com
                 <br />
-                Phone: +597 123-4567
+                Phone: +597 8858525
               </p>
             </section>
           </div>

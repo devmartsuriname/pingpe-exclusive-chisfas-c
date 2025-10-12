@@ -28,6 +28,16 @@ import categoryEcolodges from "@/assets/category-ecolodges.jpg";
 import categoryRivertours from "@/assets/category-rivertours.jpg";
 import categoryCultural from "@/assets/category-cultural.jpg";
 import categoryWildlife from "@/assets/category-wildlife.jpg";
+import boatTour from "@/assets/pingpe-boat.jpg";
+import cultureExperience from "@/assets/pingpe-culture.jpg";
+import locationParamaribo from "@/assets/location-paramaribo.jpg";
+import locationBovenSuriname from "@/assets/pingpe-river.jpg";
+import locationCentral from "@/assets/location-central.jpg";
+import locationCommewijne from "@/assets/location-commewijne.jpg";
+import locationNickerie from "@/assets/location-nickerie.jpg";
+import locationSipaliwini from "@/assets/location-sipaliwini.jpg";
+import locationBrokopondo from "@/assets/location-brokopondo.jpg";
+import locationAtjoni from "@/assets/location-atjoni.jpg";
 import illustrationBook from "@/assets/illustration-book.svg";
 import illustrationRequest from "@/assets/illustration-request.svg";
 import illustrationFun from "@/assets/illustration-fun.svg";
@@ -61,7 +71,7 @@ const Index = () => {
       location: "Boven-Suriname River",
       price: 285,
       priceUnit: "person",
-      images: ["/placeholder.svg"],
+      images: [heroImage3],
       rating: 4.9,
       reviewCount: 47,
       badges: ["Popular", "Featured"],
@@ -75,7 +85,7 @@ const Index = () => {
       location: "Central Suriname Nature Reserve",
       price: 520,
       priceUnit: "person",
-      images: ["/placeholder.svg"],
+      images: [heroImage1],
       rating: 5.0,
       reviewCount: 32,
       badges: ["Top Rated", "Adventure"],
@@ -89,7 +99,7 @@ const Index = () => {
       location: "Boven-Suriname River",
       price: 380,
       priceUnit: "person",
-      images: ["/placeholder.svg"],
+      images: [boatTour],
       rating: 4.8,
       reviewCount: 28,
       badges: ["Customizable"],
@@ -103,7 +113,7 @@ const Index = () => {
       location: "PingPe Resort",
       price: 95,
       priceUnit: "person",
-      images: ["/placeholder.svg"],
+      images: [cultureExperience],
       rating: 4.7,
       reviewCount: 61,
       badges: ["Day Trip"],
@@ -125,14 +135,14 @@ const Index = () => {
   ];
 
   const locations = [
-    { name: "Paramaribo", count: 127, image: "/placeholder.svg", href: "/search?location=paramaribo" },
-    { name: "Boven Suriname", count: 45, image: "/placeholder.svg", href: "/search?location=boven-suriname" },
-    { name: "Central Suriname", count: 38, image: "/placeholder.svg", href: "/search?location=central" },
-    { name: "Commewijne", count: 22, image: "/placeholder.svg", href: "/search?location=commewijne" },
-    { name: "Nickerie", count: 18, image: "/placeholder.svg", href: "/search?location=nickerie" },
-    { name: "Sipaliwini", count: 31, image: "/placeholder.svg", href: "/search?location=sipaliwini" },
-    { name: "Brokopondo", count: 25, image: "/placeholder.svg", href: "/search?location=brokopondo" },
-    { name: "Atjoni", count: 15, image: "/placeholder.svg", href: "/search?location=atjoni" },
+    { name: "Paramaribo", count: 127, image: locationParamaribo, href: "/search?location=paramaribo" },
+    { name: "Boven Suriname", count: 45, image: locationBovenSuriname, href: "/search?location=boven-suriname" },
+    { name: "Central Suriname", count: 38, image: locationCentral, href: "/search?location=central" },
+    { name: "Commewijne", count: 22, image: locationCommewijne, href: "/search?location=commewijne" },
+    { name: "Nickerie", count: 18, image: locationNickerie, href: "/search?location=nickerie" },
+    { name: "Sipaliwini", count: 31, image: locationSipaliwini, href: "/search?location=sipaliwini" },
+    { name: "Brokopondo", count: 25, image: locationBrokopondo, href: "/search?location=brokopondo" },
+    { name: "Atjoni", count: 15, image: locationAtjoni, href: "/search?location=atjoni" },
   ];
 
   const testimonials = [
