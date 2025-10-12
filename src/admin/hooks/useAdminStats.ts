@@ -6,6 +6,12 @@ interface AdminStats {
   totalRevenue: number;
   pendingApprovals: number;
   occupancyRate: number;
+  revenueToday: number;
+  revenueYesterday: number;
+  revenueTrend: number;
+  activeUsers: number;
+  averageRating: number;
+  refundRate: number;
 }
 
 export function useAdminStats() {
@@ -45,11 +51,72 @@ export function useAdminStats() {
         ? (confirmedBookings / (totalProperties * 30)) * 100 
         : 0;
 
+      // Get revenue today vs yesterday
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      const { data: todayRevenue } = await supabase
+        .from("bookings")
+        .select("total_price")
+        .eq("status", "completed")
+        .gte("created_at", today.toISOString())
+        .lt("created_at", tomorrow.toISOString());
+
+      const { data: yesterdayRevenue } = await supabase
+        .from("bookings")
+        .select("total_price")
+        .eq("status", "completed")
+        .gte("created_at", yesterday.toISOString())
+        .lt("created_at", today.toISOString());
+
+      const revenueToday = todayRevenue?.reduce((sum, b) => sum + Number(b.total_price), 0) || 0;
+      const revenueYesterday = yesterdayRevenue?.reduce((sum, b) => sum + Number(b.total_price), 0) || 0;
+      const revenueTrend = revenueYesterday > 0 ? ((revenueToday - revenueYesterday) / revenueYesterday) * 100 : 0;
+
+      // Get active users (users who updated profile in last 30 days)
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      const { count: activeUsers } = await supabase
+        .from("profiles")
+        .select("*", { count: "exact", head: true })
+        .gte("updated_at", thirtyDaysAgo.toISOString());
+
+      // Get average rating
+      const { data: reviews } = await supabase
+        .from("reviews")
+        .select("rating");
+
+      const averageRating = reviews && reviews.length > 0
+        ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+        : 0;
+
+      // Get refund rate
+      const { count: refundCount } = await supabase
+        .from("refunds")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "approved");
+
+      const refundRate = totalBookings && refundCount 
+        ? (refundCount / totalBookings) * 100 
+        : 0;
+
       return {
         totalBookings: totalBookings || 0,
         totalRevenue,
         pendingApprovals: pendingApprovals || 0,
         occupancyRate: Math.round(occupancyRate),
+        revenueToday,
+        revenueYesterday,
+        revenueTrend: Math.round(revenueTrend * 10) / 10,
+        activeUsers: activeUsers || 0,
+        averageRating: Math.round(averageRating * 10) / 10,
+        refundRate: Math.round(refundRate * 10) / 10,
       };
     },
   });
