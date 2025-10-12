@@ -55,9 +55,14 @@ export function Header() {
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-xl">P</span>
             </div>
-            <span className="font-display text-xl font-bold text-foreground">
-              PingPe
-            </span>
+            <div className="flex flex-col">
+              <span className="font-display text-xl font-bold text-foreground leading-none">
+                PingPe
+              </span>
+              <span className="text-[10px] text-muted-foreground leading-none">
+                Jungle Resort
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation - Center */}

@@ -50,60 +50,63 @@ const Index = () => {
     { title: "Wildlife Watching", count: 12, image: categoryWildlife, href: "/experiences?category=wildlife" },
   ];
 
+  // Real PingPe tours and experiences
   const demoListings = [
     {
       id: "1",
-      type: "stay" as const,
-      title: "Riverside Eco-Lodge",
-      subtitle: "Peaceful retreat on the Suriname River",
-      location: "Boven Suriname",
-      price: 85,
+      type: "experience" as const,
+      title: "Back to Basic Tour",
+      subtitle: "Authentic jungle experience on the Boven-Suriname River",
+      location: "Boven-Suriname River",
+      price: 285,
+      priceUnit: "person",
       images: ["/placeholder.svg"],
-      rating: 4.8,
-      reviewCount: 24,
-      badges: ["Eco-Friendly", "Featured"],
-      metadata: { guests: 4, bedrooms: 2 },
+      rating: 4.9,
+      reviewCount: 47,
+      badges: ["Popular", "Featured"],
+      metadata: { duration: "3 days", difficulty: "Easy" },
     },
     {
       id: "2",
       type: "experience" as const,
-      title: "Rainforest Hiking Adventure",
-      subtitle: "Guided trek through pristine jungle",
-      location: "Central Suriname",
-      price: 45,
+      title: "Extended Jungle Adventure",
+      subtitle: "Deep dive into Suriname's interior wilderness",
+      location: "Central Suriname Nature Reserve",
+      price: 520,
       priceUnit: "person",
       images: ["/placeholder.svg"],
-      rating: 4.9,
-      reviewCount: 18,
-      badges: ["Popular"],
-      metadata: { duration: "4 hours", difficulty: "Moderate" },
+      rating: 5.0,
+      reviewCount: 32,
+      badges: ["Top Rated", "Adventure"],
+      metadata: { duration: "6 days", difficulty: "Moderate" },
     },
     {
       id: "3",
-      type: "transport" as const,
-      title: "River Boat Transfer",
-      subtitle: "Scenic transport along the river",
-      location: "Paramaribo to Atjoni",
-      price: 120,
-      priceUnit: "trip",
+      type: "experience" as const,
+      title: "River Hopping Tour",
+      subtitle: "Multi-lodge experience along the Boven-Suriname",
+      location: "Boven-Suriname River",
+      price: 380,
+      priceUnit: "person",
       images: ["/placeholder.svg"],
-      rating: 4.7,
-      reviewCount: 31,
-      metadata: { capacity: 8, duration: "3 hours" },
+      rating: 4.8,
+      reviewCount: 28,
+      badges: ["Customizable"],
+      metadata: { duration: "4-5 days", difficulty: "Easy to Moderate" },
     },
     {
       id: "4",
       type: "experience" as const,
-      title: "Indigenous Village Tour",
-      subtitle: "Immerse in local culture and traditions",
-      location: "Boven Suriname",
-      price: 55,
+      title: "Day Experience at PingPe",
+      subtitle: "Quick authentic jungle experience",
+      location: "PingPe Resort",
+      price: 95,
       priceUnit: "person",
       images: ["/placeholder.svg"],
-      rating: 5.0,
-      reviewCount: 42,
-      badges: ["Top Rated"],
-      metadata: { duration: "5 hours", difficulty: "Easy" },
+      rating: 4.7,
+      reviewCount: 61,
+      badges: ["Day Trip"],
+      metadata: { duration: "1 day", difficulty: "Easy" },
     },
   ];
 
@@ -133,22 +136,22 @@ const Index = () => {
 
   const testimonials = [
     {
-      quote: "Great quality products! The team is very helpful and responsive. I really enjoyed my trip to Suriname thanks to PingPe.",
+      quote: "The Back to Basic tour exceeded all expectations. Our guide was incredibly knowledgeable about the jungle and Saramaccan culture. The authentic village visits and river life were unforgettable!",
       rating: 5,
       name: "Lennie Swiffan",
       location: "Netherlands",
     },
     {
-      quote: "The eco-lodge was absolutely amazing. Perfect balance of comfort and nature. Will definitely come back!",
+      quote: "PingPe Resort is a hidden gem! The traditional huts right on the river, amazing food, and the warmth of the local people made this the highlight of our Suriname trip. Highly recommend the Extended Adventure!",
+      rating: 5,
+      name: "Marco Barneveld",
+      location: "National Geographic Traveller",
+    },
+    {
+      quote: "As featured in National Geographic - this is authentic eco-tourism done right. The guides are from the local community, the resort is sustainably built, and the experience is genuinely immersive.",
       rating: 5,
       name: "Sarah Mitchell",
       location: "United Kingdom",
-    },
-    {
-      quote: "Unforgettable experience in the rainforest. Our guide was knowledgeable and the trip was well-organized.",
-      rating: 5,
-      name: "Marcus Johnson",
-      location: "United States",
     },
   ];
 
@@ -163,11 +166,11 @@ const Index = () => {
             {/* Left: Text + Search */}
             <div>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in">
-                Discover
-                <span className="text-primary block mt-2">Adventures</span>
+                Experience Authentic
+                <span className="text-primary block mt-2">Upper Suriname</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-8">
-                Explore pristine rainforests, connect with indigenous culture, and experience sustainable eco-tourism
+                Join Jungle Resort PingPe for fully guided tours to Suriname's interior. Immerse yourself in pristine rainforests and authentic Saramaccan culture on the Boven-Suriname River.
               </p>
 
               <HeroSearchBar />
@@ -344,10 +347,10 @@ const Index = () => {
             {/* Left: Text + Form */}
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                Join our newsletter 🎉
+                Get PingPe Updates 🌿
               </h2>
               <p className="text-muted-foreground mb-8">
-                Read and share new perspectives on just about any topic. Everyone's welcome.
+                Subscribe to receive special offers, new tour announcements, and insider tips for exploring Suriname's interior.
               </p>
 
               <form className="flex gap-2">
