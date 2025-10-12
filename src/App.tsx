@@ -25,10 +25,15 @@ import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./admin/layouts/AdminLayout";
 import Dashboard from "./admin/pages/Dashboard";
-import Inventory from "./admin/pages/Inventory";
-import Bookings from "./admin/pages/Bookings";
-import Users from "./admin/pages/Users";
-import Partners from "./admin/pages/Partners";
+import InventoryList from "@/admin/pages/inventory/InventoryList";
+import InventoryCreate from "@/admin/pages/inventory/InventoryCreate";
+import InventoryEdit from "@/admin/pages/inventory/InventoryEdit";
+import BookingsList from "@/admin/pages/bookings/BookingsList";
+import BookingDetail from "@/admin/pages/bookings/BookingDetail";
+import UsersList from "@/admin/pages/users/UsersList";
+import UserDetail from "@/admin/pages/users/UserDetail";
+import PartnersList from "@/admin/pages/partners/PartnersList";
+import PartnerDetail from "@/admin/pages/partners/PartnerDetail";
 import Reports from "./admin/pages/Reports";
 import Settings from "./admin/pages/Settings";
 
@@ -82,10 +87,15 @@ const App = () => (
             >
               <Route index element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="inventory" element={<Inventory />} />
-              <Route path="bookings" element={<Bookings />} />
-              <Route path="users" element={<Users />} />
-              <Route path="partners" element={<Partners />} />
+              <Route path="inventory" element={<InventoryList />} />
+              <Route path="inventory/create/:type" element={<InventoryCreate />} />
+              <Route path="inventory/edit/:type/:id" element={<InventoryEdit />} />
+              <Route path="bookings" element={<BookingsList />} />
+              <Route path="bookings/:id" element={<BookingDetail />} />
+              <Route path="users" element={<UsersList />} />
+              <Route path="users/:id" element={<UserDetail />} />
+              <Route path="partners" element={<PartnersList />} />
+              <Route path="partners/:id" element={<PartnerDetail />} />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<Settings />} />
             </Route>
