@@ -1,15 +1,22 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { PartnerForm } from "@/admin/components/forms/PartnerForm";
+import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft, Edit } from "lucide-react";
 import { format } from "date-fns";
 
 export default function PartnerDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   const { data: partner, isLoading } = useQuery({
     queryKey: ["partner", id],
@@ -36,6 +43,38 @@ export default function PartnerDetail() {
 
       if (error) throw error;
       return data;
+    },
+  });
+
+  const updatePartnerMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const { error } = await supabase.from("partners").update(data).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast({ title: "Partner updated successfully" });
+      queryClient.invalidateQueries({ queryKey: ["partner", id] });
+      setEditDialogOpen(false);
+    },
+    onError: (error: any) => {
+      toast({ title: "Failed to update partner", description: error.message, variant: "destructive" });
+    },
+  });
+
+  const markAsPaidMutation = useMutation({
+    mutationFn: async (bookingId: string) => {
+      const { error } = await supabase
+        .from("partner_bookings")
+        .update({ commission_paid: true, commission_paid_date: new Date().toISOString() })
+        .eq("booking_id", bookingId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast({ title: "Commission marked as paid" });
+      queryClient.invalidateQueries({ queryKey: ["partner", id] });
+    },
+    onError: (error: any) => {
+      toast({ title: "Failed to mark as paid", description: error.message, variant: "destructive" });
     },
   });
 
@@ -68,9 +107,15 @@ export default function PartnerDetail() {
           <h1 className="text-3xl font-bold tracking-tight">{partner.name}</h1>
           <p className="text-muted-foreground">Partner Details</p>
         </div>
-        <Badge className="ml-auto" variant={partner.is_active ? "default" : "secondary"}>
-          {partner.is_active ? "Active" : "Inactive"}
-        </Badge>
+        <div className="ml-auto flex items-center gap-3">
+          <Badge variant={partner.is_active ? "default" : "secondary"}>
+            {partner.is_active ? "Active" : "Inactive"}
+          </Badge>
+          <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
+            <Edit className="h-4 w-4 mr-2" />
+            Edit
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
@@ -144,17 +189,50 @@ export default function PartnerDetail() {
                     {format(new Date(pb.booking?.check_in), "MMM dd, yyyy")}
                   </p>
                 </div>
-                <div className="text-right">
-                  <p className="font-medium">${pb.commission_amount}</p>
-                  <Badge variant={pb.commission_paid ? "default" : "secondary"}>
-                    {pb.commission_paid ? "Paid" : "Unpaid"}
-                  </Badge>
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <p className="font-medium">${pb.commission_amount}</p>
+                    <Badge variant={pb.commission_paid ? "default" : "secondary"}>
+                      {pb.commission_paid ? "Paid" : "Unpaid"}
+                    </Badge>
+                  </div>
+                  {!pb.commission_paid && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => markAsPaidMutation.mutate(pb.booking.id)}
+                    >
+                      Mark Paid
+                    </Button>
+                  )}
                 </div>
               </div>
             )) || <p className="text-muted-foreground">No commission history</p>}
           </div>
         </CardContent>
       </Card>
+
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Edit Partner</DialogTitle>
+          </DialogHeader>
+          <PartnerForm
+            defaultValues={{
+              name: partner.name,
+              contact_name: partner.contact_name || "",
+              contact_email: partner.contact_email,
+              contact_phone: partner.contact_phone || "",
+              commission_rate: partner.commission_rate,
+              address: partner.address || "",
+              payment_terms: partner.payment_terms || "",
+            }}
+            onSubmit={(data) => updatePartnerMutation.mutate(data)}
+            isLoading={updatePartnerMutation.isPending}
+            submitText="Update Partner"
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

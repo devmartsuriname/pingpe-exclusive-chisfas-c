@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,12 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
 import { useBookings } from "@/admin/hooks/useBookings";
+import { RefundDialog } from "@/admin/components/dialogs/RefundDialog";
 import { format } from "date-fns";
 
 export default function BookingDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { updateStatus } = useBookings();
+  const { updateStatus, createRefund } = useBookings();
+  const [refundDialogOpen, setRefundDialogOpen] = useState(false);
 
   const { data: booking, isLoading } = useQuery({
     queryKey: ["booking", id],
@@ -149,15 +152,36 @@ export default function BookingDetail() {
             </Button>
           )}
           {(booking.status === "pending" || booking.status === "confirmed") && (
-            <Button
-              variant="destructive"
-              onClick={() => updateStatus({ id: booking.id, status: "cancelled" })}
-            >
-              Cancel Booking
-            </Button>
+            <>
+              <Button
+                variant="destructive"
+                onClick={() => updateStatus({ id: booking.id, status: "cancelled" })}
+              >
+                Cancel Booking
+              </Button>
+              <Button variant="outline" onClick={() => setRefundDialogOpen(true)}>
+                Process Refund
+              </Button>
+            </>
           )}
         </CardContent>
       </Card>
+
+      <RefundDialog
+        open={refundDialogOpen}
+        onOpenChange={setRefundDialogOpen}
+        maxAmount={Number(booking.total_price)}
+        onSubmit={(data) => {
+          createRefund({
+            booking_id: booking.id,
+            amount: data.amount,
+            reason: data.reason,
+            refund_method: data.refund_method,
+            notes: data.notes,
+          });
+          setRefundDialogOpen(false);
+        }}
+      />
     </div>
   );
 }

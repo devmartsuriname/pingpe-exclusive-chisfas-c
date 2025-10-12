@@ -1,11 +1,105 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { PropertyForm } from "@/admin/components/forms/PropertyForm";
+import { ExperienceForm } from "@/admin/components/forms/ExperienceForm";
+import { TransportForm } from "@/admin/components/forms/TransportForm";
 
 export default function InventoryEdit() {
   const { type, id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const getTableName = () => {
+    switch (type) {
+      case "stay": return "properties";
+      case "experience": return "experiences";
+      case "transport": return "transport";
+      default: return null;
+    }
+  };
+
+  const { data: item, isLoading } = useQuery({
+    queryKey: ["inventory-item", type, id],
+    queryFn: async () => {
+      const table = getTableName();
+      if (!table) throw new Error("Invalid type");
+
+      const { data, error } = await supabase
+        .from(table)
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const table = getTableName();
+      if (!table) throw new Error("Invalid type");
+
+      const { error } = await supabase
+        .from(table)
+        .update(data)
+        .eq("id", id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast({ title: `${type} updated successfully` });
+      navigate("/admin/inventory");
+      queryClient.invalidateQueries({ queryKey: ["admin-inventory"] });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Failed to update " + type,
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const renderForm = () => {
+    if (isLoading) return <p>Loading...</p>;
+    if (!item) return <p>Item not found</p>;
+
+    switch (type) {
+      case "stay":
+        return (
+          <PropertyForm
+            defaultValues={item}
+            onSubmit={(data) => updateMutation.mutate(data)}
+            isLoading={updateMutation.isPending}
+          />
+        );
+      case "experience":
+        return (
+          <ExperienceForm
+            defaultValues={item}
+            onSubmit={(data) => updateMutation.mutate(data)}
+            isLoading={updateMutation.isPending}
+          />
+        );
+      case "transport":
+        return (
+          <TransportForm
+            defaultValues={item}
+            onSubmit={(data) => updateMutation.mutate(data)}
+            isLoading={updateMutation.isPending}
+          />
+        );
+      default:
+        return <p className="text-muted-foreground">Form for {type} is not yet implemented.</p>;
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -23,11 +117,7 @@ export default function InventoryEdit() {
         <CardHeader>
           <CardTitle>Edit Form</CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Edit form for {type} (ID: {id}) will be added in the next iteration.
-          </p>
-        </CardContent>
+        <CardContent>{renderForm()}</CardContent>
       </Card>
     </div>
   );

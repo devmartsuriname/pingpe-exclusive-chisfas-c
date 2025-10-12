@@ -49,9 +49,37 @@ export function useBookings() {
     },
   });
 
+  const createRefund = useMutation({
+    mutationFn: async (refundData: {
+      booking_id: string;
+      amount: number;
+      reason: string;
+      refund_method: string;
+      notes?: string;
+    }) => {
+      const { error } = await supabase
+        .from("refunds")
+        .insert({
+          ...refundData,
+          requested_by: (await supabase.auth.getUser()).data.user?.id,
+          status: "approved",
+        });
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-bookings"] });
+      toast({ title: "Refund processed successfully" });
+    },
+    onError: () => {
+      toast({ title: "Failed to process refund", variant: "destructive" });
+    },
+  });
+
   return {
     bookings: bookings || [],
     isLoading,
     updateStatus: updateStatus.mutate,
+    createRefund: createRefund.mutate,
   };
 }

@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DataTable } from "@/admin/components/tables/DataTable";
 import { usePartners } from "@/admin/hooks/usePartners";
+import { PartnerForm } from "@/admin/components/forms/PartnerForm";
 import { Eye, Plus } from "lucide-react";
 import { format } from "date-fns";
 
 export default function PartnersList() {
-  const { partners, isLoading } = usePartners();
+  const { partners, isLoading, createPartner } = usePartners();
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   const columns = [
     { key: "name", label: "Partner Name" },
@@ -67,7 +71,7 @@ export default function PartnersList() {
           <h1 className="text-3xl font-bold tracking-tight">Partners Management</h1>
           <p className="text-muted-foreground">Manage partners and commissions</p>
         </div>
-        <Button>
+        <Button onClick={() => setCreateDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
           Add Partner
         </Button>
@@ -78,6 +82,21 @@ export default function PartnersList() {
         columns={columns}
         searchPlaceholder="Search partners..."
       />
+
+      <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Add New Partner</DialogTitle>
+          </DialogHeader>
+          <PartnerForm
+            onSubmit={(data) => {
+              createPartner(data);
+              setCreateDialogOpen(false);
+            }}
+            submitText="Create Partner"
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
