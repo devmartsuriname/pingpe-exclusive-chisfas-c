@@ -56,6 +56,7 @@ import HelpCenter from "./pages/HelpCenter";
 import Safety from "./pages/Safety";
 import Cancellation from "./pages/Cancellation";
 import Sitemap from "./pages/Sitemap";
+import SitemapXML from "./pages/SitemapXML";
 import BlogList from "./admin/pages/blog/BlogList";
 import BlogCreate from "./admin/pages/blog/BlogCreate";
 import BlogEdit from "./admin/pages/blog/BlogEdit";
@@ -111,10 +112,11 @@ const App = () => (
         <Route path="/press" element={<Press />} />
         <Route path="/help" element={<HelpCenter />} />
         <Route path="/safety" element={<Safety />} />
-        <Route path="/cancellation" element={<Cancellation />} />
-        <Route path="/sitemap" element={<Sitemap />} />
-            
-        {/* Legal Pages */}
+            <Route path="/cancellation" element={<Cancellation />} />
+            <Route path="/sitemap" element={<Sitemap />} />
+            <Route path="/sitemap.xml" element={<SitemapXML />} />
+                
+            {/* Legal Pages */}
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/cookies" element={<Cookies />} />

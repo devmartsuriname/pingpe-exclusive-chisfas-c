@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GeneralSettingsForm from "@/admin/components/settings/GeneralSettingsForm";
 import BookingSettingsForm from "@/admin/components/settings/BookingSettingsForm";
+import LogoUploadForm from "@/admin/components/settings/LogoUploadForm";
 
 export default function PlatformSettings() {
   return (
@@ -14,6 +15,7 @@ export default function PlatformSettings() {
       <Tabs defaultValue="general" className="w-full">
         <TabsList>
           <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="branding">Branding</TabsTrigger>
           <TabsTrigger value="bookings">Bookings</TabsTrigger>
         </TabsList>
 
@@ -27,6 +29,20 @@ export default function PlatformSettings() {
             </CardHeader>
             <CardContent>
               <GeneralSettingsForm />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="branding">
+          <Card>
+            <CardHeader>
+              <CardTitle>Branding & Logo</CardTitle>
+              <CardDescription>
+                Upload your platform logo and favicon
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <LogoUploadForm />
             </CardContent>
           </Card>
         </TabsContent>
