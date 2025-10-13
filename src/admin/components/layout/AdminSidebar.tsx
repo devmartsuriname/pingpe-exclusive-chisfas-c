@@ -8,7 +8,8 @@ import {
   BarChart3, 
   Settings,
   FileText,
-  Image
+  Image,
+  FileEdit
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +20,7 @@ const menuItems = [
   { path: "/admin/users", label: "Users", icon: Users },
   { path: "/admin/partners", label: "Partners", icon: Handshake },
   { path: "/admin/blog", label: "Blog", icon: FileText },
+  { path: "/admin/pages", label: "Pages", icon: FileEdit },
   { path: "/admin/media", label: "Media Library", icon: Image },
   { path: "/admin/reports", label: "Reports", icon: BarChart3 },
   { path: "/admin/settings", label: "Settings", icon: Settings },

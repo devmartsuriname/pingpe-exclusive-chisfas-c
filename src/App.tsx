@@ -59,7 +59,11 @@ import BlogList from "./admin/pages/blog/BlogList";
 import BlogCreate from "./admin/pages/blog/BlogCreate";
 import BlogEdit from "./admin/pages/blog/BlogEdit";
 import BlogSettings from "./admin/pages/blog/BlogSettings";
+import PagesList from "./admin/pages/pages/PagesList";
+import PageCreate from "./admin/pages/pages/PageCreate";
+import PageEdit from "./admin/pages/pages/PageEdit";
 import MediaLibrary from "./admin/pages/media/MediaLibrary";
+import DynamicPage from "./pages/DynamicPage";
 
 const queryClient = new QueryClient();
 
@@ -107,6 +111,9 @@ const App = () => (
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/cookies" element={<Cookies />} />
+        
+        {/* Dynamic Pages */}
+        <Route path="/p/:slug" element={<DynamicPage />} />
             
             {/* Auth Routes */}
             <Route path="/auth/sign-in" element={<SignIn />} />
@@ -148,6 +155,9 @@ const App = () => (
               <Route path="blog/create" element={<BlogCreate />} />
               <Route path="blog/edit/:id" element={<BlogEdit />} />
               <Route path="blog/settings" element={<BlogSettings />} />
+              <Route path="pages" element={<PagesList />} />
+              <Route path="pages/create" element={<PageCreate />} />
+              <Route path="pages/edit/:id" element={<PageEdit />} />
               <Route path="media" element={<MediaLibrary />} />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<Settings />} />
