@@ -1,4 +1,6 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
+import Navbar from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 export default function Cookies() {
   return (
@@ -8,6 +10,7 @@ export default function Cookies() {
         <meta name="description" content="Cookie usage policy and tracking information for Jungle Resort PingPe website." />
       </Helmet>
 
+      <Navbar />
       <main className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-16 max-w-4xl">
           <h1 className="text-4xl font-bold mb-8">Cookie Policy</h1>
@@ -149,6 +152,7 @@ export default function Cookies() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
