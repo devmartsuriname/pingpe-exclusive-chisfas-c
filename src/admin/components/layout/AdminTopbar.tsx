@@ -11,6 +11,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export default function AdminTopbar() {
   const { user, signOut } = useAuth();
@@ -28,6 +29,8 @@ export default function AdminTopbar() {
       </div>
 
       <div className="flex items-center gap-4">
+        <ThemeToggle />
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
