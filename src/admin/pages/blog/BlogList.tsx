@@ -36,8 +36,10 @@ export default function BlogList() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   
-  const { data: posts, isLoading } = useBlogPosts();
+  const { data, isLoading } = useBlogPosts();
   const deleteMutation = useDeleteBlogPost();
+
+  const posts = data?.posts;
 
   const filteredPosts = posts?.filter((post) => {
     const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase());

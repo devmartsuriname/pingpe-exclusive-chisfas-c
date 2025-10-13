@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useUpdateBlogPost, useBlogCategories } from "@/hooks/useBlog";
+import { useUpdateBlogPost, useBlogCategories, usePostTags, useAssignTag, useRemoveTag } from "@/hooks/useBlog";
 import { supabase } from "@/integrations/supabase/client";
+import { TagSelector } from "@/components/blog/TagSelector";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +24,9 @@ export default function BlogEdit() {
   const navigate = useNavigate();
   const updateMutation = useUpdateBlogPost();
   const { data: categories } = useBlogCategories();
+  const { data: postTags } = usePostTags(id!);
+  const assignTag = useAssignTag();
+  const removeTag = useRemoveTag();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -38,6 +42,7 @@ export default function BlogEdit() {
       keywords: "",
     },
   });
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -79,15 +84,46 @@ export default function BlogEdit() {
     fetchPost();
   }, [id]);
 
+  useEffect(() => {
+    if (postTags) {
+      const tagIds = postTags
+        .map((pt: any) => pt.blog_tags?.id)
+        .filter((id): id is string => !!id);
+      setSelectedTags(tagIds);
+    }
+  }, [postTags]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await updateMutation.mutateAsync({ id: id!, ...formData });
+    await syncTags();
     navigate("/admin/blog");
   };
 
   const handlePublish = async () => {
     await updateMutation.mutateAsync({ id: id!, ...formData, status: "published" });
+    await syncTags();
     navigate("/admin/blog");
+  };
+
+  const syncTags = async () => {
+    if (!id) return;
+
+    const currentTagIds = postTags?.map((pt: any) => pt.blog_tags?.id).filter(Boolean) || [];
+    
+    // Remove unselected tags
+    for (const tagId of currentTagIds) {
+      if (!selectedTags.includes(tagId)) {
+        await removeTag.mutateAsync({ postId: id, tagId });
+      }
+    }
+    
+    // Add newly selected tags
+    for (const tagId of selectedTags) {
+      if (!currentTagIds.includes(tagId)) {
+        await assignTag.mutateAsync({ postId: id, tagId });
+      }
+    }
   };
 
   if (loading) {
@@ -191,6 +227,11 @@ export default function BlogEdit() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div>
+                <Label>Tags</Label>
+                <TagSelector selectedTags={selectedTags} onTagsChange={setSelectedTags} />
               </div>
 
               <div>

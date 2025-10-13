@@ -38,22 +38,26 @@ export interface BlogTag {
   slug: string;
 }
 
-export const useBlogPosts = (status?: "draft" | "published") => {
+export const useBlogPosts = (status?: "draft" | "published", page = 1, limit = 12) => {
   return useQuery({
-    queryKey: ["blog-posts", status],
+    queryKey: ["blog-posts", status, page, limit],
     queryFn: async () => {
+      const from = (page - 1) * limit;
+      const to = from + limit - 1;
+
       let query = supabase
         .from("blog_posts")
-        .select("*, blog_categories(name)")
-        .order("created_at", { ascending: false });
+        .select("*, blog_categories(name)", { count: "exact" })
+        .order("created_at", { ascending: false })
+        .range(from, to);
 
       if (status) {
         query = query.eq("status", status);
       }
 
-      const { data, error } = await query;
+      const { data, error, count } = await query;
       if (error) throw error;
-      return data as BlogPost[];
+      return { posts: data as BlogPost[], total: count || 0 };
     },
   });
 };
@@ -245,5 +249,80 @@ export const useCreateTag = () => {
       queryClient.invalidateQueries({ queryKey: ["blog-tags"] });
       toast({ title: "Tag created successfully" });
     },
+  });
+};
+
+export const usePostTags = (postId: string) => {
+  return useQuery({
+    queryKey: ["post-tags", postId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("blog_post_tags")
+        .select("tag_id, blog_tags(id, name, slug)")
+        .eq("post_id", postId);
+
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!postId,
+  });
+};
+
+export const useAssignTag = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ postId, tagId }: { postId: string; tagId: string }) => {
+      const { error } = await supabase
+        .from("blog_post_tags")
+        .insert({ post_id: postId, tag_id: tagId });
+
+      if (error) throw error;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["post-tags", variables.postId] });
+    },
+  });
+};
+
+export const useRemoveTag = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ postId, tagId }: { postId: string; tagId: string }) => {
+      const { error } = await supabase
+        .from("blog_post_tags")
+        .delete()
+        .eq("post_id", postId)
+        .eq("tag_id", tagId);
+
+      if (error) throw error;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["post-tags", variables.postId] });
+    },
+  });
+};
+
+export const useRelatedPosts = (postId: string, categoryId?: string, limit = 3) => {
+  return useQuery({
+    queryKey: ["related-posts", postId, categoryId],
+    queryFn: async () => {
+      let query = supabase
+        .from("blog_posts")
+        .select("*, blog_categories(name)")
+        .eq("status", "published")
+        .neq("id", postId)
+        .limit(limit);
+
+      if (categoryId) {
+        query = query.eq("category_id", categoryId);
+      }
+
+      const { data, error } = await query;
+      if (error) throw error;
+      return data as BlogPost[];
+    },
+    enabled: !!postId,
   });
 };

@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -18,8 +19,11 @@ import { format } from "date-fns";
 export default function Blog() {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const { data: posts, isLoading } = useBlogPosts("published");
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useBlogPosts("published", page, 12);
   const { data: categories } = useBlogCategories();
+
+  const posts = data?.posts;
 
   const filteredPosts = posts?.filter((post) => {
     const matchesSearch =
@@ -129,6 +133,29 @@ export default function Blog() {
             ) : (
               <div className="text-center py-12">
                 <p className="text-muted-foreground text-lg">No articles found</p>
+              </div>
+            )}
+
+            {/* Pagination */}
+            {data && data.total > 12 && (
+              <div className="flex justify-center gap-2 mt-12">
+                <Button
+                  variant="outline"
+                  onClick={() => setPage(page - 1)}
+                  disabled={page === 1}
+                >
+                  Previous
+                </Button>
+                <span className="flex items-center px-4 text-sm text-muted-foreground">
+                  Page {page} of {Math.ceil(data.total / 12)}
+                </span>
+                <Button
+                  variant="outline"
+                  onClick={() => setPage(page + 1)}
+                  disabled={page >= Math.ceil(data.total / 12)}
+                >
+                  Next
+                </Button>
               </div>
             )}
           </div>

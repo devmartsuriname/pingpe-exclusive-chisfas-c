@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreateBlogPost, useBlogCategories } from "@/hooks/useBlog";
+import { useCreateBlogPost, useBlogCategories, useAssignTag } from "@/hooks/useBlog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { TagSelector } from "@/components/blog/TagSelector";
 import {
   Select,
   SelectContent,
@@ -22,6 +23,7 @@ import slugify from "slugify";
 export default function BlogCreate() {
   const navigate = useNavigate();
   const createMutation = useCreateBlogPost();
+  const assignTag = useAssignTag();
   const { data: categories } = useBlogCategories();
 
   const [formData, setFormData] = useState({
@@ -38,6 +40,7 @@ export default function BlogCreate() {
       keywords: "",
     },
   });
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const handleTitleChange = (title: string) => {
     setFormData({
@@ -49,12 +52,24 @@ export default function BlogCreate() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createMutation.mutateAsync(formData);
+    const post = await createMutation.mutateAsync(formData);
+    
+    // Assign tags
+    for (const tagId of selectedTags) {
+      await assignTag.mutateAsync({ postId: post.id, tagId });
+    }
+    
     navigate("/admin/blog");
   };
 
   const handlePublish = async () => {
-    await createMutation.mutateAsync({ ...formData, status: "published" });
+    const post = await createMutation.mutateAsync({ ...formData, status: "published" });
+    
+    // Assign tags
+    for (const tagId of selectedTags) {
+      await assignTag.mutateAsync({ postId: post.id, tagId });
+    }
+    
     navigate("/admin/blog");
   };
 
@@ -155,6 +170,11 @@ export default function BlogCreate() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div>
+                <Label>Tags</Label>
+                <TagSelector selectedTags={selectedTags} onTagsChange={setSelectedTags} />
               </div>
 
               <div>
