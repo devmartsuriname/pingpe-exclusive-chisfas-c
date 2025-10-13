@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FileText, Download, Mail } from "lucide-react";
@@ -25,13 +25,11 @@ export default function Press() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Press & Media | PingPe - News & Resources</title>
-        <meta
-          name="description"
-          content="Access PingPe press releases, media kit, and contact information for media inquiries."
-        />
-      </Helmet>
+      <SEO
+        title="Press & Media | PingPe - News & Resources"
+        description="Access PingPe press releases, media kit, and contact information for media inquiries."
+        url="https://www.jungleresortpingpe.com/press"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

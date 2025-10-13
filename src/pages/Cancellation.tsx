@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { XCircle, CheckCircle, AlertCircle, Clock } from "lucide-react";
@@ -33,13 +33,11 @@ export default function Cancellation() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Cancellation Policy | PingPe - Refund Information</title>
-        <meta
-          name="description"
-          content="Understand PingPe's cancellation policies and refund procedures. Learn about different cancellation options for bookings."
-        />
-      </Helmet>
+      <SEO
+        title="Cancellation Policy | PingPe - Refund Information"
+        description="Understand PingPe's cancellation policies and refund procedures. Learn about different cancellation options for bookings."
+        url="https://www.jungleresortpingpe.com/cancellation"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

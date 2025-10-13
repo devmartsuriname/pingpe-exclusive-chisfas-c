@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useBlogPost } from "@/hooks/useBlog";
-import Navbar from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
@@ -13,21 +13,21 @@ export default function BlogPost() {
 
   if (isLoading) {
     return (
-      <>
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
-        </div>
+        </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
   if (!post) {
     return (
-      <>
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
             <Link to="/blog">
@@ -37,9 +37,9 @@ export default function BlogPost() {
               </Button>
             </Link>
           </div>
-        </div>
+        </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
@@ -47,18 +47,18 @@ export default function BlogPost() {
   const seoDescription = post.seo_meta?.description || post.excerpt || "";
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <SEO
         title={`${seoTitle} - PingPe Blog`}
         description={seoDescription}
         image={post.featured_image}
       />
-      <Navbar />
+      <Header />
 
-      <article className="min-h-screen">
+      <article className="flex-1">
         {/* Hero */}
         {post.featured_image && (
-          <div className="relative h-[500px] w-full">
+          <div className="relative h-[500px] w-full mt-20">
             <img
               src={post.featured_image}
               alt={post.title}
@@ -117,6 +117,6 @@ export default function BlogPost() {
         </div>
       </article>
       <Footer />
-    </>
+    </div>
   );
 }

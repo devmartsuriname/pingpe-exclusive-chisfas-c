@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Users, Target, Heart, Award } from "lucide-react";
@@ -6,13 +6,11 @@ import { Users, Target, Heart, Award } from "lucide-react";
 export default function About() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>About Us | PingPe - Your Travel Companion</title>
-        <meta
-          name="description"
-          content="Learn about PingPe's mission to revolutionize travel experiences. Discover our story, values, and commitment to creating unforgettable adventures."
-        />
-      </Helmet>
+      <SEO
+        title="About Us | PingPe - Your Travel Companion"
+        description="Learn about PingPe's mission to revolutionize travel experiences. Discover our story, values, and commitment to creating unforgettable adventures."
+        url="https://www.jungleresortpingpe.com/about"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

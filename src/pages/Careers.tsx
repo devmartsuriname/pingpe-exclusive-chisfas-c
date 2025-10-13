@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Briefcase, Heart, TrendingUp, Users } from "lucide-react";
@@ -57,13 +57,11 @@ export default function Careers() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Careers | PingPe - Join Our Team</title>
-        <meta
-          name="description"
-          content="Join the PingPe team and help us revolutionize travel. Explore open positions and learn about our company culture."
-        />
-      </Helmet>
+      <SEO
+        title="Careers | PingPe - Join Our Team"
+        description="Join the PingPe team and help us revolutionize travel. Explore open positions and learn about our company culture."
+        url="https://www.jungleresortpingpe.com/careers"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

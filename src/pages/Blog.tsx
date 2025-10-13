@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useBlogPosts, useBlogCategories } from "@/hooks/useBlog";
-import Navbar from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { Input } from "@/components/ui/input";
@@ -31,16 +31,16 @@ export default function Blog() {
   });
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <SEO
         title="Blog - PingPe Resort"
         description="Discover travel tips, local insights, and stories from the heart of Suriname's rainforest"
       />
-      <Navbar />
+      <Header />
 
-      <div className="min-h-screen">
+      <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative h-[400px] flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
+        <section className="relative pt-28 pb-16 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-4">Blog & Stories</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -133,8 +133,8 @@ export default function Blog() {
             )}
           </div>
         </section>
-      </div>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }

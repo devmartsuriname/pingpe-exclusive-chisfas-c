@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Gift, Heart, Sparkles, Calendar } from "lucide-react";
@@ -9,13 +9,11 @@ export default function GiftCards() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Gift Cards | PingPe - Give the Gift of Travel</title>
-        <meta
-          name="description"
-          content="Give the gift of unforgettable travel experiences with PingPe gift cards. Perfect for any occasion, redeemable on stays, experiences, and more."
-        />
-      </Helmet>
+      <SEO
+        title="Gift Cards | PingPe - Give the Gift of Travel"
+        description="Give the gift of unforgettable travel experiences with PingPe gift cards. Perfect for any occasion, redeemable on stays, experiences, and more."
+        url="https://www.jungleresortpingpe.com/gifts"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

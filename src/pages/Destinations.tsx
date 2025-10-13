@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MapPin, Star } from "lucide-react";
@@ -37,13 +37,11 @@ export default function Destinations() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Destinations | PingPe - Explore Amazing Places</title>
-        <meta
-          name="description"
-          content="Discover amazing destinations on PingPe. Explore cities, towns, and hidden gems with curated stays and experiences."
-        />
-      </Helmet>
+      <SEO
+        title="Destinations | PingPe - Explore Amazing Places"
+        description="Discover amazing destinations on PingPe. Explore cities, towns, and hidden gems with curated stays and experiences."
+        url="https://www.jungleresortpingpe.com/destinations"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

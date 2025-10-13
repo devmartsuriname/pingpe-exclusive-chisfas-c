@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Search, BookOpen, CreditCard, MapPin, Users, MessageCircle } from "lucide-react";
@@ -44,13 +44,11 @@ export default function HelpCenter() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Help Center | PingPe - Support & Resources</title>
-        <meta
-          name="description"
-          content="Get help and find answers to your questions. Browse articles, guides, and resources for travelers and hosts."
-        />
-      </Helmet>
+      <SEO
+        title="Help Center | PingPe - Support & Resources"
+        description="Get help and find answers to your questions. Browse articles, guides, and resources for travelers and hosts."
+        url="https://www.jungleresortpingpe.com/help"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section with Search */}

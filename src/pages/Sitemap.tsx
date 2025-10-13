@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Link } from "react-router-dom";
@@ -64,13 +64,11 @@ export default function Sitemap() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Sitemap | PingPe - Site Navigation</title>
-        <meta
-          name="description"
-          content="Browse all pages on PingPe. Find links to stays, experiences, support, company information, and more."
-        />
-      </Helmet>
+      <SEO
+        title="Sitemap | PingPe - Site Navigation"
+        description="Browse all pages on PingPe. Find links to stays, experiences, support, company information, and more."
+        url="https://www.jungleresortpingpe.com/sitemap"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

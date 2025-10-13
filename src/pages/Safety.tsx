@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Shield, CheckCircle, AlertTriangle, Phone } from "lucide-react";
@@ -6,13 +6,11 @@ import { Shield, CheckCircle, AlertTriangle, Phone } from "lucide-react";
 export default function Safety() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Safety Guidelines | PingPe - Travel Safely</title>
-        <meta
-          name="description"
-          content="Learn about PingPe's safety measures, guidelines, and resources to ensure safe travel experiences for all users."
-        />
-      </Helmet>
+      <SEO
+        title="Safety Guidelines | PingPe - Travel Safely"
+        description="Learn about PingPe's safety measures, guidelines, and resources to ensure safe travel experiences for all users."
+        url="https://www.jungleresortpingpe.com/safety"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

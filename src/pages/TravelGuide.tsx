@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Book, Compass, Heart, Shield, Sun, Utensils } from "lucide-react";
@@ -39,13 +39,11 @@ export default function TravelGuide() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Travel Guide | PingPe - Tips & Advice</title>
-        <meta
-          name="description"
-          content="Get expert travel advice and tips from PingPe. Learn about destinations, safety, culture, and more to make your trip unforgettable."
-        />
-      </Helmet>
+      <SEO
+        title="Travel Guide | PingPe - Tips & Advice"
+        description="Get expert travel advice and tips from PingPe. Learn about destinations, safety, culture, and more to make your trip unforgettable."
+        url="https://www.jungleresortpingpe.com/guide"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

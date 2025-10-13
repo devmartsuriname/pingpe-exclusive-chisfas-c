@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import {
@@ -124,13 +124,11 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>FAQ | PingPe - Frequently Asked Questions</title>
-        <meta
-          name="description"
-          content="Find answers to common questions about PingPe. Learn about bookings, payments, hosting, experiences, and more in our comprehensive FAQ."
-        />
-      </Helmet>
+      <SEO
+        title="FAQ | PingPe - Frequently Asked Questions"
+        description="Find answers to common questions about PingPe. Learn about bookings, payments, hosting, experiences, and more in our comprehensive FAQ."
+        url="https://www.jungleresortpingpe.com/faq"
+      />
       <Header />
       <main className="flex-1">
         <section className="relative pt-28 pb-16 bg-gradient-to-b from-primary/10 to-background">

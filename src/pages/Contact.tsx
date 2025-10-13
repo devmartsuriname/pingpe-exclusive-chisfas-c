@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
@@ -31,13 +31,11 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Contact Us | PingPe - Get in Touch</title>
-        <meta
-          name="description"
-          content="Have questions? Contact PingPe's support team. We're here to help with bookings, partnerships, and any inquiries about our travel platform."
-        />
-      </Helmet>
+      <SEO
+        title="Contact Us | PingPe - Get in Touch"
+        description="Have questions? Contact PingPe's support team. We're here to help with bookings, partnerships, and any inquiries about our travel platform."
+        url="https://www.jungleresortpingpe.com/contact"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}

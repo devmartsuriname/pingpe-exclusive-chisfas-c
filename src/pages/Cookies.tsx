@@ -1,14 +1,15 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 export default function Cookies() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Cookie Policy | PingPe</title>
-        <meta name="description" content="Cookie usage policy and tracking information for PingPe website." />
-      </Helmet>
+      <SEO
+        title="Cookie Policy | PingPe"
+        description="Cookie usage policy and tracking information for PingPe website."
+        url="https://www.jungleresortpingpe.com/cookies"
+      />
 
       <Header />
       <main className="flex-1">

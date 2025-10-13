@@ -1,14 +1,15 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 export default function Terms() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Terms & Conditions | PingPe</title>
-        <meta name="description" content="Read PingPe's terms and conditions. Understand your rights and responsibilities when using our travel booking platform." />
-      </Helmet>
+      <SEO
+        title="Terms & Conditions | PingPe"
+        description="Read PingPe's terms and conditions. Understand your rights and responsibilities when using our travel booking platform."
+        url="https://www.jungleresortpingpe.com/terms"
+      />
       <Header />
       <main className="flex-1">
         <div className="container mx-auto px-4 pt-28 pb-16">

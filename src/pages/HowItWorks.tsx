@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Search, Calendar, MessageSquare, CheckCircle, Home, Compass, Truck, Gift } from "lucide-react";
@@ -6,13 +6,11 @@ import { Search, Calendar, MessageSquare, CheckCircle, Home, Compass, Truck, Gif
 export default function HowItWorks() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>How It Works | PingPe - Simple Travel Booking</title>
-        <meta
-          name="description"
-          content="Learn how PingPe works. Discover our simple 4-step process for booking stays, experiences, events, and transportation for your perfect trip."
-        />
-      </Helmet>
+      <SEO
+        title="How It Works | PingPe - Simple Travel Booking"
+        description="Learn how PingPe works. Discover our simple 4-step process for booking stays, experiences, events, and transportation for your perfect trip."
+        url="https://www.jungleresortpingpe.com/how-it-works"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
