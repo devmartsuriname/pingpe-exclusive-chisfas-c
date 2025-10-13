@@ -1,5 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
+
+type Package = Database["public"]["Tables"]["packages"]["Row"];
+type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+
+export type PackageWithDetails = Package & {
+  profiles: Profile | null;
+};
 
 interface PackageFilters {
   minPrice?: number;
@@ -47,7 +55,7 @@ export const usePackages = (filters: PackageFilters = {}) => {
 };
 
 export const usePackageDetail = (id: string) => {
-  return useQuery({
+  return useQuery<PackageWithDetails>({
     queryKey: ["package", id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -66,7 +74,7 @@ export const usePackageDetail = (id: string) => {
         .single();
 
       if (error) throw error;
-      return data;
+      return data as unknown as PackageWithDetails;
     },
     enabled: !!id,
   });

@@ -122,12 +122,12 @@ export default function StayDetail() {
               <Separator />
 
               {/* Amenities */}
-              {(property as any).property_amenities && (property as any).property_amenities.length > 0 && (
+              {property.property_amenities && property.property_amenities.length > 0 && (
                 <>
                   <div>
                     <h2 className="text-2xl font-bold mb-4">Amenities</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {(property as any).property_amenities.map((item: any) => (
+                      {property.property_amenities.map((item) => (
                         <div key={item.amenities.id} className="flex items-center gap-3">
                           <div className="w-6 h-6 text-muted-foreground">
                             {item.amenities.icon && <span>{item.amenities.icon}</span>}
@@ -144,11 +144,11 @@ export default function StayDetail() {
               {/* Reviews */}
               <div>
                 <h2 className="text-2xl font-bold mb-4">
-                  Reviews {(property as any).reviews?.length > 0 && `(${(property as any).reviews.length})`}
+                  Reviews {property.reviews?.length > 0 && `(${property.reviews.length})`}
                 </h2>
-                {(property as any).reviews && (property as any).reviews.length > 0 ? (
+                {property.reviews && property.reviews.length > 0 ? (
                   <div className="space-y-6">
-                    {(property as any).reviews.slice(0, 5).map((review: any) => (
+                    {property.reviews.slice(0, 5).map((review) => (
                       <div key={review.id} className="border-b border-border pb-6 last:border-0">
                         <div className="flex items-start gap-4">
                           <div className="flex-1">
@@ -186,10 +186,10 @@ export default function StayDetail() {
               />
             <HostProfileCard
               hostId={property.host_id}
-              hostName={(property as any).profiles?.full_name || "Host"}
-              hostAvatar={(property as any).profiles?.avatar_url}
-              hostBio={(property as any).profiles?.bio}
-              joinedDate={(property as any).profiles?.created_at || property.created_at}
+              hostName={property.profiles?.full_name || "Host"}
+              hostAvatar={property.profiles?.avatar_url}
+              hostBio={property.profiles?.bio}
+              joinedDate={property.profiles?.created_at || property.created_at}
             />
             </div>
           </div>

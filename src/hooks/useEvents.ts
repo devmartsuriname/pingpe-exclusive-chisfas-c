@@ -1,5 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
+
+type Event = Database["public"]["Tables"]["events"]["Row"];
+type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+
+export type EventWithDetails = Event & {
+  profiles: Profile | null;
+};
 
 interface EventFilters {
   minPrice?: number;
@@ -47,7 +55,7 @@ export const useEvents = (filters: EventFilters = {}) => {
 };
 
 export const useEventDetail = (id: string) => {
-  return useQuery({
+  return useQuery<EventWithDetails>({
     queryKey: ["event", id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -66,7 +74,7 @@ export const useEventDetail = (id: string) => {
         .single();
 
       if (error) throw error;
-      return data;
+      return data as unknown as EventWithDetails;
     },
     enabled: !!id,
   });

@@ -145,10 +145,10 @@ export default function ExperienceDetail() {
               />
             <HostProfileCard
               hostId={experience.host_id}
-              hostName={(experience as any).profiles?.full_name || "Host"}
-              hostAvatar={(experience as any).profiles?.avatar_url}
-              hostBio={(experience as any).profiles?.bio}
-              joinedDate={(experience as any).profiles?.created_at || experience.created_at}
+              hostName={experience.profiles?.full_name || "Host"}
+              hostAvatar={experience.profiles?.avatar_url}
+              hostBio={experience.profiles?.bio}
+              joinedDate={experience.profiles?.created_at || experience.created_at}
             />
             </div>
           </div>

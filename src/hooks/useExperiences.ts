@@ -1,5 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
+
+type Experience = Database["public"]["Tables"]["experiences"]["Row"];
+type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+
+export type ExperienceWithDetails = Experience & {
+  profiles: Profile | null;
+};
 
 interface ExperienceFilters {
   minPrice?: number;
@@ -49,7 +57,7 @@ export const useExperiences = (filters: ExperienceFilters = {}) => {
 };
 
 export const useExperienceDetail = (id: string) => {
-  return useQuery({
+  return useQuery<ExperienceWithDetails>({
     queryKey: ["experience", id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -68,7 +76,7 @@ export const useExperienceDetail = (id: string) => {
         .single();
 
       if (error) throw error;
-      return data;
+      return data as unknown as ExperienceWithDetails;
     },
     enabled: !!id,
   });

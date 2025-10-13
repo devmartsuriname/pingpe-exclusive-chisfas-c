@@ -1,5 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
+
+type Property = Database["public"]["Tables"]["properties"]["Row"];
+type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+type Amenity = Database["public"]["Tables"]["amenities"]["Row"];
+type Review = Database["public"]["Tables"]["reviews"]["Row"];
+
+export type PropertyWithDetails = Property & {
+  profiles: Profile | null;
+  property_amenities: Array<{
+    amenities: Amenity;
+  }>;
+  reviews: Array<Review & {
+    profiles: Profile | null;
+  }>;
+};
 
 interface PropertyFilters {
   minPrice?: number;
@@ -58,7 +74,7 @@ export const useProperties = (filters: PropertyFilters = {}) => {
 };
 
 export const usePropertyDetail = (id: string) => {
-  return useQuery({
+  return useQuery<PropertyWithDetails>({
     queryKey: ["property", id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -96,7 +112,7 @@ export const usePropertyDetail = (id: string) => {
         .single();
 
       if (error) throw error;
-      return data;
+      return data as unknown as PropertyWithDetails;
     },
     enabled: !!id,
   });
