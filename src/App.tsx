@@ -42,6 +42,10 @@ import Reports from "./admin/pages/Reports";
 import Settings from "./admin/pages/Settings";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
+import HowItWorks from "./pages/HowItWorks";
 import BlogList from "./admin/pages/blog/BlogList";
 import BlogCreate from "./admin/pages/blog/BlogCreate";
 import BlogEdit from "./admin/pages/blog/BlogEdit";
@@ -72,8 +76,16 @@ const App = () => (
             <Route path="/events/:id" element={<EventDetail />} />
             
             {/* Blog Pages */}
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        
+        {/* Static Pages */}
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
             
             {/* Legal Pages */}
             <Route path="/terms" element={<Terms />} />
