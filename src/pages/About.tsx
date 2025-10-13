@@ -1,11 +1,11 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Users, Target, Heart, Award } from "lucide-react";
 
 export default function About() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>About Us | PingPe - Your Travel Companion</title>
         <meta
@@ -13,13 +13,13 @@ export default function About() {
           content="Learn about PingPe's mission to revolutionize travel experiences. Discover our story, values, and commitment to creating unforgettable adventures."
         />
       </Helmet>
-      <Navbar />
-      <main className="min-h-screen bg-background">
+      <Header />
+      <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-b from-primary/10 to-background">
+        <section className="relative pt-28 pb-16 bg-gradient-to-b from-primary/10 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
                 About PingPe
               </h1>
               <p className="text-xl text-muted-foreground">
@@ -33,7 +33,7 @@ export default function About() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
+              <h2 className="font-display text-3xl font-bold text-foreground mb-6">Our Story</h2>
               <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
                 <p>
                   PingPe was born from a simple idea: travel should be more than just visiting places—it should be about creating meaningful connections and unforgettable experiences.
@@ -52,7 +52,7 @@ export default function About() {
         {/* Values Section */}
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+            <h2 className="font-display text-3xl font-bold text-center text-foreground mb-12">
               Our Values
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
@@ -100,7 +100,7 @@ export default function About() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-bold text-foreground mb-6">Our Team</h2>
+              <h2 className="font-display text-3xl font-bold text-foreground mb-6">Our Team</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 We're a passionate team of travelers, technologists, and hospitality experts dedicated to transforming how people explore the world.
               </p>
@@ -112,6 +112,6 @@ export default function About() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

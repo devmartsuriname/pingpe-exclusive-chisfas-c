@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import {
   Accordion,
@@ -123,7 +123,7 @@ export default function FAQ() {
   ];
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>FAQ | PingPe - Frequently Asked Questions</title>
         <meta
@@ -131,12 +131,12 @@ export default function FAQ() {
           content="Find answers to common questions about PingPe. Learn about bookings, payments, hosting, experiences, and more in our comprehensive FAQ."
         />
       </Helmet>
-      <Navbar />
-      <main className="min-h-screen bg-background">
-        <section className="relative py-20 bg-gradient-to-b from-primary/10 to-background">
+      <Header />
+      <main className="flex-1">
+        <section className="relative pt-28 pb-16 bg-gradient-to-b from-primary/10 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
                 Frequently Asked Questions
               </h1>
               <p className="text-xl text-muted-foreground">
@@ -188,6 +188,6 @@ export default function FAQ() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

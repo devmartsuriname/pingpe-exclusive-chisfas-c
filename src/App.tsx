@@ -46,6 +46,15 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import HowItWorks from "./pages/HowItWorks";
+import Destinations from "./pages/Destinations";
+import TravelGuide from "./pages/TravelGuide";
+import GiftCards from "./pages/GiftCards";
+import Careers from "./pages/Careers";
+import Press from "./pages/Press";
+import HelpCenter from "./pages/HelpCenter";
+import Safety from "./pages/Safety";
+import Cancellation from "./pages/Cancellation";
+import Sitemap from "./pages/Sitemap";
 import BlogList from "./admin/pages/blog/BlogList";
 import BlogCreate from "./admin/pages/blog/BlogCreate";
 import BlogEdit from "./admin/pages/blog/BlogEdit";
@@ -82,15 +91,22 @@ const App = () => (
         {/* Static Pages */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/destinations" element={<Destinations />} />
+        <Route path="/guide" element={<TravelGuide />} />
+        <Route path="/gifts" element={<GiftCards />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/press" element={<Press />} />
+        <Route path="/help" element={<HelpCenter />} />
+        <Route path="/safety" element={<Safety />} />
+        <Route path="/cancellation" element={<Cancellation />} />
+        <Route path="/sitemap" element={<Sitemap />} />
             
-            {/* Legal Pages */}
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/cookies" element={<Cookies />} />
+        {/* Legal Pages */}
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/cookies" element={<Cookies />} />
             
             {/* Auth Routes */}
             <Route path="/auth/sign-in" element={<SignIn />} />

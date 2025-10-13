@@ -1,19 +1,19 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 export default function Cookies() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>Cookie Policy - Jungle Resort PingPe</title>
-        <meta name="description" content="Cookie usage policy and tracking information for Jungle Resort PingPe website." />
+        <title>Cookie Policy | PingPe</title>
+        <meta name="description" content="Cookie usage policy and tracking information for PingPe website." />
       </Helmet>
 
-      <Navbar />
-      <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-16 max-w-4xl">
-          <h1 className="text-4xl font-bold mb-8">Cookie Policy</h1>
+      <Header />
+      <main className="flex-1">
+        <div className="container mx-auto px-4 pt-28 pb-16 max-w-4xl">
+          <h1 className="font-display text-4xl font-bold mb-8">Cookie Policy</h1>
           
           <div className="prose prose-lg dark:prose-invert max-w-none">
             <p className="text-muted-foreground mb-6">Last updated: {new Date().toLocaleDateString()}</p>
@@ -153,6 +153,6 @@ export default function Cookies() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

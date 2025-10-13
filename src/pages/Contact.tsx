@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -30,7 +30,7 @@ export default function Contact() {
   };
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>Contact Us | PingPe - Get in Touch</title>
         <meta
@@ -38,13 +38,13 @@ export default function Contact() {
           content="Have questions? Contact PingPe's support team. We're here to help with bookings, partnerships, and any inquiries about our travel platform."
         />
       </Helmet>
-      <Navbar />
-      <main className="min-h-screen bg-background">
+      <Header />
+      <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-b from-primary/10 to-background">
+        <section className="relative pt-28 pb-16 bg-gradient-to-b from-primary/10 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
                 Get in Touch
               </h1>
               <p className="text-xl text-muted-foreground">
@@ -151,6 +151,6 @@ export default function Contact() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

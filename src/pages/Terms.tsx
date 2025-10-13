@@ -1,19 +1,19 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 export default function Terms() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>Terms & Conditions | PingPe</title>
         <meta name="description" content="Read PingPe's terms and conditions. Understand your rights and responsibilities when using our travel booking platform." />
       </Helmet>
-      <Navbar />
-      <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-16">
+      <Header />
+      <main className="flex-1">
+        <div className="container mx-auto px-4 pt-28 pb-16">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold text-foreground mb-4">Terms & Conditions</h1>
+            <h1 className="font-display text-4xl font-bold text-foreground mb-4">Terms & Conditions</h1>
             <p className="text-muted-foreground mb-8">Last updated: October 2025</p>
             <div className="prose prose-lg max-w-none space-y-8">
               <section>
@@ -25,6 +25,6 @@ export default function Terms() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

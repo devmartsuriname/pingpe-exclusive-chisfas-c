@@ -1,11 +1,11 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/layout/Navbar";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Search, Calendar, MessageSquare, CheckCircle, Home, Compass, Truck, Gift } from "lucide-react";
 
 export default function HowItWorks() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>How It Works | PingPe - Simple Travel Booking</title>
         <meta
@@ -13,13 +13,13 @@ export default function HowItWorks() {
           content="Learn how PingPe works. Discover our simple 4-step process for booking stays, experiences, events, and transportation for your perfect trip."
         />
       </Helmet>
-      <Navbar />
-      <main className="min-h-screen bg-background">
+      <Header />
+      <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-b from-primary/10 to-background">
+        <section className="relative pt-28 pb-16 bg-gradient-to-b from-primary/10 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
                 How PingPe Works
               </h1>
               <p className="text-xl text-muted-foreground">
@@ -224,6 +224,6 @@ export default function HowItWorks() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
