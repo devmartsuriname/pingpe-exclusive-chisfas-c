@@ -81,7 +81,7 @@ export function Header() {
 
           {/* Desktop Actions - Right */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" className="gap-2">
+            <Button variant="ghost" size="sm" className="gap-2" aria-label="Select currency">
               USD
               <ChevronDown className="w-4 h-4" />
             </Button>
@@ -95,12 +95,14 @@ export function Header() {
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Avatar className="w-9 h-9 cursor-pointer">
-                      <AvatarImage src={profile?.avatar_url} />
-                      <AvatarFallback>
-                        {profile?.full_name?.charAt(0) || user.email?.charAt(0) || "U"}
-                      </AvatarFallback>
-                    </Avatar>
+                    <Button variant="ghost" size="icon" className="rounded-full" aria-label="Open user menu">
+                      <Avatar className="w-9 h-9">
+                        <AvatarImage src={profile?.avatar_url} />
+                        <AvatarFallback>
+                          {profile?.full_name?.charAt(0) || user.email?.charAt(0) || "U"}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
                     <DropdownMenuLabel>

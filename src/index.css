@@ -29,7 +29,7 @@ All colors MUST be HSL.
 
     /* Muted: Light neutral */
     --muted: 40 20% 96%;
-    --muted-foreground: 160 10% 45%;
+    --muted-foreground: 160 10% 35%;
 
     /* Accent: Vibrant teal for CTAs */
     --accent: 174 62% 47%;
@@ -88,7 +88,7 @@ All colors MUST be HSL.
     --secondary-foreground: 40 20% 96%;
 
     --muted: 160 15% 18%;
-    --muted-foreground: 40 15% 65%;
+    --muted-foreground: 40 15% 70%;
 
     /* Accent: Bright teal for dark mode */
     --accent: 174 62% 55%;

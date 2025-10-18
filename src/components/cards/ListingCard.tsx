@@ -149,6 +149,7 @@ export function ListingCard({
               e.preventDefault();
               onFavoriteToggle?.();
             }}
+            aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
           >
             <Heart
               className={cn(
