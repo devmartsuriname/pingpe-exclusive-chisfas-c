@@ -320,19 +320,172 @@ The frontend uses `AuthContext` to:
 
 ---
 
-## Edge Functions
-None currently implemented, but can be added for:
-- Payment processing webhooks
-- Email notifications
-- Third-party API integrations
-- Complex business logic
+#### **blog_posts**
+Blog articles and content.
+- `id` (uuid, PK)
+- `author_id` (uuid, references profiles)
+- `category_id` (uuid, references blog_categories)
+- `title`, `slug` (text)
+- `excerpt`, `body` (text)
+- `featured_image` (text)
+- `status` (text: 'draft', 'published')
+- `published_at` (timestamp)
+- `seo_meta` (jsonb) - Title, description, keywords
+- `created_at`, `updated_at` (timestamp)
+
+**Related:** `blog_categories`, `blog_tags`, `blog_post_tags`
 
 ---
 
-## Database Functions
+#### **pages**
+Dynamic custom pages.
+- `id` (uuid, PK)
+- `created_by` (uuid)
+- `title`, `slug` (text)
+- `status` (text: 'draft', 'published')
+- `seo_meta` (jsonb)
+- `created_at`, `updated_at` (timestamp)
+
+**Related:** `page_sections` - Content blocks for each page
+
+---
+
+#### **media_library**
+Centralized media management.
+- `id` (uuid, PK)
+- `uploaded_by` (uuid)
+- `name`, `folder` (text)
+- `url`, `thumbnail_url`, `webp_url`, `avif_url` (text)
+- `file_type`, `file_size` (text/integer)
+- `width`, `height` (integer)
+- `alt_text` (text)
+- `tags` (text[])
+- `srcset` (jsonb)
+- `created_at`, `updated_at` (timestamp)
+
+---
+
+## Edge Functions
+
+### Payment Processing
+
+#### `/functions/v1/create-payment-intent`
+Initializes Stripe payment for a booking.
+
+**Input:**
+```json
+{
+  "booking_id": "uuid",
+  "amount": 250.00
+}
+```
+
+**Output:**
+```json
+{
+  "client_secret": "pi_xxx_secret_xxx",
+  "payment_intent_id": "pi_xxx"
+}
+```
+
+#### `/functions/v1/confirm-payment`
+Confirms and finalizes payment.
+
+**Input:**
+```json
+{
+  "payment_intent_id": "pi_xxx",
+  "booking_id": "uuid"
+}
+```
+
+**Output:**
+```json
+{
+  "success": true,
+  "booking_status": "confirmed"
+}
+```
+
+### Email Notifications
+
+#### `/functions/v1/send-email`
+Sends transactional emails via Resend.
+
+**Input:**
+```json
+{
+  "type": "booking-confirmation",
+  "to": "guest@example.com",
+  "data": {
+    "booking_id": "uuid",
+    "guest_name": "John Doe",
+    "property_title": "Jungle Lodge",
+    "check_in": "2025-11-01",
+    "check_out": "2025-11-04"
+  }
+}
+```
+
+**Templates:**
+- `booking-confirmation` - New booking created
+- `payment-receipt` - Payment completed
+- `cancellation-notice` - Booking cancelled
+- `reminder` - Upcoming booking reminder
+
+---
+
+## Database Functions & Triggers
+
+### `handle_new_user()`
+Automatically creates a profile when a user signs up:
+
+```sql
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO 'public'
+AS $function$
+BEGIN
+  INSERT INTO public.profiles (id, user_id, full_name)
+  VALUES (gen_random_uuid(), NEW.id, COALESCE(NEW.raw_user_meta_data->>'full_name', ''));
+  RETURN NEW;
+END;
+$function$
+```
+
+**Trigger:**
+```sql
+CREATE TRIGGER on_auth_user_created
+AFTER INSERT ON auth.users
+FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+```
+
+---
+
+### `assign_default_role()`
+Assigns the default 'guest' role to new users:
+
+```sql
+CREATE OR REPLACE FUNCTION public.assign_default_role()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO 'public'
+AS $function$
+BEGIN
+  INSERT INTO public.user_roles (user_id, role)
+  VALUES (NEW.id, 'guest'::app_role);
+  RETURN NEW;
+END;
+$function$
+```
+
+---
 
 ### `update_updated_at_column()`
-Trigger function to auto-update `updated_at` timestamps:
+Automatically updates `updated_at` timestamps:
 
 ```sql
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
@@ -346,7 +499,26 @@ END;
 $function$
 ```
 
-Applied to tables with `updated_at` columns.
+Applied to: `profiles`, `properties`, `experiences`, `transport`, `packages`, `bookings`, `blog_posts`, `pages`, `media_library`
+
+---
+
+### `update_blog_updated_at()`
+Similar to above, specifically for blog posts:
+
+```sql
+CREATE OR REPLACE FUNCTION public.update_blog_updated_at()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO 'public'
+AS $function$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$function$
+```
 
 ---
 
@@ -382,7 +554,43 @@ const { data } = await supabase
 
 ---
 
-## Best Practices
+---
+
+## Performance Optimization
+
+### Indexes
+Critical indexes for query performance:
+- `properties.host_id` - Host property lookups
+- `bookings.guest_id` - Guest booking history
+- `bookings.property_id` - Property bookings
+- `user_roles.user_id` - Role checks
+- `availability.inventory_id, availability.date` - Availability queries
+- `blog_posts.slug` - SEO-friendly URL lookups
+- `pages.slug` - Page routing
+
+### Caching Strategy
+- **TanStack Query** on frontend for data caching
+- Cache invalidation on mutations
+- Prefetch related data (bookings + properties + profiles)
+- Optimistic updates for better UX
+
+### Pagination
+Use `.range()` for large datasets:
+```typescript
+const { data } = await supabase
+  .from('bookings')
+  .select('*')
+  .range(0, 9); // First 10 items
+```
+
+### Rate Limiting
+- Edge Functions have built-in rate limiting
+- API requests limited per Supabase plan tier
+- Consider implementing request throttling for public endpoints
+
+---
+
+## Security Best Practices
 
 1. **Never reference auth.users directly** - Use profiles table
 2. **Always use RLS** - Never disable for convenience
@@ -392,6 +600,34 @@ const { data } = await supabase
 6. **Index foreign keys** - For query performance
 7. **Use enums** - For consistent status values
 8. **Store dates as timestamps** - Include timezone info
+9. **Encrypt sensitive data** - Store API keys in settings table
+10. **Validate email templates** - Prevent injection attacks
+11. **Sanitize user input** - Especially in rich text editors
+12. **Use prepared statements** - Prevent SQL injection
+
+---
+
+## Entity Relationship Overview
+
+### Primary Relationships
+- **User → Profiles** (1:1)
+- **User → User Roles** (1:many)
+- **Host → Properties/Experiences/Transport** (1:many)
+- **Guest → Bookings** (1:many)
+- **Booking → Booking Items** (1:many)
+- **Package → Package Items** (many:many with inventory)
+- **Property → Amenities** (many:many)
+- **Blog Post → Categories/Tags** (many:many)
+- **Page → Page Sections** (1:many)
+
+### Inventory Polymorphism
+The system uses a polymorphic `inventory_type` + `inventory_id` pattern for:
+- Bookings (can reference any inventory type)
+- Availability (applies to all inventory)
+- Price Rules (applies to all inventory)
+- Package Items (combines multiple inventory types)
+
+**Schema Diagram:** Export ERD from Supabase Dashboard → Database → Schema Visualizer
 
 ---
 
