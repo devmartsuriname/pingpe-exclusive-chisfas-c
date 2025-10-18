@@ -13,7 +13,7 @@ import { TestimonialCard } from "@/components/cards/TestimonialCard";
 import { IllustratedStep } from "@/components/how-it-works/IllustratedStep";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Calendar, Send, Smile } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import {
@@ -334,17 +334,17 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <IllustratedStep
-              image={illustrationBook}
+              icon={Calendar}
               title="Book a trip"
               description="Choose from stays, experiences, and transport options"
             />
             <IllustratedStep
-              image={illustrationRequest}
+              icon={Send}
               title="Send a request"
               description="Receive confirmation and travel information"
             />
             <IllustratedStep
-              image={illustrationFun}
+              icon={Smile}
               title="Have fun!"
               description="Enjoy your sustainable adventure in Suriname"
             />
@@ -364,11 +364,28 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {hosts.map((host) => (
-              <HostCard key={host.id} {...host} />
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: false,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {hosts.map((host) => (
+                <CarouselItem 
+                  key={host.id} 
+                  className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5"
+                >
+                  <HostCard {...host} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center gap-2 mt-6">
+              <CarouselPrevious className="relative static translate-y-0" />
+              <CarouselNext className="relative static translate-y-0" />
+            </div>
+          </Carousel>
 
           <div className="flex justify-center mt-8">
             <Button variant="outline" size="lg">
@@ -385,11 +402,28 @@ const Index = () => {
             Explore nearby
           </h2>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-8">
-            {locations.map((location) => (
-              <LocationBadge key={location.name} {...location} />
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {locations.map((location) => (
+                <CarouselItem 
+                  key={location.name} 
+                  className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4"
+                >
+                  <LocationBadge {...location} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center gap-2 mt-6">
+              <CarouselPrevious className="relative static translate-y-0" />
+              <CarouselNext className="relative static translate-y-0" />
+            </div>
+          </Carousel>
         </div>
       </section>
 
@@ -418,15 +452,15 @@ const Index = () => {
               </form>
             </div>
 
-            {/* Right: Illustration */}
-            <div className="hidden lg:flex justify-center">
+            {/* Right: Resort Image */}
+            <div className="hidden lg:flex justify-center items-center">
               <OptimizedImage
-                src={illustrationNewsletter}
-                alt="Newsletter subscription illustration"
-                width={512}
-                height={512}
-                sizes="(max-width: 1024px) 0vw, 512px"
-                className="w-full max-w-md"
+                src={heroImage1}
+                alt="PingPe Resort - Authentic jungle experience on the Boven-Suriname River"
+                width={600}
+                height={400}
+                sizes="(max-width: 1024px) 0vw, 40vw"
+                className="w-full max-w-lg rounded-2xl shadow-lg object-cover"
               />
             </div>
           </div>
