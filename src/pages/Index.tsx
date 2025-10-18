@@ -23,6 +23,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 import heroImage1 from "@/assets/pingpe-waterfall.jpg";
 import heroImage2 from "@/assets/pingpe-river.jpg";
@@ -41,10 +42,6 @@ import locationNickerie from "@/assets/location-nickerie.jpg";
 import locationSipaliwini from "@/assets/location-sipaliwini.jpg";
 import locationBrokopondo from "@/assets/location-brokopondo.jpg";
 import locationAtjoni from "@/assets/location-atjoni.jpg";
-import illustrationBook from "@/assets/illustration-book.svg";
-import illustrationRequest from "@/assets/illustration-request.svg";
-import illustrationFun from "@/assets/illustration-fun.svg";
-import illustrationNewsletter from "@/assets/illustration-newsletter.svg";
 
 const Index = () => {
   const [activeType, setActiveType] = useState("stays");
@@ -369,6 +366,11 @@ const Index = () => {
               align: "start",
               loop: false,
             }}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+              })
+            ]}
             className="w-full"
           >
             <CarouselContent className="-ml-4">
@@ -407,6 +409,11 @@ const Index = () => {
               align: "start",
               loop: true,
             }}
+            plugins={[
+              Autoplay({
+                delay: 3500,
+              })
+            ]}
             className="w-full"
           >
             <CarouselContent className="-ml-4">
