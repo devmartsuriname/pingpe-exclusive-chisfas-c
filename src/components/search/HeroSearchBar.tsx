@@ -41,7 +41,7 @@ export const HeroSearchBar = ({ onSearch }: HeroSearchBarProps) => {
         <span className="text-sm text-muted-foreground">Guests</span>
       </div>
 
-      <Button type="submit" size="icon" className="rounded-full h-12 w-12 flex-shrink-0">
+      <Button type="submit" size="icon" className="rounded-full h-12 w-12 flex-shrink-0" aria-label="Search">
         <Search className="w-5 h-5" />
       </Button>
     </form>

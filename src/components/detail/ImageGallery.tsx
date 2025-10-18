@@ -75,7 +75,7 @@ export const ImageGallery = ({ images, title }: ImageGalleryProps) => {
 
       {/* Share Button */}
       <div className="flex justify-end mt-4">
-        <Button variant="outline" size="sm" onClick={handleShare}>
+        <Button variant="outline" size="sm" onClick={handleShare} aria-label="Share gallery">
           <Share2 className="w-4 h-4 mr-2" />
           Share
         </Button>
@@ -116,6 +116,7 @@ export const ImageGallery = ({ images, title }: ImageGalleryProps) => {
             size="icon"
             className="absolute top-4 right-4 text-white hover:bg-white/20"
             onClick={() => setIsLightboxOpen(false)}
+            aria-label="Close lightbox"
           >
             <X className="w-6 h-6" />
           </Button>

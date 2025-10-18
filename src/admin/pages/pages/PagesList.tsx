@@ -125,7 +125,7 @@ export default function PagesList() {
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Button variant="ghost" size="icon" asChild>
-                        <Link to={`/p/${page.slug}`} target="_blank">
+                        <Link to={`/p/${page.slug}`} target="_blank" rel="noopener noreferrer" aria-label="Preview page">
                           <Eye className="h-4 w-4" />
                         </Link>
                       </Button>

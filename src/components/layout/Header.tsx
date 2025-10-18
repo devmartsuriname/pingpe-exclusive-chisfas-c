@@ -90,7 +90,7 @@ export function Header() {
             
             {user ? (
               <>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" aria-label="View notifications">
                   <Bell className="w-5 h-5" />
                 </Button>
                 <DropdownMenu>
@@ -148,6 +148,8 @@ export function Header() {
           <button
             className="md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
