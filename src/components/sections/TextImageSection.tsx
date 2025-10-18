@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 
 interface TextImageSectionProps {
   content: {
@@ -35,7 +36,14 @@ export function TextImageSection({ content }: TextImageSectionProps) {
 
   const imageContent = image ? (
     <div className="rounded-lg overflow-hidden">
-      <img src={image} alt={heading} className="w-full h-full object-cover" />
+      <OptimizedImage 
+        src={image} 
+        alt={heading} 
+        width={800}
+        height={600}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        className="w-full h-full object-cover" 
+      />
     </div>
   ) : (
     <div className="rounded-lg bg-muted h-[400px]" />

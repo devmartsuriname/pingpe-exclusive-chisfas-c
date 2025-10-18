@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Facebook, Twitter, Linkedin } from "lucide-react";
 import { format } from "date-fns";
@@ -86,9 +87,13 @@ export default function BlogPost() {
         {/* Hero */}
         {post.featured_image && (
           <div className="relative h-[500px] w-full mt-20">
-            <img
+            <OptimizedImage
               src={post.featured_image}
               alt={post.title}
+              priority={true}
+              width={1920}
+              height={500}
+              sizes="100vw"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
@@ -139,10 +144,12 @@ export default function BlogPost() {
                   <Button
                     variant="outline"
                     size="sm"
+                    aria-label="Share on Twitter"
                     onClick={() =>
                       window.open(
                         `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
-                        "_blank"
+                        "_blank",
+                        "noopener,noreferrer"
                       )
                     }
                   >
@@ -152,10 +159,12 @@ export default function BlogPost() {
                   <Button
                     variant="outline"
                     size="sm"
+                    aria-label="Share on Facebook"
                     onClick={() =>
                       window.open(
                         `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-                        "_blank"
+                        "_blank",
+                        "noopener,noreferrer"
                       )
                     }
                   >
@@ -165,10 +174,12 @@ export default function BlogPost() {
                   <Button
                     variant="outline"
                     size="sm"
+                    aria-label="Share on LinkedIn"
                     onClick={() =>
                       window.open(
                         `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
-                        "_blank"
+                        "_blank",
+                        "noopener,noreferrer"
                       )
                     }
                   >
@@ -195,9 +206,12 @@ export default function BlogPost() {
                   >
                     {relatedPost.featured_image && (
                       <div className="aspect-video overflow-hidden">
-                        <img
+                        <OptimizedImage
                           src={relatedPost.featured_image}
                           alt={relatedPost.title}
+                          width={400}
+                          height={225}
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>

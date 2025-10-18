@@ -2,6 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { HeroSearchBar } from "@/components/search/HeroSearchBar";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { ListingCard } from "@/components/cards/ListingCard";
 import { CategoryCard } from "@/components/cards/CategoryCard";
 import { HostCard } from "@/components/cards/HostCard";
@@ -209,23 +210,33 @@ const Index = () => {
             {/* Right: Photo Collage */}
             <div className="hidden lg:grid grid-cols-2 gap-4 h-[500px]">
               <div className="relative overflow-hidden rounded-2xl row-span-2">
-                <img
+                <OptimizedImage
                   src={heroImage1}
-                  alt="Suriname River"
+                  alt="PingPe waterfall cascading through lush Suriname rainforest"
+                  priority={true}
+                  width={800}
+                  height={1000}
+                  sizes="(max-width: 1024px) 0vw, 40vw"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="relative overflow-hidden rounded-2xl">
-                <img
+                <OptimizedImage
                   src={heroImage2}
-                  alt="Eco-lodge"
+                  alt="Traditional eco-lodge on the Boven-Suriname River"
+                  width={800}
+                  height={480}
+                  sizes="(max-width: 1024px) 0vw, 40vw"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="relative overflow-hidden rounded-2xl">
-                <img
+                <OptimizedImage
                   src={heroImage3}
-                  alt="River adventure"
+                  alt="Jungle adventure tour exploring Ananasberg mountain"
+                  width={800}
+                  height={480}
+                  sizes="(max-width: 1024px) 0vw, 40vw"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -383,9 +394,12 @@ const Index = () => {
 
             {/* Right: Illustration */}
             <div className="hidden lg:flex justify-center">
-              <img
+              <OptimizedImage
                 src={illustrationNewsletter}
-                alt="Newsletter"
+                alt="Newsletter subscription illustration"
+                width={512}
+                height={512}
+                sizes="(max-width: 1024px) 0vw, 512px"
                 className="w-full max-w-md"
               />
             </div>
