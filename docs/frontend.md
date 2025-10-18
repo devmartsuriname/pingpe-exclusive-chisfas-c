@@ -101,6 +101,89 @@ import Autoplay from "embla-carousel-autoplay";
 
 ---
 
+## 🔍 Hero Search Bar
+
+### Overview
+
+The Hero Search Bar is PingPe's primary navigation tool, allowing users to filter and search across all inventory types from a single, unified interface.
+
+### Component: HeroSearchBar
+
+**Location:** `src/components/search/HeroSearchBar.tsx`
+
+### Features
+
+1. **Activity Type Selector**
+   - Dropdown with 5 options: All, Stays, Experiences, Transport, Packages
+   - Uses Radix UI Select component
+   - Icon: Filter (Lucide React)
+   - Replaces traditional location search (PingPe operates from single resort location)
+
+2. **Date Range Picker**
+   - Built with react-day-picker
+   - Allows selection of start and end dates
+   - Disables past dates
+   - Displays formatted range (e.g., "Oct 21 - Oct 25")
+
+3. **Guest Counter**
+   - Increment/decrement buttons
+   - Range: 1-20 guests
+   - Smart singular/plural labels
+
+4. **Smart Navigation**
+   - Routes to appropriate page based on selected type
+   - Passes URL parameters: `type`, `startDate`, `endDate`, `guests`
+   - Loading state with spinner animation
+
+### Usage
+
+```tsx
+import { HeroSearchBar } from "@/components/search/HeroSearchBar";
+
+<HeroSearchBar
+  onSearch={(params) => {
+    console.log("Search params:", params);
+  }}
+  className="max-w-4xl mx-auto"
+/>
+```
+
+### Props
+
+```typescript
+interface HeroSearchBarProps {
+  onSearch?: (params: SearchParams) => void;
+  className?: string;
+}
+
+interface SearchParams {
+  type: "all" | "stays" | "experiences" | "transport" | "packages";
+  startDate: Date | null;
+  endDate: Date | null;
+  guests: number;
+}
+```
+
+### Design Guidelines
+
+- Maintains **rounded-full** layout for clean, modern aesthetic
+- Uses semantic color tokens (`text-muted-foreground`, `bg-background`)
+- Consistent with PingPe's minimal design language
+- Fully responsive (collapses on mobile)
+- Dark mode compatible
+
+### URL Parameter Structure
+
+When search is submitted, users are navigated to:
+- `/stays?guests=4&startDate=2024-10-21T00:00:00.000Z&endDate=2024-10-25T00:00:00.000Z`
+- `/experiences?type=experiences&guests=2`
+- `/transport?guests=6`
+- `/packages?guests=4`
+
+All result pages read and apply these parameters automatically.
+
+---
+
 ## 🎨 Icon Integration
 
 ### Lucide React Icons

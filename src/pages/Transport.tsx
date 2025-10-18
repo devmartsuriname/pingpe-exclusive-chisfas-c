@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
@@ -11,9 +12,22 @@ import { useTransport } from "@/hooks/useTransport";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Transport() {
-  const [filters, setFilters] = useState({});
+  const [searchParams] = useSearchParams();
+  const [filters, setFilters] = useState<any>(() => {
+    const guests = searchParams.get("guests");
+    return guests ? { capacity: parseInt(guests) } : {};
+  });
   const [sortBy, setSortBy] = useState("popular");
   const { data: transport, isLoading } = useTransport({ ...filters, sortBy });
+
+  useEffect(() => {
+    const newFilters: any = {};
+    const guests = searchParams.get("guests");
+    if (guests) {
+      newFilters.capacity = parseInt(guests);
+    }
+    setFilters((prev: any) => ({ ...prev, ...newFilters }));
+  }, [searchParams]);
 
   const handleFilterChange = (newFilters: any) => {
     setFilters({ ...filters, ...newFilters });

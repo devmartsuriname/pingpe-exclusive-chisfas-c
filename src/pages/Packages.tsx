@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
@@ -11,9 +12,22 @@ import { usePackages } from "@/hooks/usePackages";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Packages() {
-  const [filters, setFilters] = useState({});
+  const [searchParams] = useSearchParams();
+  const [filters, setFilters] = useState<any>(() => {
+    const guests = searchParams.get("guests");
+    return guests ? { maxParticipants: parseInt(guests) } : {};
+  });
   const [sortBy, setSortBy] = useState("popular");
   const { data: packages, isLoading } = usePackages({ ...filters, sortBy });
+
+  useEffect(() => {
+    const newFilters: any = {};
+    const guests = searchParams.get("guests");
+    if (guests) {
+      newFilters.maxParticipants = parseInt(guests);
+    }
+    setFilters((prev: any) => ({ ...prev, ...newFilters }));
+  }, [searchParams]);
 
   const handleFilterChange = (newFilters: any) => {
     setFilters({ ...filters, ...newFilters });
