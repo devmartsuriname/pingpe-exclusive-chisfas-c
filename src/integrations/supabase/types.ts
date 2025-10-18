@@ -262,6 +262,11 @@ export type Database = {
           id: string
           inventory_id: string | null
           inventory_type: Database["public"]["Enums"]["inventory_type"] | null
+          payment_completed_at: string | null
+          payment_intent_id: string | null
+          payment_method: string | null
+          payment_provider: string | null
+          payment_status: string | null
           property_id: string
           status: Database["public"]["Enums"]["booking_status"] | null
           total_price: number
@@ -276,6 +281,11 @@ export type Database = {
           id?: string
           inventory_id?: string | null
           inventory_type?: Database["public"]["Enums"]["inventory_type"] | null
+          payment_completed_at?: string | null
+          payment_intent_id?: string | null
+          payment_method?: string | null
+          payment_provider?: string | null
+          payment_status?: string | null
           property_id: string
           status?: Database["public"]["Enums"]["booking_status"] | null
           total_price: number
@@ -290,6 +300,11 @@ export type Database = {
           id?: string
           inventory_id?: string | null
           inventory_type?: Database["public"]["Enums"]["inventory_type"] | null
+          payment_completed_at?: string | null
+          payment_intent_id?: string | null
+          payment_method?: string | null
+          payment_provider?: string | null
+          payment_status?: string | null
           property_id?: string
           status?: Database["public"]["Enums"]["booking_status"] | null
           total_price?: number
