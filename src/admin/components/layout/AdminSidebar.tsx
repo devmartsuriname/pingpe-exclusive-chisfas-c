@@ -9,7 +9,8 @@ import {
   Settings,
   FileText,
   Image,
-  FileEdit
+  FileEdit,
+  Database
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,7 @@ const menuItems = [
   { path: "/admin/blog", label: "Blog", icon: FileText },
   { path: "/admin/pages", label: "Pages", icon: FileEdit },
   { path: "/admin/media", label: "Media Library", icon: Image },
+  { path: "/admin/content", label: "Content Management", icon: Database },
   { path: "/admin/reports", label: "Reports", icon: BarChart3 },
   { path: "/admin/settings", label: "Settings", icon: Settings },
 ];

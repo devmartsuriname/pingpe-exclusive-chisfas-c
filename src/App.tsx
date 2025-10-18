@@ -65,6 +65,7 @@ import PagesList from "./admin/pages/pages/PagesList";
 import PageCreate from "./admin/pages/pages/PageCreate";
 import PageEdit from "./admin/pages/pages/PageEdit";
 import MediaLibrary from "./admin/pages/media/MediaLibrary";
+import ContentManagement from "./admin/pages/content/ContentManagement";
 import DynamicPage from "./pages/DynamicPage";
 
 const queryClient = new QueryClient();
@@ -168,6 +169,7 @@ const App = () => (
               <Route path="pages/create" element={<PageCreate />} />
               <Route path="pages/edit/:id" element={<PageEdit />} />
               <Route path="media" element={<MediaLibrary />} />
+              <Route path="content" element={<ContentManagement />} />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<Settings />} />
             </Route>
