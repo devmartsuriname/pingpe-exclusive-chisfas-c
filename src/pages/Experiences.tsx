@@ -4,6 +4,8 @@ import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
 import { ListingCard } from "@/components/cards/ListingCard";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import SEO from "@/components/SEO";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useExperiences } from "@/hooks/useExperiences";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,6 +21,15 @@ export default function Experiences() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Jungle Adventures & Experiences in Boven Suriname | PingPe"
+        description="Discover authentic rainforest adventures, wildlife tours, cultural experiences, and guided expeditions in Suriname's pristine jungle with indigenous guides."
+        canonicalUrl="https://www.jungleresortpingpe.com/experiences"
+      />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://www.jungleresortpingpe.com" },
+        { name: "Experiences", url: "https://www.jungleresortpingpe.com/experiences" }
+      ]} />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav items={[{ label: "Experiences" }]} />

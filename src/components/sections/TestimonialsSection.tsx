@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 
 interface Testimonial {
   name: string;
@@ -46,10 +47,13 @@ export function TestimonialsSection({ content }: TestimonialsSectionProps) {
               
               <div className="flex items-center gap-3">
                 {testimonial.avatar && (
-                  <img
+                  <OptimizedImage
                     src={testimonial.avatar}
                     alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover"
+                    width={48}
+                    height={48}
+                    aspectRatio="1/1"
+                    className="rounded-full object-cover"
                   />
                 )}
                 <div>

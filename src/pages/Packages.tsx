@@ -4,6 +4,8 @@ import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
 import { ListingCard } from "@/components/cards/ListingCard";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import SEO from "@/components/SEO";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { usePackages } from "@/hooks/usePackages";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,6 +21,15 @@ export default function Packages() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="All-Inclusive Jungle Packages in Boven Suriname | PingPe"
+        description="Book complete jungle adventure packages including accommodation, experiences, meals, and transport. Explore Suriname's rainforest with hassle-free all-in-one packages."
+        canonicalUrl="https://www.jungleresortpingpe.com/packages"
+      />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://www.jungleresortpingpe.com" },
+        { name: "Packages", url: "https://www.jungleresortpingpe.com/packages" }
+      ]} />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav items={[{ label: "Packages" }]} />

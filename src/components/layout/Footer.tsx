@@ -119,13 +119,13 @@ export function Footer() {
 
             {/* Social Links */}
             <div className="flex items-center space-x-3">
-              <Button variant="ghost" size="icon" className="rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full" aria-label="Follow us on Facebook">
                 <Facebook className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full" aria-label="Follow us on Instagram">
                 <Instagram className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full" aria-label="Follow us on Twitter">
                 <Twitter className="h-5 w-5" />
               </Button>
             </div>

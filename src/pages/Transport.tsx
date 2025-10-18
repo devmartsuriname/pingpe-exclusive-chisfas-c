@@ -4,6 +4,8 @@ import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
 import { ListingCard } from "@/components/cards/ListingCard";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import SEO from "@/components/SEO";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useTransport } from "@/hooks/useTransport";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,6 +21,15 @@ export default function Transport() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Jungle Transport & Transfers in Boven Suriname | PingPe"
+        description="Book safe and reliable jungle transport including river boats, 4x4 vehicles, and guided transfers to remote locations in Suriname's interior."
+        canonicalUrl="https://www.jungleresortpingpe.com/transport"
+      />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://www.jungleresortpingpe.com" },
+        { name: "Transport", url: "https://www.jungleresortpingpe.com/transport" }
+      ]} />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav items={[{ label: "Transport" }]} />

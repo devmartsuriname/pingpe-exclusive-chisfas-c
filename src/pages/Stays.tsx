@@ -4,6 +4,8 @@ import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
 import { ListingCard } from "@/components/cards/ListingCard";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import SEO from "@/components/SEO";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useProperties } from "@/hooks/useProperties";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,6 +21,15 @@ export default function Stays() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Jungle Stays & Accommodations in Boven Suriname | PingPe"
+        description="Find unique jungle lodges, eco-resorts, and traditional accommodations in Suriname's pristine rainforest. Book authentic stays with indigenous communities."
+        canonicalUrl="https://www.jungleresortpingpe.com/stays"
+      />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://www.jungleresortpingpe.com" },
+        { name: "Stays", url: "https://www.jungleresortpingpe.com/stays" }
+      ]} />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav items={[{ label: "Stays" }]} />
