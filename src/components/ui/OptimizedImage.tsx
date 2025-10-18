@@ -24,6 +24,9 @@ export function OptimizedImage({
 }: OptimizedImageProps) {
   const [error, setError] = useState(false);
 
+  // Detect if this is a Vite-processed static asset
+  const isStaticAsset = src?.startsWith('/assets/') || src?.startsWith('./') || src?.startsWith('../');
+
   // Generate WebP URL by replacing extension
   const getWebPUrl = (url: string) => {
     if (!url) return url;
@@ -46,10 +49,6 @@ export function OptimizedImage({
     return sizes.map(w => `${url} ${w}w`).join(', ');
   };
 
-  const webpUrl = getWebPUrl(src);
-  const srcSet = generateSrcSet(src);
-  const webpSrcSet = generateSrcSet(webpUrl);
-
   if (error || !src) {
     return (
       <div
@@ -63,6 +62,29 @@ export function OptimizedImage({
       </div>
     );
   }
+
+  // For static assets (Vite-processed), use simple img tag
+  if (isStaticAsset) {
+    return (
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading={priority ? "eager" : "lazy"}
+        decoding={priority ? "sync" : "async"}
+        fetchPriority={priority ? "high" : "auto"}
+        onError={() => setError(true)}
+        className={cn(className)}
+        style={{ aspectRatio }}
+      />
+    );
+  }
+
+  // For dynamic URLs (Supabase, external), use picture element with srcset
+  const webpUrl = getWebPUrl(src);
+  const srcSet = generateSrcSet(src);
+  const webpSrcSet = generateSrcSet(webpUrl);
 
   return (
     <picture>
