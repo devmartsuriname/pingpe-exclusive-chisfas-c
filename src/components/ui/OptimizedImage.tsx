@@ -24,29 +24,32 @@ export function OptimizedImage({
 }: OptimizedImageProps) {
   const [error, setError] = useState(false);
 
-  // Detect if this is a Vite-processed static asset
-  const isStaticAsset = src?.startsWith('/assets/') || src?.startsWith('./') || src?.startsWith('../');
+  // Treat Vite dev/prod asset URLs and data URLs as static assets
+  const isStaticAsset = !!src && (/^\/(assets|src)\//.test(src) || src.startsWith("/@fs/") || src.startsWith("./") || src.startsWith("../") || src.startsWith("data:"));
 
-  // Generate WebP URL by replacing extension
+  // Build correct fetchpriority attribute (lowercase) without React warning
+  const fetchPriorityAttr = priority ? { fetchpriority: "high" } : { fetchpriority: "auto" };
+
+  // Generate WebP URL by replacing extension (for dynamic/external URLs only)
   const getWebPUrl = (url: string) => {
     if (!url) return url;
     // Check if URL already has webp in query params or is already webp
-    if (url.includes('webp') || url.endsWith('.webp')) return url;
-    // For Supabase storage URLs, we'll append a transform parameter
-    if (url.includes('supabase.co')) {
+    if (url.includes("webp") || url.endsWith(".webp")) return url;
+    // For Supabase storage URLs, we'll append a transform parameter externally (no change here)
+    if (url.includes("supabase.co")) {
       return url; // Supabase will handle transforms via their API
     }
     // For other URLs, try to replace extension
-    return url.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+    return url.replace(/\.(jpg|jpeg|png)$/i, ".webp");
   };
 
   // Generate srcset for different viewport sizes
   const generateSrcSet = (url: string, sizes: number[] = [640, 768, 1024, 1280, 1920]) => {
-    if (!url || url.includes('supabase.co')) {
+    if (!url || url.includes("supabase.co")) {
       // For Supabase, use transform API
-      return sizes.map(w => `${url}?width=${w} ${w}w`).join(', ');
+      return sizes.map((w) => `${url}?width=${w} ${w}w`).join(", ");
     }
-    return sizes.map(w => `${url} ${w}w`).join(', ');
+    return sizes.map((w) => `${url} ${w}w`).join(", ");
   };
 
   if (error || !src) {
@@ -63,7 +66,7 @@ export function OptimizedImage({
     );
   }
 
-  // For static assets (Vite-processed), use simple img tag
+  // For static assets (Vite-processed), use simple img tag (no transforms)
   if (isStaticAsset) {
     return (
       <img
@@ -73,10 +76,10 @@ export function OptimizedImage({
         height={height}
         loading={priority ? "eager" : "lazy"}
         decoding={priority ? "sync" : "async"}
-        fetchPriority={priority ? "high" : "auto"}
         onError={() => setError(true)}
         className={cn(className)}
         style={{ aspectRatio }}
+        {...fetchPriorityAttr}
       />
     );
   }
@@ -89,12 +92,8 @@ export function OptimizedImage({
   return (
     <picture>
       {/* WebP source with srcset */}
-      <source
-        type="image/webp"
-        srcSet={webpSrcSet}
-        sizes={sizes}
-      />
-      
+      <source type="image/webp" srcSet={webpSrcSet} sizes={sizes} />
+
       {/* Fallback to original format */}
       <img
         src={src}
@@ -105,10 +104,10 @@ export function OptimizedImage({
         height={height}
         loading={priority ? "eager" : "lazy"}
         decoding={priority ? "sync" : "async"}
-        fetchPriority={priority ? "high" : "auto"}
         onError={() => setError(true)}
         className={cn(className)}
         style={{ aspectRatio }}
+        {...fetchPriorityAttr}
       />
     </picture>
   );
