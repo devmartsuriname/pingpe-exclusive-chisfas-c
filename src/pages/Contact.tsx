@@ -98,8 +98,9 @@ export default function Contact() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                        <p className="text-muted-foreground">support@pingpe.com</p>
-                        <p className="text-muted-foreground">partnerships@pingpe.com</p>
+                        <a href="mailto:info@jungleresortpingpe.com" className="text-muted-foreground hover:text-primary transition-colors">
+                          info@jungleresortpingpe.com
+                        </a>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -108,8 +109,10 @@ export default function Contact() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-foreground mb-1">Phone</h3>
-                        <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                        <p className="text-sm text-muted-foreground">Mon-Fri 9am-6pm EST</p>
+                        <a href="tel:+5978858525" className="text-muted-foreground hover:text-primary transition-colors">
+                          +597 8858525
+                        </a>
+                        <p className="text-sm text-muted-foreground mt-1">Daily 08:00 - 20:00</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -117,30 +120,22 @@ export default function Contact() {
                         <MapPin className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground mb-1">Office</h3>
-                        <p className="text-muted-foreground">123 Travel Street</p>
-                        <p className="text-muted-foreground">San Francisco, CA 94102</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <MessageSquare className="w-6 h-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-1">Live Chat</h3>
-                        <p className="text-muted-foreground">Available in your account dashboard</p>
+                        <h3 className="font-semibold text-foreground mb-1">Location</h3>
+                        <p className="text-muted-foreground">Vidijaweg 25, Wanica</p>
+                        <p className="text-muted-foreground">Boven-Suriname</p>
+                        <p className="text-muted-foreground">Suriname, South America</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-muted/30 rounded-lg p-6">
-                  <h3 className="font-semibold text-foreground mb-2">Looking to become a host?</h3>
+                  <h3 className="font-semibold text-foreground mb-2">Planning a visit?</h3>
                   <p className="text-muted-foreground mb-4">
-                    Join our community of hosts and start sharing your unique experiences with travelers worldwide.
+                    Discover the authentic beauty of Upper Suriname. Contact us to plan your jungle adventure at Jungle Resort PingPe.
                   </p>
                   <Button variant="outline" asChild>
-                    <a href="mailto:partnerships@pingpe.com">Contact Partnerships Team</a>
+                    <a href="mailto:info@jungleresortpingpe.com">Get in Touch</a>
                   </Button>
                 </div>
               </div>

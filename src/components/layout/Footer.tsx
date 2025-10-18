@@ -9,27 +9,26 @@ export function Footer() {
       title: "Company",
       links: [
         { name: "About Us", href: "/about" },
-        { name: "Careers", href: "/careers" },
-        { name: "Press", href: "/press" },
         { name: "Blog", href: "/blog" },
-      ],
-    },
-    {
-      title: "Support",
-      links: [
-        { name: "Help Center", href: "/help" },
         { name: "Contact Us", href: "/contact" },
-        { name: "Safety", href: "/safety" },
-        { name: "Cancellation", href: "/cancellation" },
       ],
     },
     {
-      title: "Explore",
+      title: "Discover",
       links: [
-        { name: "Destinations", href: "/destinations" },
-        { name: "Activities", href: "/experiences" },
-        { name: "Travel Guide", href: "/guide" },
-        { name: "Gift Cards", href: "/gifts" },
+        { name: "Stays", href: "/stays" },
+        { name: "Experiences", href: "/experiences" },
+        { name: "Transport", href: "/transport" },
+        { name: "Packages", href: "/packages" },
+      ],
+    },
+    {
+      title: "Contact",
+      links: [
+        { name: "Vidijaweg 25, Wanica", href: "/contact" },
+        { name: "Boven-Suriname", href: "/contact" },
+        { name: "+597 8858525", href: "tel:+5978858525" },
+        { name: "info@jungleresortpingpe.com", href: "mailto:info@jungleresortpingpe.com" },
       ],
     },
     {
@@ -37,8 +36,6 @@ export function Footer() {
       links: [
         { name: "Terms of Service", href: "/terms" },
         { name: "Privacy Policy", href: "/privacy" },
-        { name: "Cookie Policy", href: "/cookies" },
-        { name: "Sitemap", href: "/sitemap" },
       ],
     },
   ];
