@@ -3,6 +3,7 @@ import { useBlogPost, useRelatedPosts } from "@/hooks/useBlog";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Facebook, Twitter, Linkedin } from "lucide-react";
 import { format } from "date-fns";
@@ -49,20 +50,13 @@ export default function BlogPost() {
 
   const seoTitle = post.seo_meta?.title || post.title;
   const seoDescription = post.seo_meta?.description || post.excerpt || "";
+  const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    image: post.featured_image,
-    datePublished: post.published_at || post.created_at,
-    dateModified: post.updated_at,
-    author: {
-      "@type": "Person",
-      name: "PingPe Resort",
-    },
-    description: seoDescription,
-  };
+  const breadcrumbs = [
+    { name: "Home", url: "https://www.jungleresortpingpe.com/" },
+    { name: "Blog", url: "https://www.jungleresortpingpe.com/blog" },
+    { name: post.title, url: currentUrl }
+  ];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -70,10 +64,22 @@ export default function BlogPost() {
         title={`${seoTitle} - PingPe Blog`}
         description={seoDescription}
         image={post.featured_image}
+        schemaType="BlogPosting"
+        author={{ name: "PingPe Resort Team" }}
+        datePublished={post.published_at || post.created_at}
+        dateModified={post.updated_at}
+        canonicalUrl={currentUrl}
+        url={currentUrl}
+        type="article"
+        keywords={[
+          "pingpe blog",
+          "suriname travel",
+          "jungle resort",
+          post.blog_categories?.name || "",
+          ...(post.seo_meta?.keywords || [])
+        ].filter(Boolean)}
       />
-      <script type="application/ld+json">
-        {JSON.stringify(structuredData)}
-      </script>
+      <BreadcrumbSchema items={breadcrumbs} />
       <Header />
 
       <article className="flex-1">
