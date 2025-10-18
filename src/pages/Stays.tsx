@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
@@ -11,9 +12,20 @@ import { useProperties } from "@/hooks/useProperties";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Stays() {
-  const [filters, setFilters] = useState({});
+  const [searchParams] = useSearchParams();
+  const [filters, setFilters] = useState(() => ({
+    location: searchParams.get("location") || undefined,
+    guests: searchParams.get("guests") ? parseInt(searchParams.get("guests")!) : undefined,
+  }));
   const [sortBy, setSortBy] = useState("popular");
   const { data: properties, isLoading } = useProperties({ ...filters, sortBy });
+
+  useEffect(() => {
+    const newFilters: any = {};
+    if (searchParams.get("location")) newFilters.location = searchParams.get("location");
+    if (searchParams.get("guests")) newFilters.guests = parseInt(searchParams.get("guests")!);
+    setFilters((prev) => ({ ...prev, ...newFilters }));
+  }, [searchParams]);
 
   const handleFilterChange = (newFilters: any) => {
     setFilters({ ...filters, ...newFilters });

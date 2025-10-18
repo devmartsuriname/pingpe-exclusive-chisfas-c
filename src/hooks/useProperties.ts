@@ -26,6 +26,7 @@ interface PropertyFilters {
   propertyType?: string;
   amenities?: string[];
   sortBy?: string;
+  location?: string;
 }
 
 export const useProperties = (filters: PropertyFilters = {}) => {
@@ -52,6 +53,9 @@ export const useProperties = (filters: PropertyFilters = {}) => {
       }
       if (filters.propertyType) {
         query = query.eq("property_type", filters.propertyType as any);
+      }
+      if (filters.location) {
+        query = query.or(`city.ilike.%${filters.location}%,address.ilike.%${filters.location}%`);
       }
 
       // Apply sorting

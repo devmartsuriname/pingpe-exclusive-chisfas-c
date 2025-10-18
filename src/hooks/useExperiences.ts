@@ -17,6 +17,8 @@ interface ExperienceFilters {
   difficultyLevel?: string;
   language?: string;
   sortBy?: string;
+  location?: string;
+  guests?: number;
 }
 
 export const useExperiences = (filters: ExperienceFilters = {}) => {
@@ -39,6 +41,12 @@ export const useExperiences = (filters: ExperienceFilters = {}) => {
       }
       if (filters.difficultyLevel) {
         query = query.eq("difficulty_level", filters.difficultyLevel);
+      }
+      if (filters.location) {
+        query = query.ilike("meeting_point", `%${filters.location}%`);
+      }
+      if (filters.guests) {
+        query = query.gte("max_participants", filters.guests);
       }
 
       if (filters.sortBy === "price_asc") {
