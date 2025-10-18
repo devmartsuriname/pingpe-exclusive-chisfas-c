@@ -315,6 +315,73 @@ className="text-foreground bg-primary"
 
 ---
 
+## 💬 Testimonials Section
+
+### Animated Masonry Layout
+
+The testimonials section uses an animated 3-column masonry layout with infinite vertical scrolling, powered by Framer Motion.
+
+#### TestimonialsColumn Component
+
+**Location:** `src/components/testimonials/TestimonialsColumn.tsx`
+
+**Props:**
+- `testimonials`: Array of testimonial objects with `text`, `image`, `name`, `role`
+- `duration`: Animation duration in seconds (creates parallax effect with different speeds)
+- `className`: Additional CSS classes
+
+**Features:**
+- Infinite vertical scroll animation using `motion.div`
+- Seamless looping by duplicating testimonials
+- Respects `prefers-reduced-motion` for accessibility
+- GPU-accelerated transforms for smooth 60fps animation
+
+**Usage Example:**
+```tsx
+import { TestimonialsColumn } from "@/components/testimonials/TestimonialsColumn";
+
+const testimonialsData = [
+  {
+    text: "Amazing experience!",
+    image: "https://ui-avatars.com/api/?name=John+Doe&background=10b981&color=fff",
+    name: "John Doe",
+    role: "Travel Blogger"
+  },
+  // Add 5-7 testimonials per column for smooth looping
+];
+
+<TestimonialsColumn 
+  testimonials={testimonialsData} 
+  duration={18}
+  className="hidden md:block"
+/>
+```
+
+**Layout Configuration:**
+- Desktop (≥768px): 3 columns visible with different scroll speeds (18s, 22s, 26s)
+- Mobile (<768px): 1 column centered (middle column only)
+- Max height: 800px with gradient fades at top/bottom
+- Overflow hidden to create seamless loop effect
+
+**Styling:**
+- Card background: `bg-background` (theme-aware)
+- Card border: `border border-border`
+- Shadow: `shadow-lg shadow-primary/10`
+- Rounded corners: `rounded-3xl`
+- Padding: `p-10`
+- Gap between cards: `gap-6`
+
+**Avatar Images:**
+- Use UI Avatars API for placeholders: `https://ui-avatars.com/api/?name=First+Last&background=COLOR&color=fff`
+- Or store custom avatar images in `/public/avatars/`
+
+**Performance Notes:**
+- Uses `transform: translateY` for GPU acceleration
+- Animation respects user's motion preferences
+- Each column needs 5-7 testimonials minimum for smooth infinite loop
+
+---
+
 ## 🧪 Testing Checklist
 
 ### Before Deploying

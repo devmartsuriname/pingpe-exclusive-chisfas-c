@@ -9,7 +9,7 @@ import { ListingCard } from "@/components/cards/ListingCard";
 import { CategoryCard } from "@/components/cards/CategoryCard";
 import { HostCard } from "@/components/cards/HostCard";
 import { LocationBadge } from "@/components/cards/LocationBadge";
-import { TestimonialCard } from "@/components/cards/TestimonialCard";
+import { TestimonialsColumn } from "@/components/testimonials/TestimonialsColumn";
 import { IllustratedStep } from "@/components/how-it-works/IllustratedStep";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -145,25 +145,122 @@ const Index = () => {
     { name: "Atjoni", count: 15, image: locationAtjoni, href: "/search?location=atjoni" },
   ];
 
-  const testimonials = [
+  // Testimonials data for 3-column masonry layout
+  const testimonialsColumnA = [
     {
-      quote: "The Back to Basic tour exceeded all expectations. Our guide was incredibly knowledgeable about the jungle and Saramaccan culture. The authentic village visits and river life were unforgettable!",
-      rating: 5,
+      text: "The Back to Basic tour exceeded all expectations. Our guide was incredibly knowledgeable about the jungle and Saramaccan culture.",
+      image: "https://ui-avatars.com/api/?name=Lennie+Swiffan&background=10b981&color=fff",
       name: "Lennie Swiffan",
-      location: "Netherlands",
+      role: "Netherlands Traveler"
     },
     {
-      quote: "PingPe Resort is a hidden gem! The traditional huts right on the river, amazing food, and the warmth of the local people made this the highlight of our Suriname trip. Highly recommend the Extended Adventure!",
-      rating: 5,
+      text: "PingPe Resort is a hidden gem! The traditional huts right on the river, amazing food, and the warmth of the local people made this unforgettable.",
+      image: "https://ui-avatars.com/api/?name=Marco+Barneveld&background=3b82f6&color=fff",
       name: "Marco Barneveld",
-      location: "National Geographic Traveller",
+      role: "Travel Writer"
     },
     {
-      quote: "As featured in National Geographic - this is authentic eco-tourism done right. The guides are from the local community, the resort is sustainably built, and the experience is genuinely immersive.",
-      rating: 5,
-      name: "Sarah Mitchell",
-      location: "United Kingdom",
+      text: "The river journey to PingPe was breathtaking. Watching the rainforest unfold along the Suriname River felt like stepping back in time.",
+      image: "https://ui-avatars.com/api/?name=Emily+Chen&background=f59e0b&color=fff",
+      name: "Emily Chen",
+      role: "Adventure Photographer"
     },
+    {
+      text: "Our guide's knowledge of medicinal plants and traditional fishing methods was incredible. This is education through experience.",
+      image: "https://ui-avatars.com/api/?name=David+Kumar&background=8b5cf6&color=fff",
+      name: "David Kumar",
+      role: "Biology Teacher"
+    },
+    {
+      text: "The authentic village visits were the highlight. Meeting local artisans and learning about their wood carving traditions was deeply meaningful.",
+      image: "https://ui-avatars.com/api/?name=Sophie+Laurent&background=ec4899&color=fff",
+      name: "Sophie Laurent",
+      role: "Cultural Anthropologist"
+    },
+    {
+      text: "Sunset on the river with traditional music in the background - pure magic. PingPe offers something truly special.",
+      image: "https://ui-avatars.com/api/?name=James+Wilson&background=06b6d4&color=fff",
+      name: "James Wilson",
+      role: "UK Tourist"
+    }
+  ];
+
+  const testimonialsColumnB = [
+    {
+      text: "As featured in National Geographic - this is authentic eco-tourism done right. The guides are from the local community and the resort is sustainably built.",
+      image: "https://ui-avatars.com/api/?name=Sarah+Mitchell&background=10b981&color=fff",
+      name: "Sarah Mitchell",
+      role: "UK Journalist"
+    },
+    {
+      text: "The Extended Adventure was worth every penny. Six days of pristine jungle, incredible wildlife sightings, and genuine cultural exchange.",
+      image: "https://ui-avatars.com/api/?name=Thomas+Berg&background=f59e0b&color=fff",
+      name: "Thomas Berg",
+      role: "German Explorer"
+    },
+    {
+      text: "Swimming in crystal-clear creeks, hiking to hidden waterfalls, sleeping in traditional huts - this exceeded all my jungle adventure dreams.",
+      image: "https://ui-avatars.com/api/?name=Ana+Rodriguez&background=3b82f6&color=fff",
+      name: "Ana Rodriguez",
+      role: "Spanish Backpacker"
+    },
+    {
+      text: "The food was outstanding! Traditional Saramaccan dishes prepared with fresh jungle ingredients. I took so many recipe notes.",
+      image: "https://ui-avatars.com/api/?name=Marie+Dubois&background=ec4899&color=fff",
+      name: "Marie Dubois",
+      role: "Food Blogger"
+    },
+    {
+      text: "Perfect for families! Our kids learned so much about rainforest ecology and loved the rope swings and river swimming.",
+      image: "https://ui-avatars.com/api/?name=Robert+Johnson&background=8b5cf6&color=fff",
+      name: "Robert Johnson",
+      role: "US Family Traveler"
+    },
+    {
+      text: "The night sounds of the jungle, the star-filled sky, and the peace of being disconnected - exactly what I needed.",
+      image: "https://ui-avatars.com/api/?name=Lisa+van+Dijk&background=06b6d4&color=fff",
+      name: "Lisa van Dijk",
+      role: "Netherlands Writer"
+    }
+  ];
+
+  const testimonialsColumnC = [
+    {
+      text: "The guides' passion for protecting their ancestral lands and sharing their culture is inspiring. This is tourism with purpose.",
+      image: "https://ui-avatars.com/api/?name=Michael+Brown&background=10b981&color=fff",
+      name: "Michael Brown",
+      role: "Environmental Activist"
+    },
+    {
+      text: "River hopping between different lodges gave us a comprehensive view of life on the Boven-Suriname. Each stop was unique.",
+      image: "https://ui-avatars.com/api/?name=Anna+Kowalski&background=3b82f6&color=fff",
+      name: "Anna Kowalski",
+      role: "Polish Adventurer"
+    },
+    {
+      text: "The traditional drumming and dancing performances were powerful and authentic. You can feel the cultural pride in every beat.",
+      image: "https://ui-avatars.com/api/?name=Carlos+Silva&background=f59e0b&color=fff",
+      name: "Carlos Silva",
+      role: "Brazilian Musician"
+    },
+    {
+      text: "Spotting monkeys, toucans, and colorful frogs was amazing, but learning about the ecosystem from local experts made it unforgettable.",
+      image: "https://ui-avatars.com/api/?name=Helena+Andersen&background=ec4899&color=fff",
+      name: "Helena Andersen",
+      role: "Danish Biologist"
+    },
+    {
+      text: "The Day Experience at PingPe is perfect if you're short on time. We packed so much into one day - boat ride, jungle walk, traditional lunch.",
+      image: "https://ui-avatars.com/api/?name=John+Taylor&background=8b5cf6&color=fff",
+      name: "John Taylor",
+      role: "Paramaribo Expat"
+    },
+    {
+      text: "Sustainable tourism at its finest. Solar power, composting toilets, local employment - PingPe walks the talk on eco-responsibility.",
+      image: "https://ui-avatars.com/api/?name=Emma+Green&background=06b6d4&color=fff",
+      name: "Emma Green",
+      role: "Sustainability Consultant"
+    }
   ];
 
   return (
@@ -474,32 +571,47 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <h2 className="font-display text-3xl font-bold text-center mb-12">
-            Good news from far away 🏝️
-          </h2>
+      {/* Testimonials Section - Animated Masonry Layout */}
+      <section id="testimonials" className="py-20 px-6 md:px-12 bg-muted/30">
+        <div className="container mx-auto max-w-7xl">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-primary/10 text-primary">
+              Testimonials
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
+              What our users say
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              See what our customers have to say about us.
+            </p>
+          </div>
 
-          <div className="max-w-5xl mx-auto">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-            >
-              <CarouselContent>
-                {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <TestimonialCard {...testimonial} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <div className="flex justify-center gap-2 mt-8">
-                <CarouselPrevious className="relative static translate-y-0" />
-                <CarouselNext className="relative static translate-y-0" />
-              </div>
-            </Carousel>
+          {/* Three Column Masonry Layout with Gradient Fades */}
+          <div className="relative">
+            {/* Top Fade */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-muted/30 to-transparent z-10 pointer-events-none" />
+            
+            {/* Columns Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden max-h-[800px]">
+              <TestimonialsColumn 
+                testimonials={testimonialsColumnA} 
+                duration={18}
+                className="hidden md:block"
+              />
+              <TestimonialsColumn 
+                testimonials={testimonialsColumnB} 
+                duration={22}
+              />
+              <TestimonialsColumn 
+                testimonials={testimonialsColumnC} 
+                duration={26}
+                className="hidden md:block"
+              />
+            </div>
+            
+            {/* Bottom Fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-muted/30 to-transparent z-10 pointer-events-none" />
           </div>
         </div>
       </section>
