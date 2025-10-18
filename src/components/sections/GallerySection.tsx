@@ -1,3 +1,5 @@
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
+
 interface GallerySectionProps {
   content: {
     heading?: string;
@@ -19,9 +21,12 @@ export function GallerySection({ content }: GallerySectionProps) {
               key={index}
               className="aspect-square rounded-lg overflow-hidden hover-scale cursor-pointer"
             >
-              <img
+              <OptimizedImage
                 src={image}
                 alt={`Gallery image ${index + 1}`}
+                width={400}
+                height={400}
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 className="w-full h-full object-cover"
               />
             </div>

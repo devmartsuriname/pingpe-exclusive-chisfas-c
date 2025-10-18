@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, Share2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import {
   Carousel,
   CarouselContent,
@@ -33,15 +34,19 @@ export const ImageGallery = ({ images, title }: ImageGalleryProps) => {
       <div className="grid grid-cols-4 gap-2 rounded-2xl overflow-hidden">
         {/* Main Image */}
         <div
-          className="col-span-4 md:col-span-2 md:row-span-2 relative cursor-pointer group"
+          className="col-span-4 md:col-span-2 md:row-span-2 relative cursor-pointer group overflow-hidden"
           onClick={() => {
             setSelectedImage(0);
             setIsLightboxOpen(true);
           }}
         >
-          <img
+          <OptimizedImage
             src={images[0] || "/placeholder.svg"}
             alt={`${title} - Main`}
+            priority={true}
+            width={800}
+            height={600}
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="w-full h-full object-cover aspect-[4/3] md:aspect-auto transition-transform duration-300 group-hover:scale-105"
           />
         </div>
@@ -56,9 +61,12 @@ export const ImageGallery = ({ images, title }: ImageGalleryProps) => {
               setIsLightboxOpen(true);
             }}
           >
-            <img
+            <OptimizedImage
               src={image}
               alt={`${title} - ${index + 2}`}
+              width={400}
+              height={400}
+              sizes="(max-width: 768px) 50vw, 25vw"
               className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105"
             />
           </div>
@@ -87,9 +95,13 @@ export const ImageGallery = ({ images, title }: ImageGalleryProps) => {
               {images.map((image, index) => (
                 <CarouselItem key={index}>
                   <div className="flex items-center justify-center p-8">
-                    <img
+                    <OptimizedImage
                       src={image}
                       alt={`${title} - ${index + 1}`}
+                      width={1920}
+                      height={1080}
+                      priority={index === selectedImage}
+                      sizes="100vw"
                       className="max-h-[80vh] w-auto object-contain"
                     />
                   </div>

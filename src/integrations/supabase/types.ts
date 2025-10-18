@@ -466,6 +466,7 @@ export type Database = {
       media_library: {
         Row: {
           alt_text: string | null
+          avif_url: string | null
           created_at: string
           file_size: number
           file_type: string
@@ -473,15 +474,18 @@ export type Database = {
           height: number | null
           id: string
           name: string
+          srcset: Json | null
           tags: string[] | null
           thumbnail_url: string | null
           updated_at: string
           uploaded_by: string
           url: string
+          webp_url: string | null
           width: number | null
         }
         Insert: {
           alt_text?: string | null
+          avif_url?: string | null
           created_at?: string
           file_size: number
           file_type: string
@@ -489,15 +493,18 @@ export type Database = {
           height?: number | null
           id?: string
           name: string
+          srcset?: Json | null
           tags?: string[] | null
           thumbnail_url?: string | null
           updated_at?: string
           uploaded_by: string
           url: string
+          webp_url?: string | null
           width?: number | null
         }
         Update: {
           alt_text?: string | null
+          avif_url?: string | null
           created_at?: string
           file_size?: number
           file_type?: string
@@ -505,11 +512,13 @@ export type Database = {
           height?: number | null
           id?: string
           name?: string
+          srcset?: Json | null
           tags?: string[] | null
           thumbnail_url?: string | null
           updated_at?: string
           uploaded_by?: string
           url?: string
+          webp_url?: string | null
           width?: number | null
         }
         Relationships: []
