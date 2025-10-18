@@ -92,6 +92,6 @@ export const useUnifiedSearch = (params: UnifiedSearchParams) => {
 
       return results;
     },
-    enabled: !!params.location || !!params.guests,
+    enabled: !!params.type || !!params.guests || !!params.startDate || !!params.endDate,
   });
 };
