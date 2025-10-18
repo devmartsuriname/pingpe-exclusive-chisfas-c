@@ -192,9 +192,9 @@ export default function StayDetail() {
                         <div className="flex items-start gap-4">
                           <div className="flex-1">
                             <div className="flex items-center justify-between mb-2">
-                              <h4 className="font-semibold">
+                              <h3 className="font-semibold">
                                 {review.profiles?.full_name || "Anonymous"}
-                              </h4>
+                              </h3>
                               <div className="flex items-center gap-1">
                                 <Star className="w-4 h-4 fill-primary text-primary" />
                                 <span className="font-medium">{review.rating}</span>
