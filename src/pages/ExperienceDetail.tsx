@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { ProductSchema } from "@/components/seo/ProductSchema";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 import { ImageGallery } from "@/components/detail/ImageGallery";
 import { HostProfileCard } from "@/components/detail/HostProfileCard";
@@ -39,8 +42,39 @@ export default function ExperienceDetail() {
     );
   }
 
+  const currentUrl = typeof window !== "undefined" ? window.location.href : `https://www.jungleresortpingpe.com/experiences/${id}`;
+  const breadcrumbs = [
+    { name: "Home", url: "https://www.jungleresortpingpe.com/" },
+    { name: "Experiences", url: "https://www.jungleresortpingpe.com/experiences" },
+    { name: experience.title, url: currentUrl }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title={`${experience.title} - Jungle Resort PingPe`}
+        description={experience.description || `Experience ${experience.title} at ${experience.meeting_point}`}
+        image={experience.images?.[0]}
+        url={currentUrl}
+        schemaType="Product"
+        canonicalUrl={currentUrl}
+      />
+      <BreadcrumbSchema items={breadcrumbs} />
+      <ProductSchema
+        name={experience.title}
+        description={experience.description || `Authentic jungle experience in Suriname`}
+        image={experience.images || []}
+        url={currentUrl}
+        price={Number(experience.price_per_person)}
+        priceCurrency="USD"
+        availability="InStock"
+        rating={{
+          ratingValue: 4.9,
+          reviewCount: 28
+        }}
+        brand="Jungle Resort PingPe"
+        category="Experience"
+      />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav

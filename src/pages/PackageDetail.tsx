@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { ProductSchema } from "@/components/seo/ProductSchema";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 import { ImageGallery } from "@/components/detail/ImageGallery";
 import { HostProfileCard } from "@/components/detail/HostProfileCard";
@@ -39,8 +42,35 @@ export default function PackageDetail() {
     );
   }
 
+  const currentUrl = typeof window !== "undefined" ? window.location.href : `https://www.jungleresortpingpe.com/packages/${id}`;
+  const breadcrumbs = [
+    { name: "Home", url: "https://www.jungleresortpingpe.com/" },
+    { name: "Packages", url: "https://www.jungleresortpingpe.com/packages" },
+    { name: pkg.title, url: currentUrl }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title={`${pkg.title} - Jungle Resort PingPe`}
+        description={pkg.description || `${pkg.duration_days}-day adventure package in Suriname`}
+        image={pkg.images?.[0]}
+        url={currentUrl}
+        schemaType="Product"
+        canonicalUrl={currentUrl}
+      />
+      <BreadcrumbSchema items={breadcrumbs} />
+      <ProductSchema
+        name={pkg.title}
+        description={pkg.description || `Complete ${pkg.duration_days}-day jungle adventure package`}
+        image={pkg.images || []}
+        url={currentUrl}
+        price={Number(pkg.price_total)}
+        priceCurrency="USD"
+        availability="InStock"
+        brand="Jungle Resort PingPe"
+        category="Travel Package"
+      />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav

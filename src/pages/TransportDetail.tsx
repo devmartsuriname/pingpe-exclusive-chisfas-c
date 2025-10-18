@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { ProductSchema } from "@/components/seo/ProductSchema";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 import { ImageGallery } from "@/components/detail/ImageGallery";
 import { HostProfileCard } from "@/components/detail/HostProfileCard";
@@ -39,8 +42,35 @@ export default function TransportDetail() {
     );
   }
 
+  const currentUrl = typeof window !== "undefined" ? window.location.href : `https://www.jungleresortpingpe.com/transport/${id}`;
+  const breadcrumbs = [
+    { name: "Home", url: "https://www.jungleresortpingpe.com/" },
+    { name: "Transport", url: "https://www.jungleresortpingpe.com/transport" },
+    { name: transport.title, url: currentUrl }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title={`${transport.title} - Jungle Resort PingPe`}
+        description={transport.description || `Transport service from ${transport.route_from} to ${transport.route_to}`}
+        image={transport.images?.[0]}
+        url={currentUrl}
+        schemaType="Product"
+        canonicalUrl={currentUrl}
+      />
+      <BreadcrumbSchema items={breadcrumbs} />
+      <ProductSchema
+        name={transport.title}
+        description={transport.description || `${transport.vehicle_type} transport service in Suriname`}
+        image={transport.images || []}
+        url={currentUrl}
+        price={Number(transport.price_per_person)}
+        priceCurrency="USD"
+        availability="InStock"
+        brand="Jungle Resort PingPe"
+        category="Transport"
+      />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav

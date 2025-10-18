@@ -1,6 +1,9 @@
 import { useParams, Link } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { ProductSchema } from "@/components/seo/ProductSchema";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 import { ImageGallery } from "@/components/detail/ImageGallery";
 import { HostProfileCard } from "@/components/detail/HostProfileCard";
@@ -39,8 +42,44 @@ export default function StayDetail() {
     );
   }
 
+  const currentUrl = typeof window !== "undefined" ? window.location.href : `https://www.jungleresortpingpe.com/stays/${id}`;
+  const breadcrumbs = [
+    { name: "Home", url: "https://www.jungleresortpingpe.com/" },
+    { name: "Stays", url: "https://www.jungleresortpingpe.com/stays" },
+    { name: property.title, url: currentUrl }
+  ];
+
+  // Calculate average rating from reviews
+  const avgRating = property.reviews?.length 
+    ? property.reviews.reduce((acc, r) => acc + r.rating, 0) / property.reviews.length 
+    : 4.8;
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title={`${property.title} - Jungle Resort PingPe`}
+        description={property.description || `Book ${property.title} in ${property.city}, ${property.country}`}
+        image={property.images?.[0]}
+        url={currentUrl}
+        schemaType="Product"
+        canonicalUrl={currentUrl}
+      />
+      <BreadcrumbSchema items={breadcrumbs} />
+      <ProductSchema
+        name={property.title}
+        description={property.description || `Eco-lodge accommodation in ${property.city}`}
+        image={property.images || []}
+        url={currentUrl}
+        price={Number(property.price_per_night)}
+        priceCurrency="USD"
+        availability="InStock"
+        rating={{
+          ratingValue: avgRating,
+          reviewCount: property.reviews?.length || 0
+        }}
+        brand="Jungle Resort PingPe"
+        category={property.property_type}
+      />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav

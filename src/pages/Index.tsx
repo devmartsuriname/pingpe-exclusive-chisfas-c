@@ -1,6 +1,8 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
+import { WebSiteSchema } from "@/components/seo/WebSiteSchema";
+import { OrganizationSchema } from "@/components/seo/OrganizationSchema";
 import { HeroSearchBar } from "@/components/search/HeroSearchBar";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { ListingCard } from "@/components/cards/ListingCard";
@@ -173,6 +175,30 @@ const Index = () => {
         title="Jungle Resort PingPe - Authentic Upper Suriname Rainforest Adventures"
         description="Experience authentic rainforest adventures at Jungle Resort PingPe. Eco-friendly lodges, guided jungle tours, and immersive Saramaccan cultural experiences in Upper Suriname."
         url="https://www.jungleresortpingpe.com"
+      />
+      <WebSiteSchema
+        name="Jungle Resort PingPe"
+        url="https://www.jungleresortpingpe.com"
+        description="Authentic Upper Suriname Rainforest Adventures and Eco-Tourism Experiences"
+        searchUrl="https://www.jungleresortpingpe.com/search?q={search_term_string}"
+      />
+      <OrganizationSchema
+        name="Jungle Resort PingPe"
+        description="Leading eco-tourism provider in Upper Suriname, offering authentic jungle experiences and cultural immersion in the Boven-Suriname River region."
+        url="https://www.jungleresortpingpe.com"
+        logo="https://www.jungleresortpingpe.com/logo.png"
+        foundingDate="2010"
+        email="info@jungleresortpingpe.com"
+        phone="+597-XXXXXXX"
+        address={{
+          streetAddress: "Boven-Suriname River Region",
+          addressLocality: "Upper Suriname",
+          addressCountry: "SR"
+        }}
+        sameAs={[
+          "https://www.facebook.com/pingperesort",
+          "https://www.instagram.com/pingperesort"
+        ]}
       />
       <Header />
 
