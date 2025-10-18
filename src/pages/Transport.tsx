@@ -3,7 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
 import { ListingCard } from "@/components/cards/ListingCard";
-import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { PageHero } from "@/components/sections/PageHero";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import SEO from "@/components/SEO";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -31,8 +31,13 @@ export default function Transport() {
         { name: "Transport", url: "https://www.jungleresortpingpe.com/transport" }
       ]} />
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <BreadcrumbNav items={[{ label: "Transport" }]} />
+      <PageHero
+        title="Jungle Transport"
+        subtitle="Safe and reliable transfers through the heart of the rainforest"
+        backgroundImage="/demo-content/gallery-2.jpg"
+        breadcrumbItems={[{ label: "Transport" }]}
+      />
+      <main className="flex-1 container mx-auto px-4 pt-12 pb-16">
 
         <div className="flex flex-col lg:flex-row gap-8">
           <aside className="lg:sticky lg:top-24 lg:self-start">

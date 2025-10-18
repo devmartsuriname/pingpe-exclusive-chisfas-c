@@ -25,7 +25,14 @@ export function OptimizedImage({
   const [error, setError] = useState(false);
 
   // Treat Vite dev/prod asset URLs and data URLs as static assets
-  const isStaticAsset = !!src && (/^\/(assets|src)\//.test(src) || src.startsWith("/@fs/") || src.startsWith("./") || src.startsWith("../") || src.startsWith("data:"));
+  const isStaticAsset = !!src && (
+    /^\/(assets|src|demo-content)\//.test(src) || 
+    src.startsWith("/@fs/") || 
+    src.startsWith("/") || 
+    src.startsWith("./") || 
+    src.startsWith("../") || 
+    src.startsWith("data:")
+  );
 
   // Build correct fetchpriority attribute (lowercase) without React warning
   const fetchPriorityAttr = priority ? { fetchpriority: "high" } : { fetchpriority: "auto" };

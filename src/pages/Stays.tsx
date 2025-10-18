@@ -3,7 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
 import { ListingCard } from "@/components/cards/ListingCard";
-import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { PageHero } from "@/components/sections/PageHero";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import SEO from "@/components/SEO";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -31,8 +31,13 @@ export default function Stays() {
         { name: "Stays", url: "https://www.jungleresortpingpe.com/stays" }
       ]} />
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <BreadcrumbNav items={[{ label: "Stays" }]} />
+      <PageHero
+        title="Jungle Stays"
+        subtitle="Discover authentic lodges and eco-resorts in Suriname's pristine rainforest"
+        backgroundImage="/demo-content/gallery-1.jpg"
+        breadcrumbItems={[{ label: "Stays" }]}
+      />
+      <main className="flex-1 container mx-auto px-4 pt-12 pb-16">
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filters Sidebar */}
