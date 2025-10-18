@@ -18,13 +18,8 @@ export default defineConfig(({ mode }) => ({
   build: {
     // Inline small assets as base64
     assetsInlineLimit: 4096,
-    // Enable minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: mode === 'production',
-      },
-    },
+    // Enable minification with esbuild (faster than terser, no extra dependency)
+    minify: 'esbuild',
     // Optimize chunk splitting
     rollupOptions: {
       output: {
