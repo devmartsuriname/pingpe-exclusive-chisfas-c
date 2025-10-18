@@ -202,7 +202,7 @@ export async function seedDemoContent(userId: string): Promise<SeedResult> {
         route_from: "PingPe",
         route_to: "Custom Routes",
         capacity: 8,
-        price_per_person: null,
+        price_per_person: 35,
         price_per_group: 280,
         duration_hours: 8,
         luggage_allowance: "Flexible",
