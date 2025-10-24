@@ -69,7 +69,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "An encounter with the pristine jungle and authentic culture of Upper Suriname!",
       tour_type: "standard",
       duration_days: 3,
-      duration_hours: 72,
+      duration_hours: 8,
       price_per_person: 285,
       description: "Experience the untouched jungle and authentic culture of Upper Suriname. This 3-day adventure takes you deep into the rainforest where you'll encounter the Saramaccan culture, swim in pristine rivers, explore Tapawatra waterfall, and enjoy traditional cultural performances.",
       day_program: [
@@ -128,7 +128,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Enjoy the magnificent nature and experience the authentic culture of Upper Suriname!",
       tour_type: "standard",
       duration_days: 4,
-      duration_hours: 96,
+      duration_hours: 8,
       price_per_person: 360,
       description: "A comprehensive 4-day journey combining pristine jungle exploration, authentic village life, school visits, and cultural immersion. Experience the Saramaccan way of life, trek through untouched rainforest, and swim in the magnificent Tapawatra waterfall.",
       day_program: [
@@ -195,7 +195,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Experience the untouched jungle and authentic culture of Upper Suriname with a unique Back-to-Basic experience!",
       tour_type: "back-to-basic",
       duration_days: 4,
-      duration_hours: 96,
+      duration_hours: 8,
       price_per_person: 380,
       description: "Unique 4-day adventure featuring 2 days deep in pristine jungle with overnight camping at Kamp Anjoemara. Trek 4 hours into untouched rainforest, sleep in hammocks by a large creek, fish for Anjoemara, and truly disconnect from the outside world. Experience the jungle in its most authentic form.",
       day_program: [
@@ -264,7 +264,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Discover the magnificent nature and experience the authentic culture of Upper Suriname!",
       tour_type: "standard",
       duration_days: 5,
-      duration_hours: 24,
+      duration_hours: 8,
       price_per_person: 385,
       description: "Extended 5-day exploration featuring jungle treks, cultural immersion, Tapawatra waterfall, and the challenging Ananasberg mountain climb. Experience village life, visit the Granman's village, and enjoy multiple cultural performances.",
       day_program: [
@@ -339,7 +339,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Experience the untouched jungle and authentic culture of Upper Suriname with an extended Back-to-Basic adventure!",
       tour_type: "back-to-basic",
       duration_days: 5,
-      duration_hours: 24,
+      duration_hours: 8,
       price_per_person: 410,
       description: "Extended 5-day back-to-basic adventure with 2 days of primitive jungle camping at Kamp Anjoemara. Trek deep into pristine rainforest, sleep in hammocks, fish for Anjoemara, and experience authentic jungle life. Includes Tapawatra waterfall and cultural performances.",
       day_program: [
@@ -416,7 +416,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Experience the untouched jungle and authentic culture of Upper Suriname with the ultimate Back-to-Basic adventure!",
       tour_type: "back-to-basic",
       duration_days: 6,
-      duration_hours: 24,
+      duration_hours: 8,
       price_per_person: 430,
       description: "Ultimate 6-day back-to-basic expedition featuring 3 days of primitive jungle camping. Trek deep into pristine rainforest, live like a true jungle explorer, and completely disconnect from civilization. Includes cultural immersion, Tapawatra waterfall, and visits to traditional villages.",
       day_program: [
@@ -502,7 +502,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Combine Brownsberg Nature Park and Brokopondo Lake with Jungle Resort Pingpe for the perfect nature adventure!",
       tour_type: "combination",
       duration_days: 2,
-      duration_hours: 48,
+      duration_hours: 8,
       price_per_person: 145,
       description: "Perfect 2-day combination tour featuring Brownsberg Nature Park's stunning waterfalls, panoramic views from Mazaroni Plateau, and the serene Ston Island on Brokopondo Lake. Ideal for nature lovers and active hikers. Can be combined with longer Pingpe tours.",
       day_program: [
