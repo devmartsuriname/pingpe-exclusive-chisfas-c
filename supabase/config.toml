@@ -3,6 +3,12 @@ project_id = "kolzaqqfwldrksyrlwxx"
 [functions.generate-sitemap]
 verify_jwt = false
 
+[functions.send-email-v2]
+verify_jwt = false
+
+[functions.test-email-v2]
+verify_jwt = true
+
 [functions.optimize-image]
 verify_jwt = false
 

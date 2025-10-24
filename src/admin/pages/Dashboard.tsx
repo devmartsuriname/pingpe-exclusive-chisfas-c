@@ -6,6 +6,7 @@ import ActivityFeed from "@/admin/components/dashboard/ActivityFeed";
 import { useAdminStats, useRevenueData, useBookingTrends } from "@/admin/hooks/useAdminStats";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import EmailStatusWidget from "@/admin/components/dashboard/EmailStatusWidget";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -170,8 +171,10 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      {/* Quick Stats Tables */}
-      <div className="grid gap-4 md:grid-cols-2">
+      {/* Email Status Widget */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <EmailStatusWidget />
+        <div className="md:col-span-2 grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Upcoming Bookings Today</CardTitle>
@@ -253,6 +256,7 @@ export default function Dashboard() {
             )}
           </CardContent>
         </Card>
+        </div>
       </div>
 
       {/* Quick Actions */}
