@@ -1,3 +1,5 @@
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { Sun, Wifi, Coffee, TreePine, Home, Users } from "lucide-react";
@@ -9,7 +11,7 @@ export default function Accommodation() {
   ];
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <SEO
         title="Accommodation | Jungle Resort PingPe - Eco-Lodges in Suriname Rainforest"
         description="Stay in our eco-friendly lodges at Jungle Resort PingPe. Six spacious lodges with private facilities, solar power, and stunning river views in the heart of Upper Suriname's pristine jungle."
@@ -17,8 +19,9 @@ export default function Accommodation() {
         schemaType="WebPage"
       />
       <BreadcrumbSchema items={breadcrumbs} />
-
-      <main className="min-h-screen">
+      <Header />
+      
+      <main className="flex-1">
         {/* Hero Section */}
         <section className="relative h-[60vh] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
           <div className="container mx-auto px-4 text-center">
@@ -183,6 +186,7 @@ export default function Accommodation() {
           </div>
         </section>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }

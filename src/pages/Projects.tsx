@@ -1,3 +1,5 @@
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { Leaf, Heart, Users, Construction } from "lucide-react";
@@ -9,7 +11,7 @@ export default function Projects() {
   ];
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <SEO
         title="Community Projects & Sustainability | Jungle Resort PingPe"
         description="Learn about Jungle Resort PingPe's community development projects and sustainability initiatives supporting local villages in Upper Suriname. Conservation, education, and cultural preservation."
@@ -17,8 +19,9 @@ export default function Projects() {
         schemaType="WebPage"
       />
       <BreadcrumbSchema items={breadcrumbs} />
-
-      <main className="min-h-screen">
+      <Header />
+      
+      <main className="flex-1">
         {/* Hero Section */}
         <section className="relative h-[60vh] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
           <div className="container mx-auto px-4 text-center">
@@ -122,6 +125,7 @@ export default function Projects() {
           </div>
         </section>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }

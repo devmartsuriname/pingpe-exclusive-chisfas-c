@@ -1,3 +1,5 @@
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { Users, Heart, Home, TreePine, School, Radio } from "lucide-react";
@@ -9,7 +11,7 @@ export default function Village() {
   ];
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <SEO
         title="PingPe Village | Authentic Saramaccan Maroon Culture in Suriname"
         description="Discover PingPe Village - an authentic Maroon settlement in Upper Suriname where 200 inhabitants preserve traditional Saramaccan culture, customs, and self-sustaining lifestyle passed down from West African ancestors."
@@ -17,8 +19,9 @@ export default function Village() {
         schemaType="Place"
       />
       <BreadcrumbSchema items={breadcrumbs} />
-
-      <main className="min-h-screen">
+      <Header />
+      
+      <main className="flex-1">
         {/* Hero Section */}
         <section className="relative h-[60vh] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
           <div className="container mx-auto px-4 text-center">
@@ -235,6 +238,7 @@ export default function Village() {
           </div>
         </section>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }
