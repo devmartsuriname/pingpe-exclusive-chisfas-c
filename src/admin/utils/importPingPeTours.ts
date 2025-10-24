@@ -264,7 +264,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Discover the magnificent nature and experience the authentic culture of Upper Suriname!",
       tour_type: "standard",
       duration_days: 5,
-      duration_hours: 120,
+      duration_hours: 24,
       price_per_person: 385,
       description: "Extended 5-day exploration featuring jungle treks, cultural immersion, Tapawatra waterfall, and the challenging Ananasberg mountain climb. Experience village life, visit the Granman's village, and enjoy multiple cultural performances.",
       day_program: [
@@ -339,7 +339,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Experience the untouched jungle and authentic culture of Upper Suriname with an extended Back-to-Basic adventure!",
       tour_type: "back-to-basic",
       duration_days: 5,
-      duration_hours: 120,
+      duration_hours: 24,
       price_per_person: 410,
       description: "Extended 5-day back-to-basic adventure with 2 days of primitive jungle camping at Kamp Anjoemara. Trek deep into pristine rainforest, sleep in hammocks, fish for Anjoemara, and experience authentic jungle life. Includes Tapawatra waterfall and cultural performances.",
       day_program: [
@@ -416,7 +416,7 @@ export async function importPingPeTours(userId: string): Promise<ImportResult> {
       subtitle: "Experience the untouched jungle and authentic culture of Upper Suriname with the ultimate Back-to-Basic adventure!",
       tour_type: "back-to-basic",
       duration_days: 6,
-      duration_hours: 144,
+      duration_hours: 24,
       price_per_person: 430,
       description: "Ultimate 6-day back-to-basic expedition featuring 3 days of primitive jungle camping. Trek deep into pristine rainforest, live like a true jungle explorer, and completely disconnect from civilization. Includes cultural immersion, Tapawatra waterfall, and visits to traditional villages.",
       day_program: [
