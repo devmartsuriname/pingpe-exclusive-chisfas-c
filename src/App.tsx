@@ -67,6 +67,9 @@ import PageEdit from "./admin/pages/pages/PageEdit";
 import MediaLibrary from "./admin/pages/media/MediaLibrary";
 import ContentManagement from "./admin/pages/content/ContentManagement";
 import DynamicPage from "./pages/DynamicPage";
+import Accommodation from "./pages/Accommodation";
+import Village from "./pages/Village";
+import Projects from "./pages/Projects";
 
 const queryClient = new QueryClient();
 
@@ -104,6 +107,9 @@ const App = () => (
         {/* Static Pages */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/accommodation" element={<Accommodation />} />
+        <Route path="/village" element={<Village />} />
+        <Route path="/projects" element={<Projects />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/destinations" element={<Destinations />} />

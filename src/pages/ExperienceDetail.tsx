@@ -11,8 +11,10 @@ import { BookingBar } from "@/components/detail/BookingBar";
 import { useExperienceDetail } from "@/hooks/useExperiences";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Users, MapPin, Star } from "lucide-react";
+import { Clock, Users, MapPin, Star, Calendar, Bus } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { DayByDayAccordion } from "@/components/experiences/DayByDayAccordion";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function ExperienceDetail() {
   const { id } = useParams<{ id: string }>();
@@ -110,13 +112,23 @@ export default function ExperienceDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-primary" />
-                  <div>
-                    <div className="text-sm text-muted-foreground">Duration</div>
-                    <div className="font-semibold">{experience.duration_hours}h</div>
+                {experience.duration_days ? (
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-primary" />
+                    <div>
+                      <div className="text-sm text-muted-foreground">Duration</div>
+                      <div className="font-semibold">{experience.duration_days} Days</div>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-primary" />
+                    <div>
+                      <div className="text-sm text-muted-foreground">Duration</div>
+                      <div className="font-semibold">{experience.duration_hours}h</div>
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-primary" />
                   <div>
@@ -124,6 +136,13 @@ export default function ExperienceDetail() {
                     <div className="font-semibold">Up to {experience.max_participants}</div>
                   </div>
                 </div>
+                {experience.tour_type && (
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="capitalize">
+                      {experience.tour_type.replace('-', ' ')}
+                    </Badge>
+                  </div>
+                )}
               </div>
 
               <Separator />
@@ -135,7 +154,39 @@ export default function ExperienceDetail() {
                 </p>
               </div>
 
-              {experience.includes && experience.includes.length > 0 && (
+              {experience.day_program && experience.day_program.length > 0 && (
+                <>
+                  <Separator />
+                  <DayByDayAccordion dayProgram={experience.day_program as any[]} />
+                </>
+              )}
+
+              {experience.transport_options && Array.isArray(experience.transport_options) && experience.transport_options.length > 0 && (
+                <>
+                  <Separator />
+                  <div>
+                    <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                      <Bus className="h-6 w-6" />
+                      Transport Options
+                    </h2>
+                    <div className="space-y-3">
+                      {(experience.transport_options as any[]).map((option, index) => (
+                        <div key={index} className="p-4 bg-muted/50 rounded-lg">
+                          <h3 className="font-semibold mb-1">{option.name}</h3>
+                          <p className="text-sm text-muted-foreground">{option.description}</p>
+                          {option.surcharge_note && (
+                            <p className="text-xs text-muted-foreground mt-2 italic">
+                              {option.surcharge_note}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {experience.includes && Array.isArray(experience.includes) && experience.includes.length > 0 && (
                 <>
                   <Separator />
                   <div>
@@ -148,6 +199,13 @@ export default function ExperienceDetail() {
                         </li>
                       ))}
                     </ul>
+                    {!experience.is_demo && (
+                      <Alert className="mt-4">
+                        <AlertDescription className="text-sm">
+                          *Prices are based on current economic conditions and may be adjusted if unexpected changes occur. Excludes alcoholic beverages.
+                        </AlertDescription>
+                      </Alert>
+                    )}
                   </div>
                 </>
               )}

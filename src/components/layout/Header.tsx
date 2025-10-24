@@ -16,9 +16,10 @@ export function Header() {
 
   const navigation = [
     { name: "Stays", href: "/stays" },
-    { name: "Experiences", href: "/experiences" },
-    { name: "Transport", href: "/transport" },
-    { name: "Packages", href: "/packages" },
+    { name: "Tours", href: "/experiences" },
+    { name: "Accommodation", href: "/accommodation" },
+    { name: "Village", href: "/village" },
+    { name: "About", href: "/about" },
   ];
 
   useEffect(() => {
