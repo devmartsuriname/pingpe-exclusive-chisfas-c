@@ -2,6 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 import { Users, Heart, Home, TreePine, School, Radio } from "lucide-react";
 
 export default function Village() {
@@ -24,13 +25,21 @@ export default function Village() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative h-[60vh] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              PingPe Village
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-              Heart of Saramaccan Culture in Upper Suriname
-            </p>
+          <div className="container mx-auto px-4">
+            <BreadcrumbNav
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Village" },
+              ]}
+            />
+            <div className="text-center mt-8">
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                PingPe Village
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+                Heart of Saramaccan Culture in Upper Suriname
+              </p>
+            </div>
           </div>
         </section>
 
