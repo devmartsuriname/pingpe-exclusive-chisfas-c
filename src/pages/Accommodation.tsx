@@ -2,7 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
-import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { PageHero } from "@/components/sections/PageHero";
 import { Sun, Wifi, Coffee, TreePine, Home, Users } from "lucide-react";
 
 export default function Accommodation() {
@@ -23,25 +23,12 @@ export default function Accommodation() {
       <Header />
       
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative h-[60vh] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-          <div className="container mx-auto px-4">
-            <BreadcrumbNav
-              items={[
-                { label: "Home", href: "/" },
-                { label: "Accommodation" },
-              ]}
-            />
-            <div className="text-center mt-8">
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                Jungle Resort PingPe Accommodation
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-                Comfortable eco-lodges in the heart of Suriname's pristine rainforest
-              </p>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="Accommodation"
+          subtitle="Comfortable eco-lodges in the heart of Suriname's pristine rainforest"
+          backgroundImage="/demo-content/gallery-1.jpg"
+          breadcrumbItems={[{ label: "Accommodation" }]}
+        />
 
         {/* Facilities Overview */}
         <section className="py-16 bg-background">

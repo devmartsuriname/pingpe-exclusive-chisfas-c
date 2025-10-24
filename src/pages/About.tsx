@@ -1,6 +1,7 @@
 import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PageHero } from "@/components/sections/PageHero";
 import { Users, Target, Heart, Award } from "lucide-react";
 
 export default function About() {
@@ -13,19 +14,12 @@ export default function About() {
       />
       <Header />
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative pt-28 pb-16 bg-gradient-to-b from-primary/10 to-background">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
-                About PingPe
-              </h1>
-              <p className="text-xl text-muted-foreground">
-                We're on a mission to make travel experiences more accessible, authentic, and unforgettable for everyone.
-              </p>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="About Jungle Resort PingPe"
+          subtitle="We're on a mission to make travel experiences more accessible, authentic, and unforgettable for everyone."
+          backgroundImage="/demo-content/gallery-1.jpg"
+          breadcrumbItems={[{ label: "About" }]}
+        />
 
         {/* Story Section */}
         <section className="py-16">

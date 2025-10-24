@@ -2,7 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
-import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { PageHero } from "@/components/sections/PageHero";
 import { Leaf, Heart, Users, Construction } from "lucide-react";
 
 export default function Projects() {
@@ -23,26 +23,12 @@ export default function Projects() {
       <Header />
       
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative h-[60vh] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-          <div className="container mx-auto px-4">
-            <BreadcrumbNav
-              items={[
-                { label: "Home", href: "/" },
-                { label: "Projects" },
-              ]}
-            />
-            <div className="text-center mt-8">
-              <Construction className="h-20 w-20 text-primary mx-auto mb-6" />
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                Community Projects & Sustainability
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-                Supporting Local Communities Through Responsible Tourism
-              </p>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="Community Projects & Sustainability"
+          subtitle="Supporting Local Communities Through Responsible Tourism"
+          backgroundImage="/demo-content/back-to-basic-tour.jpg"
+          breadcrumbItems={[{ label: "Projects" }]}
+        />
 
         {/* Coming Soon Content */}
         <section className="py-20 bg-background">
