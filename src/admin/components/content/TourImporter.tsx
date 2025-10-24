@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Plane, Trash2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, Plane, Trash2, CheckCircle2, AlertCircle, Eraser } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { importPingPeTours, clearDemoTours, type ImportResult } from "@/admin/utils/importPingPeTours";
 
 export function TourImporter() {
   const [loading, setLoading] = useState(false);
+  const [cleanupLoading, setCleanupLoading] = useState(false);
   const [result, setResult] = useState<ImportResult | null>(null);
 
   const handleImportTours = async () => {
@@ -85,6 +86,41 @@ export function TourImporter() {
     }
   };
 
+  const handleCleanupDuplicates = async () => {
+    if (!confirm("Remove duplicate tours and keep only the newest version of each? This cannot be undone.")) {
+      return;
+    }
+
+    setCleanupLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('cleanup-duplicate-tours');
+      
+      if (error) throw error;
+
+      if (data.success) {
+        toast({
+          title: "Duplicates cleaned up",
+          description: `Removed ${data.deleted} duplicate tours, ${data.remaining} unique tours remain`,
+        });
+        setResult(null);
+      } else {
+        toast({
+          title: "Cleanup failed",
+          description: data.error || "Unknown error",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setCleanupLoading(false);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -109,7 +145,7 @@ export function TourImporter() {
         <div className="flex gap-2">
           <Button
             onClick={handleImportTours}
-            disabled={loading}
+            disabled={loading || cleanupLoading}
             className="flex-1"
           >
             {loading ? (
@@ -125,9 +161,22 @@ export function TourImporter() {
             )}
           </Button>
           <Button
+            onClick={handleCleanupDuplicates}
+            disabled={loading || cleanupLoading}
+            variant="outline"
+            title="Remove duplicate tours"
+          >
+            {cleanupLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Eraser className="h-4 w-4" />
+            )}
+          </Button>
+          <Button
             onClick={handleClearDemo}
-            disabled={loading}
+            disabled={loading || cleanupLoading}
             variant="destructive"
+            title="Clear demo tours"
           >
             <Trash2 className="h-4 w-4" />
           </Button>

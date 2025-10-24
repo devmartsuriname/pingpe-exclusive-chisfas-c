@@ -35,3 +35,6 @@ verify_jwt = false
 
 [functions.test-email]
 verify_jwt = true
+
+[functions.cleanup-duplicate-tours]
+verify_jwt = true
