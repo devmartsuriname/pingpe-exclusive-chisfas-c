@@ -396,14 +396,18 @@ export type Database = {
         Row: {
           age_restriction: number | null
           created_at: string | null
+          day_program: Json | null
           description: string | null
           difficulty_level: string | null
+          duration_days: number | null
           duration_hours: number
           host_id: string
           id: string
           images: string[] | null
           includes: string[] | null
           is_active: boolean | null
+          is_demo: boolean | null
+          keywords: string[] | null
           language: string[] | null
           latitude: number | null
           longitude: number | null
@@ -412,20 +416,26 @@ export type Database = {
           min_participants: number | null
           price_per_person: number
           title: string
+          tour_type: string | null
+          transport_options: Json | null
           updated_at: string | null
           what_to_bring: string[] | null
         }
         Insert: {
           age_restriction?: number | null
           created_at?: string | null
+          day_program?: Json | null
           description?: string | null
           difficulty_level?: string | null
+          duration_days?: number | null
           duration_hours: number
           host_id: string
           id?: string
           images?: string[] | null
           includes?: string[] | null
           is_active?: boolean | null
+          is_demo?: boolean | null
+          keywords?: string[] | null
           language?: string[] | null
           latitude?: number | null
           longitude?: number | null
@@ -434,20 +444,26 @@ export type Database = {
           min_participants?: number | null
           price_per_person: number
           title: string
+          tour_type?: string | null
+          transport_options?: Json | null
           updated_at?: string | null
           what_to_bring?: string[] | null
         }
         Update: {
           age_restriction?: number | null
           created_at?: string | null
+          day_program?: Json | null
           description?: string | null
           difficulty_level?: string | null
+          duration_days?: number | null
           duration_hours?: number
           host_id?: string
           id?: string
           images?: string[] | null
           includes?: string[] | null
           is_active?: boolean | null
+          is_demo?: boolean | null
+          keywords?: string[] | null
           language?: string[] | null
           latitude?: number | null
           longitude?: number | null
@@ -456,6 +472,8 @@ export type Database = {
           min_participants?: number | null
           price_per_person?: number
           title?: string
+          tour_type?: string | null
+          transport_options?: Json | null
           updated_at?: string | null
           what_to_bring?: string[] | null
         }

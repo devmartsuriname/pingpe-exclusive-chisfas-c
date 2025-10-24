@@ -7,6 +7,7 @@ import { Loader2, Database, Trash2, CheckCircle2, AlertCircle } from "lucide-rea
 import { supabase } from "@/integrations/supabase/client";
 import { seedDemoContent, clearDemoContent, type SeedResult } from "@/admin/utils/seedDemoContent";
 import { ContentImporter } from "@/admin/components/content/ContentImporter";
+import { TourImporter } from "@/admin/components/content/TourImporter";
 
 export default function ContentManagement() {
   const [loading, setLoading] = useState(false);
@@ -104,6 +105,8 @@ export default function ContentManagement() {
       </Alert>
 
       <div className="grid md:grid-cols-2 gap-6">
+        <TourImporter />
+        
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
