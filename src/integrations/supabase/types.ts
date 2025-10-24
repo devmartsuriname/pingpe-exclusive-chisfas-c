@@ -267,7 +267,11 @@ export type Database = {
           payment_method: string | null
           payment_provider: string | null
           payment_status: string | null
+          proof_url: string | null
           property_id: string
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
           status: Database["public"]["Enums"]["booking_status"] | null
           total_price: number
           updated_at: string | null
@@ -286,7 +290,11 @@ export type Database = {
           payment_method?: string | null
           payment_provider?: string | null
           payment_status?: string | null
+          proof_url?: string | null
           property_id: string
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           status?: Database["public"]["Enums"]["booking_status"] | null
           total_price: number
           updated_at?: string | null
@@ -305,7 +313,11 @@ export type Database = {
           payment_method?: string | null
           payment_provider?: string | null
           payment_status?: string | null
+          proof_url?: string | null
           property_id?: string
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           status?: Database["public"]["Enums"]["booking_status"] | null
           total_price?: number
           updated_at?: string | null

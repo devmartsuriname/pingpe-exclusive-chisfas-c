@@ -1,4 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import PaymentProviderSelector from "@/admin/components/settings/PaymentProviderSelector";
+import WiseConfigForm from "@/admin/components/settings/WiseConfigForm";
+import PayPalConfigForm from "@/admin/components/settings/PayPalConfigForm";
 import StripeConfigForm from "@/admin/components/settings/StripeConfigForm";
 import PaymentModeToggle from "@/admin/components/settings/PaymentModeToggle";
 
@@ -19,6 +22,42 @@ export default function PaymentSettings() {
         </CardHeader>
         <CardContent>
           <PaymentModeToggle />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Primary Payment Provider</CardTitle>
+          <CardDescription>
+            Choose your preferred payment method for guest bookings
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <PaymentProviderSelector />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Wise (Bank Transfer)</CardTitle>
+          <CardDescription>
+            Configure Wise for low-fee international bank transfers (recommended for production)
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <WiseConfigForm />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>PayPal</CardTitle>
+          <CardDescription>
+            Configure PayPal for credit card and PayPal balance payments
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <PayPalConfigForm />
         </CardContent>
       </Card>
 
