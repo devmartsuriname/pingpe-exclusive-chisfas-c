@@ -154,7 +154,7 @@ export default function ExperienceDetail() {
                 </p>
               </div>
 
-              {experience.day_program && experience.day_program.length > 0 && (
+              {experience.day_program && Array.isArray(experience.day_program) && experience.day_program.length > 0 && (
                 <>
                   <Separator />
                   <DayByDayAccordion dayProgram={experience.day_program as any[]} />
