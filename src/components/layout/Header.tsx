@@ -15,6 +15,7 @@ export function Header() {
   const navigate = useNavigate();
 
   const navigation = [
+    { name: "Home", href: "/" },
     { name: "Stays", href: "/stays" },
     { name: "Tours", href: "/experiences" },
     { name: "Accommodation", href: "/accommodation" },
