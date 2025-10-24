@@ -20,6 +20,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.1] - 2025-10-24
+
+### Added
+- **Hero Search Bar Upgrade**
+  - Activity Type Selector replaces location field
+  - Options: All Activities, Stays, Experiences, Transport, Packages
+  - Smart navigation based on activity type
+  - URL parameter structure for filtering results
+
+### Changed
+- **Search Experience**
+  - Removed location-based search (single-location resort model)
+  - Updated `HeroSearchBar` component to use Radix Select for activity types
+  - Modified search logic to route based on activity type selection
+  - Enhanced `useUnifiedSearch` hook with `type` parameter
+
+- **Page Integration**
+  - Updated `src/pages/Transport.tsx` to read `guests` from URL parameters
+  - Updated `src/pages/Packages.tsx` to read `guests` from URL parameters
+  - URL parameter mapping: `guests` → `capacity` (Transport), `guests` → `maxParticipants` (Packages)
+
+### Documentation
+- Added Hero Search Bar architecture section to `docs/architecture.md`
+- Created comprehensive hooks documentation in `docs/hooks.md`
+- Updated `docs/frontend.md` with Hero Search Bar usage and props
+- Added current project status snapshot to `docs/STATUS.md`
+
+### Technical Improvements
+- Type-safe search parameter handling
+- Consistent URL structure across all inventory pages
+- Better separation of concerns in search components
+
+---
+
 ## [1.1.0] - 2025-10-18
 
 ### Added

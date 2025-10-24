@@ -435,6 +435,74 @@ Sends transactional emails via Resend.
 
 ---
 
+## Edge Functions Status & Deployment
+
+### Current Edge Functions
+
+#### ✅ Configured (Awaiting Deployment)
+- `/functions/v1/create-payment-intent` - Stripe payment initialization
+- `/functions/v1/confirm-payment` - Payment confirmation handler
+- `/functions/v1/send-email` - Resend email delivery
+
+#### 🔴 Critical Requirements
+All Edge Functions require:
+1. **API Keys/Secrets** must be configured in Supabase dashboard
+2. **Edge Functions** must be manually deployed via Supabase CLI or dashboard
+3. **CORS Headers** are implemented for web app access
+
+### Deployment Status
+
+**⚠️ Not Yet Deployed**
+Edge Functions are defined in `supabase/functions/` but require manual deployment:
+
+```bash
+# Deploy all functions
+supabase functions deploy create-payment-intent
+supabase functions deploy confirm-payment
+supabase functions deploy send-email
+```
+
+### Required Secrets
+
+**Stripe Integration:**
+- `STRIPE_SECRET_KEY` - Required for payment processing
+- Configure at: https://dashboard.stripe.com/apikeys
+
+**Resend Integration:**
+- `RESEND_API_KEY` - Required for email delivery
+- Configure at: https://resend.com/api-keys
+- Must verify sender domain at: https://resend.com/domains
+
+### Troubleshooting
+
+**Edge Function Not Found (404)**
+- Cause: Function not deployed
+- Solution: Deploy via `supabase functions deploy [function-name]`
+
+**Unauthorized (401)**
+- Cause: Missing or invalid API key
+- Solution: Add secret in Supabase dashboard → Project Settings → Edge Functions
+
+**CORS Errors**
+- Cause: Missing CORS headers in function response
+- Solution: Ensure `corsHeaders` object is returned in all responses
+
+**Function Timeout**
+- Default timeout: 60 seconds
+- Check function logs in Supabase dashboard
+- Optimize database queries or external API calls
+
+### Best Practices
+
+1. **Always use environment variables** via `Deno.env.get()`
+2. **Log extensively** for debugging in production
+3. **Validate input** before processing
+4. **Handle errors gracefully** with proper HTTP status codes
+5. **Test locally** using Supabase CLI before deployment
+6. **Monitor function logs** after deployment
+
+---
+
 ## Database Functions & Triggers
 
 ### `handle_new_user()`

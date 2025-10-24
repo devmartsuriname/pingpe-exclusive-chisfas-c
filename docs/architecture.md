@@ -112,6 +112,11 @@ export const Component: FC<ComponentProps> = ({ title, onAction }) => {
 - `usePerformanceReports(dateRange)` - Host performance
 - `useRecentActivity()` - Activity feed
 - `useSettings()` - Platform settings CRUD
+- `useUnifiedSearch(params)` - Multi-inventory search
+- `usePackages(filters)` - Package listings with filtering
+- `useTransport(filters)` - Transport listings with filtering
+- `usePackageDetail(id)` - Single package details
+- `useTransportDetail(id)` - Single transport details
 
 ### Authentication Hooks
 - `useAuth()` - User auth state and helpers
@@ -165,6 +170,86 @@ Used for UI-only state:
 Used for shared app state:
 - **AuthContext** - User authentication and profile
 - Accessible via `useAuth()` hook
+
+---
+
+## Hero Search Bar Architecture
+
+### Overview
+The Hero Search Bar is PingPe's primary navigation component, designed for a single-location resort with multiple activity types.
+
+**Location:** `src/components/search/HeroSearchBar.tsx`
+
+### Design Philosophy
+- **Single Location**: PingPe operates from one resort location, eliminating the need for location-based search
+- **Activity-Centric**: Users select activity type (Stays, Experiences, Transport, Packages) instead of destination
+- **Unified Interface**: One search bar handles all inventory types with consistent date/guest filtering
+
+### Component Architecture
+
+#### State Management
+```typescript
+interface SearchParams {
+  type: "all" | "stays" | "experiences" | "transport" | "packages";
+  startDate: Date | null;
+  endDate: Date | null;
+  guests: number;
+}
+```
+
+#### Key Features
+1. **Activity Type Selector**
+   - Radix UI Select component
+   - Options: All Activities, Stays, Experiences, Transport, Packages
+   - Icon: Filter (Lucide React)
+   
+2. **Date Range Picker**
+   - Built with react-day-picker
+   - Disables past dates
+   - Optional (users can browse without dates)
+
+3. **Guest Counter**
+   - Range: 1-20 guests
+   - Smart singular/plural labels
+   - Increment/decrement controls
+
+4. **Smart Navigation**
+   - Routes based on activity type selection
+   - Passes URL parameters for filtering
+   - Loading state with spinner
+
+#### Routing Logic
+```typescript
+const baseRoutes = {
+  all: "/search",
+  stays: "/stays",
+  experiences: "/experiences",
+  transport: "/transport",
+  packages: "/packages",
+};
+```
+
+#### URL Parameter Structure
+Search submissions generate URLs like:
+- `/stays?guests=4&startDate=2024-10-21T00:00:00.000Z&endDate=2024-10-25T00:00:00.000Z`
+- `/experiences?type=experiences&guests=2`
+- `/transport?guests=6`
+
+### Integration with useUnifiedSearch
+
+The `useUnifiedSearch` hook supports the Hero Search Bar by:
+- Accepting `type` parameter for activity filtering
+- Querying multiple Supabase tables based on type
+- Mapping `guests` to appropriate capacity fields (e.g., `capacity` for transport, `max_participants` for packages)
+- Returning unified search results across all inventory types
+
+**Location:** `src/hooks/useUnifiedSearch.ts`
+
+### Design System Integration
+- Uses semantic color tokens (`text-muted-foreground`, `bg-background`)
+- Maintains **rounded-full** layout for modern aesthetic
+- Dark mode compatible
+- Fully responsive (collapses on mobile)
 
 ---
 
