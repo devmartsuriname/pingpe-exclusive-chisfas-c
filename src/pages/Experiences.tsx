@@ -139,7 +139,9 @@ export default function Experiences() {
                     metadata={{
                       duration: experience.duration_days ? `${experience.duration_days} days` : `${experience.duration_hours}h`,
                       maxParticipants: experience.max_participants,
+                      durationDays: experience.duration_days,
                     }}
+                    listing={experience}
                   />
                 ))}
               </div>

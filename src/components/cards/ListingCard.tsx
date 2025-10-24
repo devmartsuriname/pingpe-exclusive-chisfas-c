@@ -35,6 +35,7 @@ interface ListingCardProps {
   isFavorite?: boolean;
   onFavoriteToggle?: () => void;
   className?: string;
+  listing?: any; // Full listing object for additional data
 }
 
 export function ListingCard({
@@ -53,6 +54,7 @@ export function ListingCard({
   isFavorite = false,
   onFavoriteToggle,
   className,
+  listing,
 }: ListingCardProps) {
   const baseHref = `/${type}s/${id}`;
   const primaryImage = images[0] || "/placeholder.svg";
@@ -75,18 +77,33 @@ export function ListingCard({
         );
       case "experience":
         return (
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            {metadata?.duration && (
-              <span className="flex items-center gap-1">
-                <Clock className="h-4 w-4" />
-                {metadata.duration}
-              </span>
+          <div className="space-y-2">
+            {/* Multi-day tour badges */}
+            {(metadata?.durationDays || listing?.duration_days) && (
+              <div className="flex items-center gap-2 flex-wrap">
+                <Badge className="bg-primary/10 text-primary border-primary/20">
+                  {metadata?.durationDays || listing?.duration_days} Day{(metadata?.durationDays || listing?.duration_days) > 1 ? 's' : ''}
+                </Badge>
+                {(listing?.tour_type) && (
+                  <Badge variant="secondary" className="text-xs capitalize">
+                    {listing.tour_type === 'back-to-basic' ? 'Back-to-Basic' : listing.tour_type}
+                  </Badge>
+                )}
+              </div>
             )}
-            {metadata?.difficulty && (
-              <Badge variant="outline" className="text-xs">
-                {metadata.difficulty}
-              </Badge>
-            )}
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+              {metadata?.duration && !metadata?.durationDays && !listing?.duration_days && (
+                <span className="flex items-center gap-1">
+                  <Clock className="h-4 w-4" />
+                  {metadata.duration}
+                </span>
+              )}
+              {metadata?.difficulty && (
+                <Badge variant="outline" className="text-xs">
+                  {metadata.difficulty}
+                </Badge>
+              )}
+            </div>
           </div>
         );
       case "transport":
