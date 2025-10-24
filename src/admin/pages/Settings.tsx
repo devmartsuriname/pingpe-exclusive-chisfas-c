@@ -17,9 +17,9 @@ export default function Settings() {
         <TabsList>
           <TabsTrigger value="platform">Platform</TabsTrigger>
           <TabsTrigger value="payments">Payments</TabsTrigger>
+          <TabsTrigger value="email">Email</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
           <TabsTrigger value="roles">Roles & Permissions</TabsTrigger>
-          <TabsTrigger value="integrations">Integrations</TabsTrigger>
         </TabsList>
 
         <TabsContent value="platform">
@@ -30,16 +30,16 @@ export default function Settings() {
           <PaymentSettings />
         </TabsContent>
 
+        <TabsContent value="email">
+          <IntegrationSettings />
+        </TabsContent>
+
         <TabsContent value="notifications">
           <NotificationSettings />
         </TabsContent>
 
         <TabsContent value="roles">
           <RoleSettings />
-        </TabsContent>
-
-        <TabsContent value="integrations">
-          <IntegrationSettings />
         </TabsContent>
       </Tabs>
     </div>

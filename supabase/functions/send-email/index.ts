@@ -1,11 +1,11 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
-import { Resend } from "https://esm.sh/resend@4.0.0";
 import React from "https://esm.sh/react@18.3.1";
 import { renderAsync } from "https://esm.sh/@react-email/components@0.0.22";
 import { BookingConfirmationEmail } from "./_templates/booking-confirmation.tsx";
 import { PaymentReceiptEmail } from "./_templates/payment-receipt.tsx";
 import { BookingCancellationEmail } from "./_templates/booking-cancellation.tsx";
+import { EmailProviderRegistry } from "./_lib/provider-registry.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -52,26 +52,17 @@ serve(async (req) => {
       throw new Error('Missing required fields: to and template');
     }
 
-    // Get Resend configuration from settings
-    const { data: resendSettings, error: settingsError } = await supabaseClient
-      .from('settings')
-      .select('key, value')
-      .in('key', ['resend_api_key', 'resend_sender_email', 'resend_sender_name']);
+    // Load email configuration from settings
+    const emailConfig = await EmailProviderRegistry.loadConfigFromSettings(supabaseClient);
+    
+    // Get email provider
+    const emailProvider = EmailProviderRegistry.getProvider(emailConfig);
 
-    if (settingsError) {
-      console.error('Failed to fetch Resend settings:', settingsError);
-    }
-
-    const resendApiKey = resendSettings?.find((s: any) => s.key === 'resend_api_key')?.value;
-    const senderEmail = resendSettings?.find((s: any) => s.key === 'resend_sender_email')?.value || 'noreply@jungleresortpingpe.com';
-    const senderName = resendSettings?.find((s: any) => s.key === 'resend_sender_name')?.value || 'Jungle Resort PingPe';
-
-    // Check if Resend is configured
-    if (!resendApiKey) {
-      console.warn('Email not sent — Resend API not configured');
+    if (!emailProvider) {
+      console.warn('Email not sent — No email provider configured');
       return new Response(
         JSON.stringify({
-          error: 'Email service not configured. Please configure Resend API key in Settings → Integrations.',
+          error: 'Email service not configured. Please configure an email provider in Settings → Email Configuration.',
           configured: false,
         }),
         {
@@ -80,9 +71,6 @@ serve(async (req) => {
         }
       );
     }
-
-    // Initialize Resend with API key
-    const resend = new Resend(resendApiKey);
 
     // Render email template
     let html: string;
@@ -129,25 +117,24 @@ serve(async (req) => {
         throw new Error(`Unknown email template: ${template}`);
     }
 
-    // Send email via Resend
-    const { data: emailData, error: emailError } = await resend.emails.send({
-      from: `${senderName} <${senderEmail}>`,
-      to: [to],
+    // Send email via configured provider
+    const result = await emailProvider.sendEmail({
+      to,
       subject,
       html,
     });
 
-    if (emailError) {
-      console.error('Resend API error:', emailError);
-      throw new Error(`Failed to send email: ${emailError.message}`);
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to send email');
     }
 
-    console.log('Email sent successfully:', emailData?.id);
+    console.log('Email sent successfully via', emailConfig.provider, ':', result.messageId);
 
     return new Response(
       JSON.stringify({
         success: true,
-        emailId: emailData?.id,
+        emailId: result.messageId,
+        provider: emailConfig.provider,
         template,
         to,
         message: 'Email sent successfully',
