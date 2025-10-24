@@ -35,7 +35,7 @@ export default function PayPalConfigForm() {
   useEffect(() => {
     const enabled = getSetting("payment_paypal_enabled");
     const clientId = getSetting("payment_paypal_client_id");
-    const secret = getSetting("payment_paypal_secret");
+    const secret = getSetting("payment_paypal_client_secret");
 
     if (enabled) form.setValue("enabled", enabled.value);
     if (clientId) form.setValue("client_id", clientId.value);
@@ -45,7 +45,7 @@ export default function PayPalConfigForm() {
   const onSubmit = (data: FormData) => {
     updateSetting({ key: "payment_paypal_enabled", value: data.enabled, description: "PayPal Enabled" });
     updateSetting({ key: "payment_paypal_client_id", value: data.client_id, description: "PayPal Client ID" });
-    updateSetting({ key: "payment_paypal_secret", value: data.secret, description: "PayPal Secret (Encrypted)" });
+    updateSetting({ key: "payment_paypal_client_secret", value: data.secret, description: "PayPal Secret" });
   };
 
   return (

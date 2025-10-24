@@ -7,6 +7,7 @@ import { useAdminStats, useRevenueData, useBookingTrends } from "@/admin/hooks/u
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import EmailStatusWidget from "@/admin/components/dashboard/EmailStatusWidget";
+import PaymentStatusWidget from "@/admin/components/dashboard/PaymentStatusWidget";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -171,10 +172,11 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      {/* Email Status Widget */}
+      {/* Status Widgets */}
       <div className="grid gap-4 md:grid-cols-3">
         <EmailStatusWidget />
-        <div className="md:col-span-2 grid gap-4 md:grid-cols-2">
+        <PaymentStatusWidget />
+        <div className="md:col-span-1 grid gap-4">
         <Card>
           <CardHeader>
             <CardTitle>Upcoming Bookings Today</CardTitle>
