@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
-import { getProviderByName, getEmailProvider } from "../_shared/email-providers/registry.ts";
+import { getEmailProvider } from "../_shared/email-providers/registry.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -9,7 +9,6 @@ const corsHeaders = {
 
 interface TestEmailRequest {
   to: string;
-  provider?: 'hostinger' | 'resend';
 }
 
 serve(async (req) => {
@@ -45,7 +44,7 @@ serve(async (req) => {
       }
     }
 
-    const { to, provider: requestedProvider }: TestEmailRequest = await req.json();
+    const { to }: TestEmailRequest = await req.json();
 
     if (!to) {
       return new Response(
@@ -54,12 +53,10 @@ serve(async (req) => {
       );
     }
 
-    console.log(`[test-email-v2] Testing email to ${to} with provider: ${requestedProvider || 'default'}`);
+    console.log(`[test-email-v2] Testing email to ${to}`);
 
-    // Get the requested provider or use the active one
-    const provider = requestedProvider
-      ? await getProviderByName(supabaseClient, requestedProvider)
-      : await getEmailProvider(supabaseClient);
+    // Get the active provider (Hostinger SMTP only)
+    const provider = await getEmailProvider(supabaseClient);
 
     // Test connection first
     const connectionTest = await provider.testConnection();

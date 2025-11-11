@@ -9,36 +9,20 @@ export default function EmailStatusWidget() {
   const { getSetting } = useSettings();
   const navigate = useNavigate();
 
-  const emailProvider = getSetting("email_provider")?.value || "hostinger";
   const hostingerEnabled = getSetting("email_hostinger_enabled")?.value || false;
-  const resendEnabled = getSetting("email_resend_enabled")?.value || false;
-
-  // Determine overall status
-  const isConfigured = 
-    (emailProvider === "hostinger" && hostingerEnabled) ||
-    (emailProvider === "resend" && resendEnabled);
 
   const getStatusIcon = () => {
-    if (isConfigured) {
+    if (hostingerEnabled) {
       return <CheckCircle className="h-5 w-5 text-success" />;
     }
     return <XCircle className="h-5 w-5 text-destructive" />;
   };
 
   const getStatusBadge = () => {
-    if (isConfigured) {
+    if (hostingerEnabled) {
       return <Badge variant="default" className="bg-success">Active</Badge>;
     }
     return <Badge variant="destructive">Not Configured</Badge>;
-  };
-
-  const getProviderDisplay = () => {
-    if (emailProvider === "hostinger") {
-      return "Hostinger SMTP";
-    } else if (emailProvider === "resend") {
-      return "Resend API";
-    }
-    return "None";
   };
 
   return (
@@ -53,15 +37,15 @@ export default function EmailStatusWidget() {
       <CardContent>
         <div className="space-y-3">
           <div>
-            <p className="text-2xl font-bold">{getProviderDisplay()}</p>
-            <p className="text-xs text-muted-foreground">Active Provider</p>
+            <p className="text-2xl font-bold">Hostinger SMTP</p>
+            <p className="text-xs text-muted-foreground">Email Provider</p>
           </div>
 
           <div className="flex items-center justify-between">
             {getStatusBadge()}
           </div>
 
-          {!isConfigured && (
+          {!hostingerEnabled && (
             <div className="flex items-start gap-2 p-3 bg-warning/10 rounded-lg">
               <AlertCircle className="h-4 w-4 text-warning mt-0.5" />
               <p className="text-xs text-warning">
@@ -74,7 +58,7 @@ export default function EmailStatusWidget() {
             variant="outline" 
             size="sm" 
             className="w-full"
-            onClick={() => navigate("/admin/settings/integrations")}
+            onClick={() => navigate("/admin/settings")}
           >
             <Settings className="h-4 w-4 mr-2" />
             Configure Email

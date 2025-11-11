@@ -21,6 +21,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.1-prep] - 2025-11-11
+
+### Removed
+- 🗑️ **Resend email provider support** - Simplified to Hostinger SMTP only
+  - Removed `ResendProvider` class and all Resend-related code
+  - Removed `EmailProviderSelector` component (no longer needed)
+  - Removed `ResendConfigForm` component
+  - Removed `IntegrationSettings` nested tabs structure
+  - Cleaned up 8 obsolete database settings keys (`email_resend_*`, `resend_*`)
+  - Removed duplicate "Payments" tab from Email Settings section
+
+### Fixed
+- ✅ **Hostinger SMTP toggle persistence** - Now correctly saves and persists state after refresh
+  - Fixed form state synchronization with database
+  - Added settings data to `useEffect` dependency array
+  - Toggle state now survives page refresh and browser sessions
+- ✅ **Email Settings UI structure** - Removed confusing nested tabs
+  - Simplified to single-column layout
+  - Renamed `IntegrationSettings` to `EmailSettings` for clarity
+  - Eliminated duplicate Payments tab inside Email section
+
+### Changed
+- **Email Provider Architecture** - Simplified to single provider model
+  - Updated `EmailConfig` interface to remove Resend types
+  - Simplified `getEmailProvider()` to only return Hostinger SMTP
+  - Removed `getProviderByName()` function (no longer needed)
+  - Updated all edge functions to use Hostinger SMTP exclusively
+- **Admin Settings Structure** - Cleaner navigation
+  - Settings tabs: Platform | Payments | Email | Notifications | Roles
+  - Email tab now shows only Hostinger SMTP configuration
+  - No nested tabs or provider selection dropdowns
+
+### Backend
+- Updated `registry.ts` to load only Hostinger settings
+- Updated `interface.ts` to simplify EmailConfig type
+- Updated `test-email-v2` to remove provider selection parameter
+- Deleted `resend.ts` provider implementation
+- Created migration `20251111_cleanup_resend_settings.sql`
+
+### Documentation
+- ✅ Updated `/docs/email.md` - Removed all Resend references
+  - Added "Why Hostinger SMTP Only?" section explaining simplification rationale
+  - Updated architecture diagrams to show single-provider model
+  - Removed Resend setup instructions and comparison tables
+- ✅ Created `/docs/settings-module.md` - Comprehensive settings documentation
+  - Email configuration guide (Hostinger only)
+  - Toggle persistence fix explanation
+  - Troubleshooting section for common issues
+  - Settings data flow diagram
+
+---
+
 ## [1.3.1] - 2025-11-11
 
 ### Verification & Audit

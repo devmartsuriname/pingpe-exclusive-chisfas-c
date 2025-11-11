@@ -59,7 +59,7 @@ export default function HostingerSmtpConfigForm() {
     const fromEmail = getSetting("email_hostinger_from_email");
     const replyTo = getSetting("email_hostinger_reply_to");
 
-    if (enabled) form.setValue("enabled", enabled.value);
+    if (enabled !== undefined) form.setValue("enabled", enabled.value);
     if (host) form.setValue("smtp_host", host.value);
     if (port) form.setValue("smtp_port", String(port.value));
     if (username) form.setValue("smtp_username", username.value);

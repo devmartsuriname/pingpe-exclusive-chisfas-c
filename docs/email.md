@@ -7,7 +7,7 @@
 
 ## 📧 Overview
 
-The PingPe email system provides flexible, multi-provider email delivery with fallback support and admin testing capabilities. The system is architected to support multiple email providers (SMTP and API-based) with graceful degradation.
+The PingPe email system provides reliable email delivery through Hostinger SMTP with admin testing capabilities. The system is architected for simplicity and reliability using a single, proven SMTP provider.
 
 ---
 
@@ -15,44 +15,51 @@ The PingPe email system provides flexible, multi-provider email delivery with fa
 
 ### Components
 
-1. **EmailProvider Interface** (`src/lib/email/providers/EmailProvider.ts`)
-   - Abstract base class for all email providers
-   - Defines standard methods: `send()`, `test()`, `validate()`
+1. **EmailProvider Interface** (`supabase/functions/_shared/email-providers/interface.ts`)
+   - Abstract base class defining email provider contract
+   - Defines standard methods: `send()`, `testConnection()`, `getProviderName()`
 
-2. **Provider Implementations**
-   - **HostingerSMTP** - Traditional SMTP for reliable delivery
-   - **Resend** - Modern API-based provider (planned)
-   - **SendGrid** - Enterprise option (future)
+2. **Provider Implementation**
+   - **HostingerSMTP** (`hostinger.ts`) - Reliable SMTP delivery via Hostinger hosting
 
-3. **Provider Registry** (`src/lib/email/EmailProviderRegistry.ts`)
-   - Auto-detects active provider from settings
-   - Manages provider instances
-   - Fallback logic when provider unavailable
+3. **Provider Registry** (`registry.ts`)
+   - Loads email configuration from database settings
+   - Returns configured Hostinger SMTP provider instance
 
 4. **Edge Functions**
-   - `send-email-v2` - Send emails via active provider
-   - `test-email-v2` - Test provider configuration
+   - `send-email-v2` - Send emails via Hostinger SMTP
+   - `test-email-v2` - Test SMTP configuration
 
 5. **Admin UI**
    - Settings → Email tab
-   - Provider configuration forms
-   - Test email button
-   - Status indicators
+   - Hostinger SMTP configuration form
+   - Test email button with real-time status
+   - Enable/disable toggle with persistence
 
 ---
 
-## 📊 Provider Comparison
+## 📊 Why Hostinger SMTP Only?
 
-| Feature | Hostinger SMTP | Resend | SendGrid |
-|---------|---------------|---------|----------|
-| **Type** | SMTP | API | API |
-| **Setup Complexity** | Low | Low | Medium |
-| **Monthly Free Tier** | Varies | 3,000 | 100/day |
-| **Reliability** | High | Very High | Very High |
-| **Tracking** | Basic | Advanced | Advanced |
-| **Templates** | Manual | React Email | Handlebars |
-| **Webhooks** | No | Yes | Yes |
-| **Best For** | Simple, reliable | Modern apps | Enterprise |
+**Decision Rationale (v1.3.1):**
+
+We simplified to a single email provider for the following reasons:
+
+| Factor | Benefit |
+|--------|---------|
+| **Simplicity** | One provider = easier configuration and troubleshooting |
+| **Reliability** | Proven SMTP protocol with decades of stability |
+| **Cost** | Included with existing Hostinger hosting plan |
+| **Control** | Full control over sending infrastructure |
+| **Support** | Direct support from hosting provider |
+| **Integration** | No third-party API dependencies |
+
+**Hostinger SMTP Features:**
+- ✅ Reliable delivery via established SMTP protocol
+- ✅ SSL/TLS encryption for secure transmission
+- ✅ No monthly sending limits (varies by plan)
+- ✅ Custom domain email support
+- ✅ SPF/DKIM configuration for deliverability
+- ✅ 24/7 hosting provider support
 
 ---
 
@@ -91,18 +98,6 @@ The PingPe email system provides flexible, multi-provider email delivery with fa
    - Check inbox for test message
    - Verify status shows "Active ✓"
 
-### Resend Setup (Planned)
-
-1. **Create Resend Account**
-   - Visit https://resend.com
-   - Sign up and verify domain
-   - Generate API key
-
-2. **Configure in PingPe**
-   - Admin → Settings → Email → Resend tab
-   - Enter API key
-   - Set sender email (verified domain required)
-   - Save and test
 
 ---
 
@@ -364,14 +359,14 @@ console.error('[Email] Send failed:', error.message);
 
 ### Planned Features
 
-- [ ] **Email Templates** - Pre-designed HTML templates
-- [ ] **Batch Sending** - Send to multiple recipients
-- [ ] **Scheduling** - Delayed email delivery
-- [ ] **Tracking** - Open rates, click tracking (Resend)
-- [ ] **Webhooks** - Event notifications (bounces, complaints)
-- [ ] **A/B Testing** - Test email variants
+- [ ] **Email Templates** - Pre-designed HTML templates using React Email
+- [ ] **Batch Sending** - Send to multiple recipients efficiently
+- [ ] **Scheduling** - Delayed email delivery for specific times
 - [ ] **Email Queue** - Background processing for bulk sends
-- [ ] **Resend Integration** - Full implementation
+- [ ] **Bounce Handling** - Automatic bounce detection and cleanup
+- [ ] **Delivery Reports** - Track sent/delivered/failed emails
+- [ ] **Custom Templates** - Admin-editable email templates
+- [ ] **Attachment Support** - Send PDFs, images, etc.
 
 ---
 

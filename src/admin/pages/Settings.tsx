@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PlatformSettings from "./settings/PlatformSettings";
 import NotificationSettings from "./settings/NotificationSettings";
 import RoleSettings from "./settings/RoleSettings";
-import IntegrationSettings from "./settings/IntegrationSettings";
+import EmailSettings from "./settings/EmailSettings";
 import PaymentSettings from "./settings/PaymentSettings";
 
 export default function Settings() {
@@ -31,7 +31,7 @@ export default function Settings() {
         </TabsContent>
 
         <TabsContent value="email">
-          <IntegrationSettings />
+          <EmailSettings />
         </TabsContent>
 
         <TabsContent value="notifications">

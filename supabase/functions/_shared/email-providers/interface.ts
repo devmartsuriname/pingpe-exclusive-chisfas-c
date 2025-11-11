@@ -4,19 +4,13 @@
  */
 
 export interface EmailConfig {
-  provider: 'hostinger' | 'resend';
-  hostinger?: {
+  provider: 'hostinger';
+  hostinger: {
     enabled: boolean;
     host: string;
     port: number;
     username: string;
     password: string;
-    from_email: string;
-    from_name: string;
-  };
-  resend?: {
-    enabled: boolean;
-    api_key: string;
     from_email: string;
     from_name: string;
   };
