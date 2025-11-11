@@ -39,6 +39,9 @@ Deno.serve(async (req) => {
       { loc: '/contact', priority: '0.7', changefreq: 'monthly' },
       { loc: '/destinations', priority: '0.7', changefreq: 'weekly' },
       { loc: '/guide', priority: '0.6', changefreq: 'monthly' },
+      { loc: '/accommodation', priority: '0.8', changefreq: 'monthly' },
+      { loc: '/village', priority: '0.8', changefreq: 'monthly' },
+      { loc: '/projects', priority: '0.8', changefreq: 'monthly' },
     ];
 
     urls.push(...staticPages);
@@ -97,10 +100,10 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Fetch active experiences
+    // Fetch active experiences (official tours prioritized)
     const { data: experiences } = await supabase
       .from('experiences')
-      .select('id, updated_at')
+      .select('id, updated_at, is_demo')
       .eq('is_active', true)
       .order('updated_at', { ascending: false });
 
@@ -109,8 +112,8 @@ Deno.serve(async (req) => {
         urls.push({
           loc: `/experiences/${experience.id}`,
           lastmod: new Date(experience.updated_at).toISOString().split('T')[0],
-          changefreq: 'weekly',
-          priority: '0.8',
+          changefreq: experience.is_demo ? 'weekly' : 'daily',
+          priority: experience.is_demo ? '0.7' : '0.9',
         });
       });
     }

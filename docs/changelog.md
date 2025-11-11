@@ -10,13 +10,100 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Stripe payment processing (awaiting API key configuration)
-- Resend email delivery (awaiting API key configuration)
+- Tour image upload and optimization (manual upload available)
+- Stripe payment processing (stub exists, awaiting configuration)
+- Resend email delivery (infrastructure ready)
 - Google Maps integration for location display
-- Multi-language support (Dutch, English, French)
+- Multi-language support (Dutch, English, Saramaccan)
 - Guest review moderation system
 - Advanced analytics dashboard
 - Mobile app (React Native)
+
+---
+
+## [1.3.0] - 2025-10-24
+
+### Added
+
+#### Official Tour Import & Content Migration
+- **7 Official PingPe Tours** - Imported from authentic Dutch documentation
+  - 3-day Jungle Adventure (€285)
+  - 4-day Jungle Experience (€360)
+  - 4-day Back-to-Basic Expedition (€380)
+  - 5-day Jungle Explorer (€385)
+  - 5-day Back-to-Basic Deep Forest (€410)
+  - 6-day Ultimate Back-to-Basic (€430)
+  - Brownsberg & Ston Island Combo (€145)
+
+- **Duplicate Cleanup System**
+  - Edge function: `cleanup-duplicate-tours`
+  - Admin UI button in TourImporter component
+  - Automated detection and removal of duplicate tours
+  - Keeps newest entry for each unique (title + tour_type)
+
+- **Multi-Day Tour Support**
+  - `duration_days` field for tours longer than 24 hours
+  - `day_program` JSONB field with structured itineraries
+  - Day-by-day accordion component (DayByDayAccordion.tsx)
+  - Transport options JSONB field (Bus-Korjaal, Flight options)
+
+- **Static Content Pages**
+  - `/accommodation` - Resort facilities and lodging information
+  - `/village` - Pingpe village culture and community
+  - `/projects` - Community development initiatives
+
+#### SEO Enhancements
+- **TourSchema Structured Data** - JSON-LD for TouristTrip schema type
+  - Tour details, pricing, duration, provider information
+  - Aggregate ratings and reviews
+  - Inclusions and additional properties
+  
+- **Updated Sitemap** - `generate-sitemap` edge function enhanced
+  - Includes all 7 official tours with priority 0.9
+  - Static pages added (/accommodation, /village, /projects)
+  - Official tours prioritized over demo content
+  
+- **Tour-Specific Keywords** - SEO optimization per tour
+  - "Suriname jungle tour", "Pingpe village", "back-to-basic expedition"
+  - Keywords array in database for filtering
+
+#### Security Hardening
+- **Search Path Fixes** - Applied to all database functions
+  - `handle_new_user()` - SET search_path TO 'public'
+  - `assign_default_role()` - SET search_path TO 'public'
+  - `update_updated_at_column()` - SET search_path TO 'public'
+  
+- **RLS Policy Audit** - Verified security for critical tables
+  - `bookings` - Restricted to guest/host/admin
+  - `payment_proofs` - Storage RLS for admin + owner only
+  - `experiences` - Filters `is_demo = false` for public view
+
+#### Documentation Suite
+- **Email System Guide** (`docs/email.md`)
+  - Provider comparison, configuration, testing, troubleshooting
+  
+- **Payment System Guide** (`docs/payments.md`)
+  - Wise, PayPal, Stripe architecture and workflows
+  - Webhook configuration, security considerations
+  
+- **Content Migration Guide** (`docs/content-migration.md`)
+  - Tour import process, database schema, pricing details
+  - Duplicate cleanup procedures, image upload workflow
+
+### Changed
+- **ExperienceDetail Page** - Integrated TourSchema component
+- **Sitemap Generation** - Prioritizes official tours (is_demo = false)
+- **Navigation** - "Experiences" → "Tours" (more accurate naming)
+
+### Fixed
+- **Duplicate Tours** - Cleanup system resolves 19 entries → 7 unique
+- **Edge Function Imports** - Fixed Deno imports for `cleanup-duplicate-tours`
+- **Security Warnings** - Resolved search_path issues in all functions
+
+### Security
+- ✅ Search path fixes prevent SQL injection via function hijacking
+- ✅ RLS policies audited for leaks
+- ⚠️ Password leak protection requires manual enable (Supabase Dashboard)
 
 ---
 

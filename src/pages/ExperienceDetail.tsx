@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { ProductSchema } from "@/components/seo/ProductSchema";
+import { TourSchema } from "@/components/seo/TourSchema";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 import { ImageGallery } from "@/components/detail/ImageGallery";
 import { HostProfileCard } from "@/components/detail/HostProfileCard";
@@ -77,6 +78,7 @@ export default function ExperienceDetail() {
         brand="Jungle Resort PingPe"
         category="Experience"
       />
+      <TourSchema tour={experience} url={currentUrl} />
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <BreadcrumbNav
