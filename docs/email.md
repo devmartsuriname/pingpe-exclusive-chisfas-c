@@ -112,14 +112,13 @@ Email settings are stored in the `settings` table (encrypted), not environment v
 SELECT key, value FROM settings WHERE key LIKE 'email_%';
 
 -- Example keys:
-email_provider_active         -- 'hostinger_smtp' | 'resend'
-email_hostinger_smtp_host     -- 'smtp.hostinger.com'
-email_hostinger_smtp_port     -- '465'
-email_hostinger_smtp_secure   -- true
-email_hostinger_smtp_username -- 'info@jungleresortpingpe.com'
-email_hostinger_smtp_password -- '[encrypted]'
-email_hostinger_from_email    -- 'info@jungleresortpingpe.com'
-email_hostinger_from_name     -- 'Jungle Resort PingPe'
+email_hostinger_enabled      -- true | false
+email_hostinger_host         -- 'smtp.hostinger.com'
+email_hostinger_port         -- 465
+email_hostinger_username     -- 'info@jungleresortpingpe.com'
+email_hostinger_password     -- '[encrypted]'
+email_hostinger_from_email   -- 'info@jungleresortpingpe.com'
+email_hostinger_from_name    -- 'Jungle Resort PingPe'
 ```
 
 ---

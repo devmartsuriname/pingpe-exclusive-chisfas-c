@@ -27,7 +27,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function HostingerSmtpConfigForm() {
-  const { getSetting, updateSetting, isUpdating } = useSettings();
+  const { settings, getSetting, updateSetting, isUpdating } = useSettings();
   const [isTesting, setIsTesting] = useState(false);
   const { toast } = useToast();
 
@@ -49,6 +49,8 @@ export default function HostingerSmtpConfigForm() {
   const isEnabled = form.watch("enabled");
 
   useEffect(() => {
+    if (!settings) return;
+
     const enabled = getSetting("email_hostinger_enabled");
     const host = getSetting("email_hostinger_smtp_host");
     const port = getSetting("email_hostinger_smtp_port");
@@ -68,7 +70,7 @@ export default function HostingerSmtpConfigForm() {
     if (fromName) form.setValue("from_name", fromName.value);
     if (fromEmail) form.setValue("from_email", fromEmail.value);
     if (replyTo) form.setValue("reply_to", replyTo.value || "");
-  }, [getSetting, form]);
+  }, [settings, getSetting, form]);
 
   const onSubmit = (data: FormData) => {
     updateSetting({ key: "email_hostinger_enabled", value: data.enabled, description: "Hostinger SMTP Enabled" });
@@ -91,10 +93,9 @@ export default function HostingerSmtpConfigForm() {
         throw new Error("No user email found");
       }
 
-      const { data, error } = await supabase.functions.invoke('test-email', {
+      const { data, error } = await supabase.functions.invoke('test-email-v2', {
         body: {
           to: user.email,
-          provider: 'hostinger',
         },
       });
 
