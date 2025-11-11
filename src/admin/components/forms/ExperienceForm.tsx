@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ImageUpload } from "./ImageUpload";
 
 const experienceSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -19,6 +21,7 @@ const experienceSchema = z.object({
   age_restriction: z.coerce.number().optional(),
   latitude: z.coerce.number().optional(),
   longitude: z.coerce.number().optional(),
+  images: z.array(z.string()).optional(),
 });
 
 type ExperienceFormData = z.infer<typeof experienceSchema>;
@@ -30,6 +33,8 @@ interface ExperienceFormProps {
 }
 
 export function ExperienceForm({ defaultValues, onSubmit, isLoading }: ExperienceFormProps) {
+  const [images, setImages] = useState<string[]>(defaultValues?.images || []);
+
   const form = useForm<ExperienceFormData>({
     resolver: zodResolver(experienceSchema),
     defaultValues: {
@@ -41,13 +46,24 @@ export function ExperienceForm({ defaultValues, onSubmit, isLoading }: Experienc
       min_participants: 1,
       meeting_point: "",
       difficulty_level: "moderate",
+      images: [],
       ...defaultValues,
     },
   });
 
+  const handleSubmit = (data: ExperienceFormData) => {
+    onSubmit({ ...data, images });
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <ImageUpload
+          images={images}
+          onImagesChange={setImages}
+          maxImages={10}
+          bucketName="inventory_images"
+        />
         <FormField
           control={form.control}
           name="title"
