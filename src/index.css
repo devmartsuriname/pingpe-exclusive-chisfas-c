@@ -173,3 +173,56 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* 3D Transform Utilities */
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  /* Glow Effects */
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+
+  .drop-shadow-glow-red {
+    filter: drop-shadow(0 0 10px rgb(239 68 68));
+  }
+
+  .drop-shadow-glow-primary {
+    filter: drop-shadow(0 0 10px hsl(var(--primary)));
+  }
+
+  /* Glassmorphism Presets */
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-backdrop);
+  }
+
+  .glass-badge {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px) saturate(180%);
+  }
+}
+
+@layer components {
+  /* Hover Glow Animation */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+}
