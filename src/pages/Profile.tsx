@@ -206,8 +206,8 @@ export default function Profile() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
+      <main className="flex-1 container mx-auto px-4 py-16 md:py-20 pb-20">
+        <div className="max-w-4xl mx-auto space-y-8">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-4xl font-bold text-foreground mb-2">My Profile</h1>
