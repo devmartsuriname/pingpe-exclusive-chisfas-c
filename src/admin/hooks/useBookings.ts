@@ -13,7 +13,7 @@ export function useBookings() {
         .from("bookings")
         .select(`
           *,
-          profiles!guest_id(full_name, avatar_url, phone),
+          profiles!guest_id(full_name, avatar_url),
           properties(title, images)
         `)
         .order("created_at", { ascending: false });

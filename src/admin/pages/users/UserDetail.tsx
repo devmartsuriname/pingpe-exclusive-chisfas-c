@@ -35,7 +35,18 @@ export default function UserDetail() {
         .single();
 
       if (error) throw error;
-      return data;
+
+      // Fetch contact info separately (admin can see it)
+      const { data: contactData } = await supabase
+        .from("user_contact_info")
+        .select("phone")
+        .eq("user_id", data.user_id)
+        .maybeSingle();
+
+      return {
+        ...data,
+        phone: contactData?.phone || null,
+      };
     },
   });
 

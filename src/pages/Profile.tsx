@@ -21,6 +21,9 @@ import { LogOut, User } from "lucide-react";
 const profileSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
   bio: z.string().optional(),
+});
+
+const contactSchema = z.object({
   phone: z.string().optional(),
 });
 
@@ -36,6 +39,7 @@ const passwordSchema = z.object({
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
+type ContactFormData = z.infer<typeof contactSchema>;
 type PasswordFormData = z.infer<typeof passwordSchema>;
 
 export default function Profile() {
@@ -50,6 +54,12 @@ export default function Profile() {
     defaultValues: {
       fullName: "",
       bio: "",
+    },
+  });
+
+  const contactForm = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
       phone: "",
     },
   });
@@ -69,18 +79,31 @@ export default function Profile() {
   }, [user]);
 
   const fetchProfile = async () => {
-    const { data, error } = await supabase
+    // Fetch profile data
+    const { data: profileData } = await supabase
       .from("profiles")
       .select("*")
       .eq("user_id", user?.id)
       .single();
 
-    if (data) {
-      setProfile(data);
+    // Fetch contact info separately
+    const { data: contactData } = await supabase
+      .from("user_contact_info")
+      .select("*")
+      .eq("user_id", user?.id)
+      .maybeSingle();
+
+    if (profileData) {
+      setProfile(profileData);
       profileForm.reset({
-        fullName: data.full_name || "",
-        bio: data.bio || "",
-        phone: data.phone || "",
+        fullName: profileData.full_name || "",
+        bio: profileData.bio || "",
+      });
+    }
+
+    if (contactData) {
+      contactForm.reset({
+        phone: contactData.phone || "",
       });
     }
   };
@@ -92,7 +115,6 @@ export default function Profile() {
       .update({
         full_name: data.fullName,
         bio: data.bio,
-        phone: data.phone,
       })
       .eq("user_id", user?.id);
 
@@ -106,6 +128,46 @@ export default function Profile() {
       toast({
         title: "Profile updated!",
         description: "Your profile has been successfully updated.",
+      });
+      fetchProfile();
+    }
+    setLoading(false);
+  };
+
+  const onContactSubmit = async (data: ContactFormData) => {
+    setLoading(true);
+    
+    // Check if contact info exists
+    const { data: existing } = await supabase
+      .from("user_contact_info")
+      .select("id")
+      .eq("user_id", user?.id)
+      .maybeSingle();
+
+    let error;
+    if (existing) {
+      // Update existing
+      ({ error } = await supabase
+        .from("user_contact_info")
+        .update({ phone: data.phone })
+        .eq("user_id", user?.id));
+    } else {
+      // Insert new
+      ({ error } = await supabase
+        .from("user_contact_info")
+        .insert({ user_id: user?.id, phone: data.phone }));
+    }
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Contact info updated!",
+        description: "Your contact information has been successfully updated.",
       });
       fetchProfile();
     }
@@ -207,20 +269,6 @@ export default function Profile() {
 
                       <FormField
                         control={profileForm.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Phone</FormLabel>
-                            <FormControl>
-                              <Input placeholder="+1 234 567 8900" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={profileForm.control}
                         name="bio"
                         render={({ field }) => (
                           <FormItem>
@@ -234,10 +282,43 @@ export default function Profile() {
                       />
 
                       <Button type="submit" disabled={loading}>
-                        {loading ? "Saving..." : "Save Changes"}
+                        {loading ? "Saving..." : "Save Profile"}
                       </Button>
                     </form>
                   </Form>
+
+                  <Separator className="my-6" />
+
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg font-semibold">Contact Information</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Your phone number is private and only visible to you.
+                      </p>
+                    </div>
+                    
+                    <Form {...contactForm}>
+                      <form onSubmit={contactForm.handleSubmit(onContactSubmit)} className="space-y-4">
+                        <FormField
+                          control={contactForm.control}
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Phone Number (Private)</FormLabel>
+                              <FormControl>
+                                <Input placeholder="+1 234 567 8900" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <Button type="submit" disabled={loading}>
+                          {loading ? "Saving..." : "Save Contact Info"}
+                        </Button>
+                      </form>
+                    </Form>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>

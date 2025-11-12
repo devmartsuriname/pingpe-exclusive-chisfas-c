@@ -23,7 +23,7 @@ export default function BookingDetail() {
         .from("bookings")
         .select(`
           *,
-          profiles!guest_id(full_name, avatar_url, phone, user_id),
+          profiles!guest_id(full_name, avatar_url, user_id),
           properties(title, images, city, country, price_per_night)
         `)
         .eq("id", id)
@@ -31,10 +31,27 @@ export default function BookingDetail() {
 
       if (error) throw error;
       
+      // Fetch guest contact info separately (admin can see it)
+      const guestUserId = (data as any).profiles?.user_id;
+      let guestPhone = null;
+      
+      if (guestUserId) {
+        const { data: contactData } = await supabase
+          .from("user_contact_info")
+          .select("phone")
+          .eq("user_id", guestUserId)
+          .maybeSingle();
+        
+        guestPhone = contactData?.phone || null;
+      }
+      
       // Transform the data to match expected structure with proper typing
       const transformedData: any = {
         ...data,
-        guest: (data as any).profiles,
+        guest: {
+          ...(data as any).profiles,
+          phone: guestPhone,
+        },
         property: (data as any).properties
       };
       
