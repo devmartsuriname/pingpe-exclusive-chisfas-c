@@ -7,12 +7,18 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { useSettings } from "@/admin/hooks/useSettings";
+import { useToast } from "@/hooks/use-toast";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [profile, setProfile] = useState<any>(null);
   const { user, roles, signOut } = useAuth();
   const navigate = useNavigate();
+  const { getSetting, updateSetting } = useSettings();
+  const { toast } = useToast();
+
+  const currentCurrency = getSetting("currency")?.value?.value || "USD";
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -46,6 +52,18 @@ export function Header() {
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
+  };
+
+  const handleCurrencyChange = (currency: string) => {
+    updateSetting({
+      key: "currency",
+      value: { value: currency },
+      description: "Default currency for the platform"
+    });
+    toast({
+      title: "Currency updated",
+      description: `Currency changed to ${currency}`,
+    });
   };
 
   return (
@@ -83,10 +101,33 @@ export function Header() {
 
           {/* Desktop Actions - Right */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" className="gap-2" aria-label="Select currency">
-              USD
-              <ChevronDown className="w-4 h-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="gap-2" aria-label="Select currency">
+                  {currentCurrency}
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Select Currency</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleCurrencyChange("USD")}>
+                  USD ($)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCurrencyChange("EUR")}>
+                  EUR (€)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCurrencyChange("GBP")}>
+                  GBP (£)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCurrencyChange("JPY")}>
+                  JPY (¥)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCurrencyChange("AUD")}>
+                  AUD (A$)
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             
             <ThemeToggle />
             
