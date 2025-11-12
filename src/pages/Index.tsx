@@ -534,9 +534,9 @@ const Index = () => {
       {/* Newsletter with Illustration */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Text + Form */}
-            <div>
+          <div className="flex justify-center">
+            {/* Centered: Text + Form */}
+            <div className="max-w-2xl w-full text-center">
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
                 Get PingPe Updates 🌿
               </h2>
@@ -544,28 +544,16 @@ const Index = () => {
                 Subscribe to receive special offers, new tour announcements, and insider tips for exploring Suriname's interior.
               </p>
 
-              <form className="flex gap-2">
+              <form className="flex gap-2 justify-center">
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1"
+                  className="flex-1 max-w-md"
                 />
                 <Button type="submit" className="px-8">
                   Subscribe
                 </Button>
               </form>
-            </div>
-
-            {/* Right: Resort Image */}
-            <div className="hidden lg:flex justify-center items-center">
-              <OptimizedImage
-                src={heroImage1}
-                alt="PingPe Resort - Authentic jungle experience on the Boven-Suriname River"
-                width={600}
-                height={400}
-                sizes="(max-width: 1024px) 0vw, 40vw"
-                className="w-full max-w-lg rounded-2xl shadow-lg object-cover"
-              />
             </div>
           </div>
         </div>
