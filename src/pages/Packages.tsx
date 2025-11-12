@@ -48,7 +48,7 @@ export default function Packages() {
       <PageHero
         title="Jungle Packages"
         subtitle="Complete jungle adventures with stays, tours, meals, and transport included"
-        backgroundImage="/demo-content/nature-pool.jpg"
+        backgroundImage="/demo-content/gallery-1.jpg"
         breadcrumbItems={[{ label: "Packages" }]}
       />
       <main className="flex-1 container mx-auto px-4 pt-12 pb-16">

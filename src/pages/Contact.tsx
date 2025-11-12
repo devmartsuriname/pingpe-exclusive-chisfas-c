@@ -1,6 +1,8 @@
 import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PageHero } from "@/components/sections/PageHero";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,21 +38,18 @@ export default function Contact() {
         description="Have questions? Contact PingPe's support team. We're here to help with bookings, partnerships, and any inquiries about our travel platform."
         url="https://www.jungleresortpingpe.com/contact"
       />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://www.jungleresortpingpe.com" },
+        { name: "Contact", url: "https://www.jungleresortpingpe.com/contact" }
+      ]} />
       <Header />
+      <PageHero
+        title="Get in Touch"
+        subtitle="Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+        backgroundImage="/demo-content/gallery-1.jpg"
+        breadcrumbItems={[{ label: "Contact" }]}
+      />
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative pt-28 pb-16 bg-gradient-to-b from-primary/10 to-background">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
-                Get in Touch
-              </h1>
-              <p className="text-xl text-muted-foreground">
-                Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-              </p>
-            </div>
-          </div>
-        </section>
 
         <section className="py-16">
           <div className="container mx-auto px-4">

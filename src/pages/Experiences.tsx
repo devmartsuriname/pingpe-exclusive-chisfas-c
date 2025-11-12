@@ -56,7 +56,7 @@ export default function Experiences() {
       <PageHero
         title="Jungle Experiences"
         subtitle="Embark on unforgettable jungle adventures with local expert guides"
-        backgroundImage="/demo-content/back-to-basic-tour.jpg"
+        backgroundImage="/demo-content/gallery-1.jpg"
         breadcrumbItems={[{ label: "Experiences" }]}
       />
       <main className="flex-1 container mx-auto px-4 pt-12 pb-16">

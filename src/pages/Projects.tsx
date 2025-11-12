@@ -26,7 +26,7 @@ export default function Projects() {
         <PageHero
           title="Community Projects & Sustainability"
           subtitle="Supporting Local Communities Through Responsible Tourism"
-          backgroundImage="/demo-content/back-to-basic-tour.jpg"
+          backgroundImage="/demo-content/gallery-1.jpg"
           breadcrumbItems={[{ label: "Projects" }]}
         />
 

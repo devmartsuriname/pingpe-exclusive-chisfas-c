@@ -48,7 +48,7 @@ export default function Transport() {
       <PageHero
         title="Jungle Transport"
         subtitle="Safe and reliable transfers through the heart of the rainforest"
-        backgroundImage="/demo-content/gallery-2.jpg"
+        backgroundImage="/demo-content/gallery-1.jpg"
         breadcrumbItems={[{ label: "Transport" }]}
       />
       <main className="flex-1 container mx-auto px-4 pt-12 pb-16">

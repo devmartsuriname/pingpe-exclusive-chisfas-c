@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useBlogPosts, useBlogCategories } from "@/hooks/useBlog";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PageHero } from "@/components/sections/PageHero";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import SEO from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -40,19 +42,19 @@ export default function Blog() {
         title="Blog - PingPe Resort"
         description="Discover travel tips, local insights, and stories from the heart of Suriname's rainforest"
       />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://www.jungleresortpingpe.com" },
+        { name: "Blog", url: "https://www.jungleresortpingpe.com/blog" }
+      ]} />
       <Header />
+      <PageHero
+        title="Blog & Stories"
+        subtitle="Explore travel insights, local culture, and adventures in Suriname's pristine rainforest"
+        backgroundImage="/demo-content/gallery-1.jpg"
+        breadcrumbItems={[{ label: "Blog" }]}
+      />
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative pt-28 pb-16 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-4">Blog & Stories</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Explore travel insights, local culture, and adventures in Suriname's pristine
-              rainforest
-            </p>
-          </div>
-        </section>
 
         {/* Filters */}
         <section className="py-8 border-b">
