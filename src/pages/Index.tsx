@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight, Calendar, Send, Smile } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
@@ -302,34 +303,69 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text + Search */}
             <div>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in">
+              <motion.h1 
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="font-display text-fluid-3xl font-bold mb-4"
+              >
                 Experience Authentic
                 <span className="text-primary block mt-2">Upper Suriname</span>
-              </h1>
-              <p className="text-lg text-muted-foreground mb-8">
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                className="text-fluid-base text-muted-foreground mb-8"
+              >
                 Join Jungle Resort PingPe for fully guided tours to Suriname's interior. Immerse yourself in pristine rainforests and authentic Saramaccan culture on the Boven-Suriname River.
-              </p>
+              </motion.p>
 
-              <HeroSearchBar />
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+              >
+                <HeroSearchBar />
+              </motion.div>
 
-              {/* Type Selector Pills */}
-              <div className="flex flex-wrap gap-2 mt-6">
-                {inventoryTypes.map((type) => (
-                  <Badge
+              {/* Type Selector Pills with Float Animation */}
+              <motion.div 
+                className="flex flex-wrap gap-2 mt-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
+                {inventoryTypes.map((type, index) => (
+                  <motion.div
                     key={type.id}
-                    variant={activeType === type.id ? "default" : "outline"}
-                    className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors px-4 py-2"
-                    onClick={() => setActiveType(type.id)}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    {type.label} • {type.count}
-                  </Badge>
+                    <Badge
+                      variant={activeType === type.id ? "default" : "outline"}
+                      className="cursor-pointer hover:shadow-lg transition-all px-4 py-2"
+                      onClick={() => setActiveType(type.id)}
+                    >
+                      {type.label} • {type.count}
+                    </Badge>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
 
-            {/* Right: Photo Collage */}
+            {/* Right: Photo Collage with Parallax */}
             <div className="hidden lg:grid grid-cols-2 gap-4 h-[500px]">
-              <div className="relative overflow-hidden rounded-2xl row-span-2">
+              <motion.div 
+                className="relative overflow-hidden rounded-2xl row-span-2"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <OptimizedImage
                   src={heroImage1}
                   alt="PingPe waterfall cascading through lush Suriname rainforest"
@@ -337,29 +373,41 @@ const Index = () => {
                   width={800}
                   height={1000}
                   sizes="(max-width: 1024px) 0vw, 40vw"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                 />
-              </div>
-              <div className="relative overflow-hidden rounded-2xl">
+              </motion.div>
+              <motion.div 
+                className="relative overflow-hidden rounded-2xl"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <OptimizedImage
                   src={heroImage2}
                   alt="Traditional eco-lodge on the Boven-Suriname River"
                   width={800}
                   height={480}
                   sizes="(max-width: 1024px) 0vw, 40vw"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                 />
-              </div>
-              <div className="relative overflow-hidden rounded-2xl">
+              </motion.div>
+              <motion.div 
+                className="relative overflow-hidden rounded-2xl"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <OptimizedImage
                   src={heroImage3}
                   alt="Jungle adventure tour exploring Ananasberg mountain"
                   width={800}
                   height={480}
                   sizes="(max-width: 1024px) 0vw, 40vw"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

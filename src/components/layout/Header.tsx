@@ -9,9 +9,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useSettings } from "@/admin/hooks/useSettings";
 import { useToast } from "@/hooks/use-toast";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [profile, setProfile] = useState<any>(null);
   const { user, roles, signOut } = useAuth();
   const navigate = useNavigate();
@@ -28,6 +31,16 @@ export function Header() {
     { name: "Village", href: "/village" },
     { name: "About", href: "/about" },
   ];
+
+  // Scroll detection for glassmorphism effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -67,17 +80,30 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
-
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+    <motion.header 
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out",
+        isScrolled 
+          ? "h-16 backdrop-blur-xl bg-background/80 border-b border-border/50 shadow-lg" 
+          : "h-20 bg-background border-b border-border"
+      )}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <div className="container mx-auto px-4 h-full">
+        <div className="flex items-center justify-between h-full">
+          {/* Logo with Scale Animation */}
+          <Link to="/" className="flex items-center gap-2 group">
+            <motion.div 
+              className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center"
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
               <span className="text-primary-foreground font-bold text-xl">P</span>
-            </div>
+            </motion.div>
             <div className="flex flex-col">
-              <span className="font-display text-xl font-bold text-foreground leading-none">
+              <span className="font-display text-xl font-bold text-foreground leading-none group-hover:text-primary transition-colors">
                 PingPe
               </span>
               <span className="text-[10px] text-muted-foreground leading-none">
@@ -86,15 +112,21 @@ export function Header() {
             </div>
           </Link>
 
-          {/* Desktop Navigation - Center */}
+          {/* Desktop Navigation - Center with Enhanced Hover */}
           <nav className="hidden lg:flex items-center gap-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className="px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-full transition-colors"
+                className="group relative px-4 py-2 text-sm font-medium text-foreground rounded-full transition-all hover:scale-105"
               >
-                {item.name}
+                <span className="relative z-10">{item.name}</span>
+                <motion.div 
+                  className="absolute inset-0 bg-primary/10 rounded-full"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileHover={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
               </Link>
             ))}
           </nav>
@@ -204,70 +236,106 @@ export function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t">
-            <nav className="flex flex-col gap-2 mb-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-            
-            {user ? (
-              <div className="flex flex-col gap-2 px-4 pt-4 border-t">
-                <Link
-                  to="/profile"
-                  className="flex items-center gap-2 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg px-2 transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <User className="w-4 h-4" />
-                  Profile
-                </Link>
-                {roles.includes("admin") && (
-                  <Link
-                    to="/admin/dashboard"
-                    className="flex items-center gap-2 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg px-2 transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Shield className="w-4 h-4" />
-                    Admin Dashboard
-                  </Link>
-                )}
-                <button
-                  onClick={() => {
-                    handleSignOut();
-                    setIsMobileMenuOpen(false);
+        {/* Animated Mobile Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div 
+              className="md:hidden border-t backdrop-blur-xl bg-background/95"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <div className="py-4">
+                <motion.nav 
+                  className="flex flex-col gap-2 mb-4"
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  variants={{
+                    open: { transition: { staggerChildren: 0.05 } },
+                    closed: { transition: { staggerChildren: 0.02, staggerDirection: -1 } }
                   }}
-                  className="flex items-center gap-2 py-2 text-sm font-medium text-destructive hover:bg-muted rounded-lg px-2 transition-colors text-left"
                 >
-                  <LogOut className="w-4 h-4" />
-                  Sign Out
-                </button>
+                  {navigation.map((item) => (
+                    <motion.div
+                      key={item.name}
+                      variants={{
+                        open: { opacity: 1, x: 0 },
+                        closed: { opacity: 0, x: -20 }
+                      }}
+                    >
+                      <Link
+                        to={item.href}
+                        className="block px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.nav>
+                
+                {user ? (
+                  <motion.div 
+                    className="flex flex-col gap-2 px-4 pt-4 border-t"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <Link
+                      to="/profile"
+                      className="flex items-center gap-2 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg px-2 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <User className="w-4 h-4" />
+                      Profile
+                    </Link>
+                    {roles.includes("admin") && (
+                      <Link
+                        to="/admin/dashboard"
+                        className="flex items-center gap-2 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg px-2 transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <Shield className="w-4 h-4" />
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 py-2 text-sm font-medium text-destructive hover:bg-muted rounded-lg px-2 transition-colors text-left"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    className="flex flex-col gap-2 px-4 pt-4 border-t"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <Button variant="outline" size="sm" asChild className="w-full">
+                      <Link to="/auth/sign-in" onClick={() => setIsMobileMenuOpen(false)}>
+                        Sign In
+                      </Link>
+                    </Button>
+                    <Button size="sm" asChild className="w-full">
+                      <Link to="/auth/sign-up" onClick={() => setIsMobileMenuOpen(false)}>
+                        Sign Up
+                      </Link>
+                    </Button>
+                  </motion.div>
+                )}
               </div>
-            ) : (
-              <div className="flex flex-col gap-2 px-4 pt-4 border-t">
-                <Button variant="outline" size="sm" asChild className="w-full">
-                  <Link to="/auth/sign-in" onClick={() => setIsMobileMenuOpen(false)}>
-                    Sign In
-                  </Link>
-                </Button>
-                <Button size="sm" asChild className="w-full">
-                  <Link to="/auth/sign-up" onClick={() => setIsMobileMenuOpen(false)}>
-                    Sign Up
-                  </Link>
-                </Button>
-              </div>
-            )}
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 }
