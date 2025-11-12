@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
@@ -8,8 +9,11 @@ import { PageHero } from "@/components/sections/PageHero";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import SEO from "@/components/SEO";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { useProperties } from "@/hooks/useProperties";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { Filter } from "lucide-react";
 
 export default function Stays() {
   const [searchParams] = useSearchParams();
@@ -18,7 +22,12 @@ export default function Stays() {
     guests: searchParams.get("guests") ? parseInt(searchParams.get("guests")!) : undefined,
   }));
   const [sortBy, setSortBy] = useState("popular");
+  const [filterOpen, setFilterOpen] = useState(false);
   const { data: properties, isLoading } = useProperties({ ...filters, sortBy });
+  const isMobile = useMediaQuery("(max-width: 1024px)");
+
+  // Count active filters
+  const activeFilterCount = (filters.location ? 1 : 0) + (filters.guests ? 1 : 0);
 
   useEffect(() => {
     const newFilters: any = {};
@@ -54,8 +63,45 @@ export default function Stays() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filters Sidebar */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <FilterSidebar onFilterChange={handleFilterChange} filterType="stays" />
+            <FilterSidebar 
+              onFilterChange={handleFilterChange} 
+              filterType="stays"
+              isOpen={isMobile ? filterOpen : true}
+              onClose={() => setFilterOpen(false)}
+            />
           </aside>
+
+          {/* Mobile Filter Button */}
+          {isMobile && (
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.5, type: "spring" }}
+              className="fixed bottom-6 right-6 z-30"
+            >
+              <Button
+                size="lg"
+                onClick={() => setFilterOpen(true)}
+                className="rounded-full h-14 w-14 shadow-2xl hover:shadow-primary/50 
+                           transition-shadow relative"
+              >
+                <Filter className="h-6 w-6" />
+                
+                {/* Active filters badge */}
+                {activeFilterCount > 0 && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 w-5 h-5 rounded-full 
+                               bg-destructive text-white text-xs flex items-center 
+                               justify-center font-bold"
+                  >
+                    {activeFilterCount}
+                  </motion.div>
+                )}
+              </Button>
+            </motion.div>
+          )}
 
           {/* Results */}
           <div className="flex-1">

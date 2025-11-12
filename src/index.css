@@ -209,6 +209,28 @@ All colors MUST be HSL.
     border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(12px) saturate(180%);
   }
+
+  /* Form & Filter Animations */
+  .animate-input-focus {
+    animation: input-focus-glow 2s ease-in-out infinite;
+  }
+
+  .animate-shake {
+    animation: shake 0.4s ease-in-out;
+  }
+
+  .animate-checkmark {
+    stroke-dasharray: 20;
+    animation: checkmark-draw 0.3s ease-out forwards;
+  }
+
+  .animate-badge-pulse {
+    animation: badge-pulse 1s ease-in-out infinite;
+  }
+
+  .animate-dropdown-slide {
+    animation: dropdown-slide-down 0.2s ease-out;
+  }
 }
 
 @layer components {
@@ -224,5 +246,52 @@ All colors MUST be HSL.
 
   .animate-pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Form & Filter Keyframes */
+  @keyframes input-focus-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
+    }
+    50% {
+      box-shadow: 0 0 0 4px hsl(var(--primary) / 0.2);
+    }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+  }
+
+  @keyframes checkmark-draw {
+    from {
+      stroke-dashoffset: 20;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes badge-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes dropdown-slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 }

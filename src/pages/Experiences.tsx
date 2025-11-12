@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FilterSidebar } from "@/components/filters/FilterSidebar";
@@ -8,8 +9,11 @@ import { PageHero } from "@/components/sections/PageHero";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import SEO from "@/components/SEO";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { useExperiences } from "@/hooks/useExperiences";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { Filter } from "lucide-react";
 
 export default function Experiences() {
   const [searchParams] = useSearchParams();
@@ -20,7 +24,13 @@ export default function Experiences() {
     durationDays: searchParams.get("durationDays") ? parseInt(searchParams.get("durationDays")!) : undefined,
   }));
   const [sortBy, setSortBy] = useState("popular");
+  const [filterOpen, setFilterOpen] = useState(false);
   const { data: allExperiences, isLoading } = useExperiences({ ...filters, sortBy });
+  const isMobile = useMediaQuery("(max-width: 1024px)");
+
+  // Count active filters
+  const activeFilterCount = (filters.location ? 1 : 0) + (filters.guests ? 1 : 0) + 
+                            (filters.tourType ? 1 : 0) + (filters.durationDays ? 1 : 0);
 
   // Filter out demo content and apply tour-specific filters
   const experiences = allExperiences?.filter((exp: any) => {
@@ -63,8 +73,45 @@ export default function Experiences() {
 
         <div className="flex flex-col lg:flex-row gap-8">
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <FilterSidebar onFilterChange={handleFilterChange} filterType="experiences" />
+            <FilterSidebar 
+              onFilterChange={handleFilterChange} 
+              filterType="experiences"
+              isOpen={isMobile ? filterOpen : true}
+              onClose={() => setFilterOpen(false)}
+            />
           </aside>
+
+          {/* Mobile Filter Button */}
+          {isMobile && (
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.5, type: "spring" }}
+              className="fixed bottom-6 right-6 z-30"
+            >
+              <Button
+                size="lg"
+                onClick={() => setFilterOpen(true)}
+                className="rounded-full h-14 w-14 shadow-2xl hover:shadow-primary/50 
+                           transition-shadow relative"
+              >
+                <Filter className="h-6 w-6" />
+                
+                {/* Active filters badge */}
+                {activeFilterCount > 0 && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 w-5 h-5 rounded-full 
+                               bg-destructive text-white text-xs flex items-center 
+                               justify-center font-bold"
+                  >
+                    {activeFilterCount}
+                  </motion.div>
+                )}
+              </Button>
+            </motion.div>
+          )}
 
           <div className="flex-1">
             <div className="flex items-center justify-between mb-6">
