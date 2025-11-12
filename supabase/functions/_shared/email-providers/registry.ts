@@ -16,6 +16,7 @@ export async function loadEmailConfig(supabaseClient: any): Promise<EmailConfig>
       'email_hostinger_password',
       'email_hostinger_from_email',
       'email_hostinger_from_name',
+      'email_hostinger_secure',
     ]);
 
   if (error) {
@@ -34,6 +35,7 @@ export async function loadEmailConfig(supabaseClient: any): Promise<EmailConfig>
       enabled: config.email_hostinger_enabled || false,
       host: config.email_hostinger_host || '',
       port: config.email_hostinger_port || 465,
+      secure: config.email_hostinger_secure !== false, // Default true for SSL/TLS
       username: config.email_hostinger_username || '',
       password: config.email_hostinger_password || '',
       from_email: config.email_hostinger_from_email || '',

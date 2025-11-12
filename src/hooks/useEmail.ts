@@ -9,7 +9,7 @@ interface SendEmailParams {
 export const useEmail = () => {
   const sendEmail = async ({ to, template, data = {} }: SendEmailParams): Promise<boolean> => {
     try {
-      const { data: result, error } = await supabase.functions.invoke('send-email', {
+      const { data: result, error } = await supabase.functions.invoke('send-email-v2', {
         body: {
           to,
           template,
@@ -25,7 +25,7 @@ export const useEmail = () => {
       if (result?.error) {
         // Email service not configured - log warning but don't fail
         if (!result.configured) {
-          console.warn('Email not sent — Resend API not configured');
+          console.warn('Email not sent — Hostinger SMTP not configured. Configure via Admin Settings.');
           return false;
         }
         console.error('Email send failed:', result.error);

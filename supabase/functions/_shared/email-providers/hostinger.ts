@@ -8,7 +8,7 @@ export class HostingerSMTP extends EmailProvider {
         connection: {
           hostname: this.config.host,
           port: this.config.port,
-          tls: true,
+          tls: this.config.secure !== false, // Use configured secure setting, default true
           auth: {
             username: this.config.username,
             password: this.config.password,
@@ -45,7 +45,7 @@ export class HostingerSMTP extends EmailProvider {
         connection: {
           hostname: this.config.host,
           port: this.config.port,
-          tls: true,
+          tls: this.config.secure !== false, // Use configured secure setting, default true
           auth: {
             username: this.config.username,
             password: this.config.password,

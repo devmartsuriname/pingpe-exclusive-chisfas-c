@@ -9,6 +9,7 @@ export interface EmailConfig {
     enabled: boolean;
     host: string;
     port: number;
+    secure: boolean;
     username: string;
     password: string;
     from_email: string;

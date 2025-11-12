@@ -51,13 +51,14 @@ export default function HostingerSmtpConfigForm() {
 
   useEffect(() => {
     if (!settings) return;
-
+    
     const enabled = getSetting("email_hostinger_enabled");
-    const host = getSetting("email_hostinger_smtp_host");
-    const port = getSetting("email_hostinger_smtp_port");
-    const username = getSetting("email_hostinger_smtp_username");
-    const password = getSetting("email_hostinger_smtp_password");
-    const secure = getSetting("email_hostinger_smtp_secure");
+    // Prefer canonical keys, fallback to legacy _smtp_ keys for backward compatibility
+    const host = getSetting("email_hostinger_host") || getSetting("email_hostinger_smtp_host");
+    const port = getSetting("email_hostinger_port") || getSetting("email_hostinger_smtp_port");
+    const username = getSetting("email_hostinger_username") || getSetting("email_hostinger_smtp_username");
+    const password = getSetting("email_hostinger_password") || getSetting("email_hostinger_smtp_password");
+    const secure = getSetting("email_hostinger_secure") ?? getSetting("email_hostinger_smtp_secure");
     const fromName = getSetting("email_hostinger_from_name");
     const fromEmail = getSetting("email_hostinger_from_email");
     const replyTo = getSetting("email_hostinger_reply_to");
@@ -75,11 +76,12 @@ export default function HostingerSmtpConfigForm() {
 
   const onSubmit = (data: FormData) => {
     updateSetting({ key: "email_hostinger_enabled", value: data.enabled, description: "Hostinger SMTP Enabled" });
-    updateSetting({ key: "email_hostinger_smtp_host", value: data.smtp_host, description: "Hostinger SMTP Host" });
-    updateSetting({ key: "email_hostinger_smtp_port", value: parseInt(data.smtp_port), description: "Hostinger SMTP Port" });
-    updateSetting({ key: "email_hostinger_smtp_username", value: data.smtp_username, description: "Hostinger SMTP Username (Encrypted)" });
-    updateSetting({ key: "email_hostinger_smtp_password", value: data.smtp_password, description: "Hostinger SMTP Password (Encrypted)" });
-    updateSetting({ key: "email_hostinger_smtp_secure", value: data.smtp_secure, description: "Hostinger SMTP Use SSL/TLS" });
+    // Write only canonical keys (no _smtp_ infix)
+    updateSetting({ key: "email_hostinger_host", value: data.smtp_host, description: "Hostinger SMTP Host" });
+    updateSetting({ key: "email_hostinger_port", value: parseInt(data.smtp_port), description: "Hostinger SMTP Port" });
+    updateSetting({ key: "email_hostinger_username", value: data.smtp_username, description: "Hostinger SMTP Username (Encrypted)" });
+    updateSetting({ key: "email_hostinger_password", value: data.smtp_password, description: "Hostinger SMTP Password (Encrypted)" });
+    updateSetting({ key: "email_hostinger_secure", value: data.smtp_secure, description: "Hostinger SMTP Use SSL/TLS" });
     updateSetting({ key: "email_hostinger_from_name", value: data.from_name, description: "Hostinger From Name" });
     updateSetting({ key: "email_hostinger_from_email", value: data.from_email, description: "Hostinger From Email" });
     updateSetting({ key: "email_hostinger_reply_to", value: data.reply_to || null, description: "Hostinger Reply-To Email" });
