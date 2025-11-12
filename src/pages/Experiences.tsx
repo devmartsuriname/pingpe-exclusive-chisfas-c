@@ -14,6 +14,7 @@ import { useExperiences } from "@/hooks/useExperiences";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Filter } from "lucide-react";
+import { AnimatedGrid } from "@/components/animations/AnimatedGrid";
 
 export default function Experiences() {
   const [searchParams] = useSearchParams();
@@ -166,7 +167,7 @@ export default function Experiences() {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <AnimatedGrid columns={{ base: 1, md: 2, xl: 3 }} staggerDelay={0.1}>
                 {experiences?.map((experience: any) => (
                   <ListingCard
                     key={experience.id}
@@ -191,7 +192,7 @@ export default function Experiences() {
                     listing={experience}
                   />
                 ))}
-              </div>
+              </AnimatedGrid>
             )}
           </div>
         </div>

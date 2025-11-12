@@ -14,6 +14,7 @@ import { useProperties } from "@/hooks/useProperties";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Filter } from "lucide-react";
+import { AnimatedGrid } from "@/components/animations/AnimatedGrid";
 
 export default function Stays() {
   const [searchParams] = useSearchParams();
@@ -129,7 +130,7 @@ export default function Stays() {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <AnimatedGrid columns={{ base: 1, md: 2, xl: 3 }} staggerDelay={0.1}>
                 {properties?.map((property) => (
                   <ListingCard
                     key={property.id}
@@ -151,7 +152,7 @@ export default function Stays() {
                     }}
                   />
                 ))}
-              </div>
+              </AnimatedGrid>
             )}
           </div>
         </div>
