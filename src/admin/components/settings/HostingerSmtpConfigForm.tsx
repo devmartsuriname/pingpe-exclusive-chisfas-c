@@ -27,8 +27,9 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function HostingerSmtpConfigForm() {
-  const { settings, getSetting, updateSetting, isUpdating } = useSettings();
+  const { settings, getSetting, updateSetting, updateSettingAsync, isUpdating } = useSettings();
   const [isTesting, setIsTesting] = useState(false);
+  const [isTogglingEnabled, setIsTogglingEnabled] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<FormData>({
@@ -84,6 +85,28 @@ export default function HostingerSmtpConfigForm() {
     updateSetting({ key: "email_hostinger_reply_to", value: data.reply_to || null, description: "Hostinger Reply-To Email" });
   };
 
+  const handleToggleChange = async (checked: boolean) => {
+    const previousValue = form.getValues("enabled");
+    setIsTogglingEnabled(true);
+    
+    try {
+      // Update form state immediately for responsive UI
+      form.setValue("enabled", checked, { shouldDirty: false });
+      
+      // Persist to database (toast handled by useSettings hook)
+      await updateSettingAsync({ 
+        key: "email_hostinger_enabled", 
+        value: checked, 
+        description: "Hostinger SMTP Enabled" 
+      });
+    } catch (error: any) {
+      // Revert on failure (error toast already shown by useSettings hook)
+      form.setValue("enabled", previousValue);
+    } finally {
+      setIsTogglingEnabled(false);
+    }
+  };
+
   const handleTestEmail = async () => {
     setIsTesting(true);
     try {
@@ -135,7 +158,8 @@ export default function HostingerSmtpConfigForm() {
               <FormControl>
                 <Switch
                   checked={field.value}
-                  onCheckedChange={field.onChange}
+                  onCheckedChange={handleToggleChange}
+                  disabled={isTogglingEnabled}
                 />
               </FormControl>
             </FormItem>

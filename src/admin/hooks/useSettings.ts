@@ -71,6 +71,7 @@ export const useSettings = () => {
     isLoading,
     getSetting,
     updateSetting: updateSettingMutation.mutate,
+    updateSettingAsync: updateSettingMutation.mutateAsync,
     isUpdating: updateSettingMutation.isPending,
   };
 };
