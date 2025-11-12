@@ -11,11 +11,13 @@ import { useSettings } from "@/admin/hooks/useSettings";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [profile, setProfile] = useState<any>(null);
+  const prefersReducedMotion = useReducedMotion();
   const { user, roles, signOut } = useAuth();
   const navigate = useNavigate();
   const { getSetting, updateSetting } = useSettings();
@@ -87,9 +89,9 @@ export function Header() {
           ? "h-16 backdrop-blur-xl bg-background/80 border-b border-border/50 shadow-lg" 
           : "h-20 bg-background border-b border-border"
       )}
-      initial={{ y: -100 }}
+      initial={prefersReducedMotion ? { y: 0 } : { y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, ease: "easeOut" }}
     >
       <div className="container mx-auto px-4 h-full">
         <div className="flex items-center justify-between h-full">

@@ -61,7 +61,7 @@ export const HeroSearchBar = ({ onSearch, className }: HeroSearchBarProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`bg-background dark:bg-card rounded-full shadow-lg border border-border p-2 flex items-center gap-2 relative ${className}`}
+      className={`backdrop-blur-xl bg-background/80 dark:bg-card/80 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-border/50 p-2 flex items-center gap-2 relative hover:shadow-[0_8px_32px_rgba(0,0,0,0.18)] transition-shadow duration-300 ${className}`}
     >
       <div className="flex-1 flex items-center gap-2 px-4">
         <Filter className="w-5 h-5 text-muted-foreground flex-shrink-0" />

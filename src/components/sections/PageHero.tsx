@@ -3,6 +3,7 @@ import { ChevronRight, Home } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface BreadcrumbItem {
   label: string;
@@ -18,16 +19,17 @@ interface PageHeroProps {
 
 export const PageHero = ({ title, subtitle, backgroundImage, breadcrumbItems }: PageHeroProps) => {
   const ref = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"]
   });
 
-  // Parallax effects
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 0.5], ["0%", "20%"]);
+  // Parallax effects (disabled if user prefers reduced motion)
+  const backgroundY = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? ["0%", "0%"] : ["0%", "30%"]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [1, 1] : [1, 1.1]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], prefersReducedMotion ? [1, 1] : [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.5], prefersReducedMotion ? ["0%", "0%"] : ["0%", "20%"]);
 
   return (
     <section ref={ref} className="relative h-[400px] flex items-center justify-center overflow-hidden">

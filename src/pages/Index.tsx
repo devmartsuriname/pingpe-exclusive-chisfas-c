@@ -16,7 +16,8 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight, Calendar, Send, Smile } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import {
   Carousel,
   CarouselContent,
@@ -46,6 +47,11 @@ import locationAtjoni from "@/assets/location-atjoni.jpg";
 
 const Index = () => {
   const [activeType, setActiveType] = useState("stays");
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  
+  // Photo collage parallax effect (disabled if user prefers reduced motion)
+  const collageY = useTransform(scrollY, [0, 800], prefersReducedMotion ? [0, 0] : [0, -100]);
 
   const inventoryTypes = [
     { id: "stays", label: "Stays", count: 23 },
@@ -358,7 +364,10 @@ const Index = () => {
             </div>
 
             {/* Right: Photo Collage with Parallax */}
-            <div className="hidden lg:grid grid-cols-2 gap-4 h-[500px]">
+            <motion.div 
+              className="hidden lg:grid grid-cols-2 gap-4 h-[500px]"
+              style={{ y: collageY }}
+            >
               <motion.div 
                 className="relative overflow-hidden rounded-2xl row-span-2"
                 initial={{ opacity: 0, x: 50 }}
@@ -408,7 +417,7 @@ const Index = () => {
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                 />
               </motion.div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
