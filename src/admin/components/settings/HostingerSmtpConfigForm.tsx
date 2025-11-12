@@ -47,12 +47,14 @@ export default function HostingerSmtpConfigForm() {
     },
   });
 
-  const isEnabled = form.watch("enabled");
+  const isEnabled = form.watch("enabled") === true;
 
   useEffect(() => {
     if (!settings) return;
     
     const enabled = getSetting("email_hostinger_enabled");
+    console.log('[SMTP Form] Loaded enabled setting:', enabled?.value, 'Type:', typeof enabled?.value);
+    
     // Prefer canonical keys, fallback to legacy _smtp_ keys for backward compatibility
     const host = getSetting("email_hostinger_host") || getSetting("email_hostinger_smtp_host");
     const port = getSetting("email_hostinger_port") || getSetting("email_hostinger_smtp_port");
@@ -63,7 +65,11 @@ export default function HostingerSmtpConfigForm() {
     const fromEmail = getSetting("email_hostinger_from_email");
     const replyTo = getSetting("email_hostinger_reply_to");
 
-    if (enabled !== undefined) form.setValue("enabled", enabled.value);
+    if (enabled !== undefined) {
+      const boolValue = Boolean(enabled.value);
+      console.log('[SMTP Form] Setting enabled to:', boolValue);
+      form.setValue("enabled", boolValue);
+    }
     if (host) form.setValue("smtp_host", host.value);
     if (port) form.setValue("smtp_port", String(port.value));
     if (username) form.setValue("smtp_username", username.value);
@@ -72,7 +78,7 @@ export default function HostingerSmtpConfigForm() {
     if (fromName) form.setValue("from_name", fromName.value);
     if (fromEmail) form.setValue("from_email", fromEmail.value);
     if (replyTo) form.setValue("reply_to", replyTo.value || "");
-  }, [settings, getSetting, form]);
+  }, [settings, getSetting]);
 
   const onSubmit = (data: FormData) => {
     updateSetting({ key: "email_hostinger_enabled", value: data.enabled, description: "Hostinger SMTP Enabled" });
@@ -93,7 +99,7 @@ export default function HostingerSmtpConfigForm() {
     
     try {
       // Update form state immediately for responsive UI
-      form.setValue("enabled", checked, { shouldDirty: false });
+      form.setValue("enabled", checked, { shouldValidate: true, shouldDirty: true });
       
       // Persist to database (toast handled by useSettings hook)
       await updateSettingAsync({ 
