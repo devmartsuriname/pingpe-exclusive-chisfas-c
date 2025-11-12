@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -31,6 +31,7 @@ export default function HostingerSmtpConfigForm() {
   const [isTesting, setIsTesting] = useState(false);
   const [isTogglingEnabled, setIsTogglingEnabled] = useState(false);
   const { toast } = useToast();
+  const hasInitialized = useRef(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -50,10 +51,10 @@ export default function HostingerSmtpConfigForm() {
   const isEnabled = form.watch("enabled") === true;
 
   useEffect(() => {
-    if (!settings) return;
+    // Only initialize form values once when settings first load
+    if (!settings || hasInitialized.current) return;
     
     const enabled = getSetting("email_hostinger_enabled");
-    console.log('[SMTP Form] Loaded enabled setting:', enabled?.value, 'Type:', typeof enabled?.value);
     
     // Prefer canonical keys, fallback to legacy _smtp_ keys for backward compatibility
     const host = getSetting("email_hostinger_host") || getSetting("email_hostinger_smtp_host");
@@ -66,9 +67,7 @@ export default function HostingerSmtpConfigForm() {
     const replyTo = getSetting("email_hostinger_reply_to");
 
     if (enabled !== undefined) {
-      const boolValue = Boolean(enabled.value);
-      console.log('[SMTP Form] Setting enabled to:', boolValue);
-      form.setValue("enabled", boolValue);
+      form.setValue("enabled", Boolean(enabled.value));
     }
     if (host) form.setValue("smtp_host", host.value);
     if (port) form.setValue("smtp_port", String(port.value));
@@ -78,7 +77,10 @@ export default function HostingerSmtpConfigForm() {
     if (fromName) form.setValue("from_name", fromName.value);
     if (fromEmail) form.setValue("from_email", fromEmail.value);
     if (replyTo) form.setValue("reply_to", replyTo.value || "");
-  }, [settings, getSetting]);
+    
+    // Mark as initialized
+    hasInitialized.current = true;
+  }, [settings]);
 
   const onSubmit = (data: FormData) => {
     updateSetting({ key: "email_hostinger_enabled", value: data.enabled, description: "Hostinger SMTP Enabled" });
