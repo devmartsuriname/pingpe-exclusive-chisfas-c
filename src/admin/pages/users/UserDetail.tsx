@@ -25,26 +25,35 @@ export default function UserDetail() {
   const { data: user, isLoading } = useQuery({
     queryKey: ["user", id],
     queryFn: async () => {
-      const { data, error } = await supabase
+      // Step 1: Fetch profile by profiles.id
+      const { data: profile, error: profileError } = await supabase
         .from("profiles")
-        .select(`
-          *,
-          user_roles(role)
-        `)
+        .select("*")
         .eq("id", id)
-        .single();
+        .maybeSingle();
 
-      if (error) throw error;
+      if (profileError) throw profileError;
+      if (!profile) return null;
 
-      // Fetch contact info separately (admin can see it)
+      // Step 2: Fetch user roles by user_id
+      const { data: roles, error: rolesError } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", profile.user_id);
+
+      if (rolesError) throw rolesError;
+
+      // Step 3: Fetch contact info by user_id
       const { data: contactData } = await supabase
         .from("user_contact_info")
         .select("phone")
-        .eq("user_id", data.user_id)
+        .eq("user_id", profile.user_id)
         .maybeSingle();
 
+      // Step 4: Merge all data
       return {
-        ...data,
+        ...profile,
+        user_roles: roles || [],
         phone: contactData?.phone || null,
       };
     },
