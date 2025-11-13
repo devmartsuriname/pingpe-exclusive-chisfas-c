@@ -2,7 +2,6 @@ import SEO from "@/components/SEO";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHero } from "@/components/sections/PageHero";
-import { ParallaxSection } from "@/components/animations/ParallaxSection";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { StatCard } from "@/components/about/StatCard";
 import { TeamCarousel } from "@/components/about/TeamCarousel";
@@ -26,7 +25,7 @@ export default function About() {
         />
 
         {/* Story Section */}
-        <ParallaxSection backgroundImage="/demo-content/gallery-1.jpg" speed={0.5} overlay="dark" className="py-20">
+        <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <ScrollReveal direction="up">
@@ -45,7 +44,7 @@ export default function About() {
               </ScrollReveal>
             </div>
           </div>
-        </ParallaxSection>
+        </section>
 
         {/* Statistics Section */}
         <section className="py-20 bg-primary/5">
@@ -93,7 +92,7 @@ export default function About() {
         </section>
 
         {/* Values Section */}
-        <ParallaxSection backgroundImage="/demo-content/gallery-2.jpg" speed={0.3} overlay="dark" className="py-20">
+        <section className="py-20 bg-muted/20">
           <div className="container mx-auto px-4">
             <ScrollReveal direction="up">
               <h2 className="font-display text-3xl font-bold text-center text-foreground mb-12">
@@ -147,7 +146,7 @@ export default function About() {
               </ScrollReveal>
             </div>
           </div>
-        </ParallaxSection>
+        </section>
 
         {/* Team Section */}
         <section className="py-20 bg-muted/30">
