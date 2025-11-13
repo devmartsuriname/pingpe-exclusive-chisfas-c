@@ -3,6 +3,10 @@ import { Footer } from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { PageHero } from "@/components/sections/PageHero";
+import { InteractiveMap } from "@/components/map/InteractiveMap";
+import { PhotoGallery } from "@/components/gallery/PhotoGallery";
+import { ParallaxSection } from "@/components/animations/ParallaxSection";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { Users, Heart, Home, TreePine, School, Radio } from "lucide-react";
 
 export default function Village() {
@@ -50,46 +54,54 @@ export default function Village() {
         </section>
 
         {/* Heritage Section */}
-        <section className="py-16 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex items-start gap-4 mb-8">
-                <Users className="h-8 w-8 text-primary flex-shrink-0 mt-1" />
-                <div>
-                  <h2 className="text-3xl font-bold mb-4">Maroon Heritage</h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    Maroons are descendants of escaped slaves who originally came from West Africa. 
-                    In the villages, they have successfully preserved the culture of their ancestors. 
-                    This rich cultural heritage is visible in their language, traditions, crafts, 
-                    and daily way of life.
-                  </p>
-                </div>
-              </div>
+        <ParallaxSection backgroundImage="/demo-content/gallery-2.jpg" speed={0.5} overlay="dark">
+          <section className="py-20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <ScrollReveal direction="up">
+                  <div className="flex items-start gap-4 mb-8">
+                    <Users className="h-8 w-8 text-primary flex-shrink-0 mt-1" />
+                    <div>
+                      <h2 className="text-3xl font-bold mb-4">Maroon Heritage</h2>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        Maroons are descendants of escaped slaves who originally came from West Africa. 
+                        In the villages, they have successfully preserved the culture of their ancestors. 
+                        This rich cultural heritage is visible in their language, traditions, crafts, 
+                        and daily way of life.
+                      </p>
+                    </div>
+                  </div>
+                </ScrollReveal>
 
-              <div className="grid md:grid-cols-2 gap-6 mt-8">
-                <div className="p-6 rounded-lg bg-card border">
-                  <TreePine className="h-8 w-8 text-primary mb-3" />
-                  <h3 className="text-xl font-semibold mb-2">Self-Sustaining Lifestyle</h3>
-                  <p className="text-muted-foreground">
-                    For their daily livelihood, villagers rely primarily on nature's bounty: 
-                    hunting, fishing, agriculture, timber, and medicinal plants. This sustainable 
-                    way of living has been passed down through generations.
-                  </p>
-                </div>
+                <div className="grid md:grid-cols-2 gap-6 mt-8">
+                  <ScrollReveal direction="left" delay={0.2}>
+                    <div className="p-6 rounded-lg bg-background/80 backdrop-blur-sm border">
+                      <TreePine className="h-8 w-8 text-primary mb-3" />
+                      <h3 className="text-xl font-semibold mb-2">Self-Sustaining Lifestyle</h3>
+                      <p className="text-muted-foreground">
+                        For their daily livelihood, villagers rely primarily on nature's bounty: 
+                        hunting, fishing, agriculture, timber, and medicinal plants. This sustainable 
+                        way of living has been passed down through generations.
+                      </p>
+                    </div>
+                  </ScrollReveal>
 
-                <div className="p-6 rounded-lg bg-card border">
-                  <Home className="h-8 w-8 text-primary mb-3" />
-                  <h3 className="text-xl font-semibold mb-2">Modern Supplies</h3>
-                  <p className="text-muted-foreground">
-                    From Paramaribo, supplies such as clothing, kitchenware, tools, rice, 
-                    gasoline, and outboard motors are brought in. This blend of traditional 
-                    and modern creates a unique community dynamic.
-                  </p>
+                  <ScrollReveal direction="right" delay={0.2}>
+                    <div className="p-6 rounded-lg bg-background/80 backdrop-blur-sm border">
+                      <Home className="h-8 w-8 text-primary mb-3" />
+                      <h3 className="text-xl font-semibold mb-2">Modern Supplies</h3>
+                      <p className="text-muted-foreground">
+                        From Paramaribo, supplies such as clothing, kitchenware, tools, rice, 
+                        gasoline, and outboard motors are brought in. This blend of traditional 
+                        and modern creates a unique community dynamic.
+                      </p>
+                    </div>
+                  </ScrollReveal>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ParallaxSection>
 
         {/* Authentic Experience */}
         <section className="py-16 bg-background">
@@ -187,24 +199,76 @@ export default function Village() {
           </div>
         </section>
 
+        {/* Map Section */}
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <ScrollReveal direction="up">
+                <h2 className="text-3xl font-bold mb-4 text-center">Find Us in the Jungle</h2>
+                <p className="text-center text-muted-foreground mb-8">
+                  Located in the heart of Upper Suriname River region, accessible by boat from Atjoni
+                </p>
+              </ScrollReveal>
+              <ScrollReveal direction="up" delay={0.2}>
+                <InteractiveMap center={[4.5, -55.5]} zoom={10} />
+              </ScrollReveal>
+              <ScrollReveal direction="up" delay={0.3}>
+                <div className="mt-6 text-center">
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Getting Here:</strong> The journey to PingPe is part of the adventure! 
+                    Travel by boat from Atjoni along the scenic Upper Suriname River.
+                  </p>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </section>
+
+        {/* Photo Gallery Section */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <ScrollReveal direction="up">
+              <h2 className="text-3xl font-bold mb-4 text-center">Village Life Gallery</h2>
+              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+                Experience life in PingPe through images - from daily activities to cultural celebrations
+              </p>
+            </ScrollReveal>
+            <PhotoGallery
+              images={[
+                { src: "/demo-content/gallery-1.jpg", category: "Village Life", caption: "Traditional houses in PingPe" },
+                { src: "/demo-content/gallery-2.jpg", category: "Nature", caption: "Upper Suriname River" },
+                { src: "/demo-content/gallery-3.jpg", category: "Culture", caption: "Traditional dance performance" },
+                { src: "/demo-content/gallery-4.jpg", category: "Activities", caption: "Fishing in the river" },
+                { src: "/demo-content/gallery-5.jpg", category: "Village Life", caption: "Children playing" },
+                { src: "/demo-content/gallery-6.jpg", category: "Nature", caption: "Jungle trails" },
+                { src: "/demo-content/event-1.jpg", category: "Culture", caption: "Village gathering" },
+                { src: "/demo-content/event-2.jpg", category: "Activities", caption: "Canoe making" },
+              ]}
+              categories={["Village Life", "Nature", "Culture", "Activities"]}
+            />
+          </div>
+        </section>
+
         {/* Neighboring Semoisie */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-6">PingPe & Semoisie</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                PingPe and neighboring Semoisie village work together as a close-knit community. 
-                Children from both villages attend the same school, families intermarry, and 
-                cultural celebrations are shared events. This partnership strengthens both 
-                communities while preserving their unique identities.
-              </p>
-              <div className="p-6 bg-muted/30 rounded-lg">
-                <p className="text-muted-foreground italic">
-                  "The warm hospitality and genuine cultural experience in PingPe and Semoisie 
-                  create unforgettable memories. Here, tourism doesn't disrupt tradition - it 
-                  celebrates and preserves it."
+              <ScrollReveal direction="up">
+                <h2 className="text-3xl font-bold mb-6">PingPe & Semoisie</h2>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  PingPe and neighboring Semoisie village work together as a close-knit community. 
+                  Children from both villages attend the same school, families intermarry, and 
+                  cultural celebrations are shared events. This partnership strengthens both 
+                  communities while preserving their unique identities.
                 </p>
-              </div>
+                <div className="p-6 bg-muted/30 rounded-lg">
+                  <p className="text-muted-foreground italic">
+                    "The warm hospitality and genuine cultural experience in PingPe and Semoisie 
+                    create unforgettable memories. Here, tourism doesn't disrupt tradition - it 
+                    celebrates and preserves it."
+                  </p>
+                </div>
+              </ScrollReveal>
             </div>
           </div>
         </section>
