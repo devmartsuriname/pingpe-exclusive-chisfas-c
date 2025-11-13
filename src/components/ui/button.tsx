@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Loader2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useRipple } from "@/components/ui/ripple";
@@ -42,10 +43,11 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, onClick, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, loading = false, onClick, children, disabled, ...props }, ref) => {
     const { createRipple, RippleContainer } = useRipple({
       duration: 600,
       color: variant === "default" || variant === "premium" || variant === "hero" || variant === "gradient" || variant === "glow" || variant === "3d"
@@ -54,13 +56,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     });
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!asChild) {
+      if (!asChild && !loading) {
         createRipple(e);
       }
       onClick?.(e);
     };
 
     const Comp = asChild ? Slot : "button";
+    const isDisabled = disabled || loading;
     
     // When asChild is true, Slot expects a single child, so don't add RippleContainer
     if (asChild) {
@@ -69,20 +72,25 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className={cn(buttonVariants({ variant, size, className }))} 
           ref={ref} 
           onClick={handleClick}
+          disabled={isDisabled}
           {...props}
         />
       );
     }
     
-    // When asChild is false, we can add ripple effect
+    // When asChild is false, we can add ripple effect and loading spinner
     return (
       <Comp 
         className={cn(buttonVariants({ variant, size, className }), "relative overflow-hidden")} 
         ref={ref} 
         onClick={handleClick}
+        disabled={isDisabled}
         {...props}
       >
-        {props.children}
+        {loading && (
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        )}
+        {children}
         <RippleContainer />
       </Comp>
     );
