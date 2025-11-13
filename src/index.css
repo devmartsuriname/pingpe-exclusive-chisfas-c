@@ -59,6 +59,9 @@ All colors MUST be HSL.
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
 
+    /* Primary RGB for glow effects */
+    --primary-rgb: 221, 119, 0;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 160 15% 15%;
     --sidebar-primary: 158 64% 30%;
@@ -133,6 +136,9 @@ All colors MUST be HSL.
     --warning-foreground: 160 20% 8%;
     --info: 199 89% 58%;
     --info-foreground: 160 20% 8%;
+
+    /* Primary RGB for glow effects (dark mode) */
+    --primary-rgb: 234, 179, 8;
 
     --sidebar-background: 160 20% 10%;
     --sidebar-foreground: 40 20% 96%;
@@ -305,4 +311,34 @@ All colors MUST be HSL.
       opacity: 0;
     }
   }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes button-glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.6);
+    }
+  }
+}
+
+/* ============= BUTTON ANIMATION UTILITIES ============= */
+.animate-gradient-shift {
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-button-glow {
+  animation: button-glow-pulse 2s ease-in-out infinite;
 }

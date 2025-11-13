@@ -17,7 +17,10 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground active:scale-95",
         link: "text-primary underline-offset-4 hover:underline",
         premium: "bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-lg hover:shadow-primary/50 hover:scale-105 active:scale-100 font-semibold",
+        gradient: "bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] text-primary-foreground hover:bg-right-bottom hover:scale-105 active:scale-100 font-medium animate-gradient-shift",
         glass: "bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] text-foreground hover:bg-[var(--glass-bg)]/80 hover:border-[var(--glass-border)]/80 shadow-[var(--glass-shadow)]",
+        glow: "bg-primary text-primary-foreground shadow-lg hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.6)] hover:scale-105 active:scale-100 animate-pulse-glow",
+        "3d": "bg-primary text-primary-foreground shadow-[0_6px_0_hsl(var(--primary)/0.8)] hover:shadow-[0_4px_0_hsl(var(--primary)/0.8)] hover:translate-y-[2px] active:shadow-[0_2px_0_hsl(var(--primary)/0.8)] active:translate-y-[4px] transition-all",
         hero: "bg-gradient-to-r from-primary via-primary-hover to-accent text-primary-foreground hover:shadow-xl hover:shadow-primary/50 hover:scale-[1.02] active:scale-[0.98] font-bold text-base",
       },
       size: {
@@ -45,7 +48,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, onClick, ...props }, ref) => {
     const { createRipple, RippleContainer } = useRipple({
       duration: 600,
-      color: variant === "default" || variant === "premium" || variant === "hero"
+      color: variant === "default" || variant === "premium" || variant === "hero" || variant === "gradient" || variant === "glow" || variant === "3d"
         ? "rgba(255, 255, 255, 0.3)" 
         : "rgba(0, 0, 0, 0.1)"
     });
