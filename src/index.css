@@ -294,4 +294,15 @@ All colors MUST be HSL.
       transform: translateY(0) scale(1);
     }
   }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
+import { Facebook, Instagram, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 export function Footer() {
   const footerSections = [
@@ -51,17 +51,7 @@ export function Footer() {
           <p className="text-muted-foreground mb-6">
             Subscribe to get exclusive deals, travel tips, and updates from Boven Suriname
           </p>
-          <form className="flex gap-2 max-w-md mx-auto">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1"
-            />
-            <Button type="submit">
-              <Mail className="h-4 w-4 mr-2" />
-              Subscribe
-            </Button>
-          </form>
+          <NewsletterForm layout="horizontal" showIcon={true} />
         </div>
 
         {/* Footer Links */}
