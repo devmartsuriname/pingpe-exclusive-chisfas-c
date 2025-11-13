@@ -101,11 +101,11 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
           >
             <div className="container mx-auto px-4 py-8">
               <div className="glass-card rounded-3xl max-w-4xl mx-auto overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/70 to-background/80 dark:from-background/40 dark:via-background/30 dark:to-background/40" />
+                <div className="absolute inset-0 bg-gradient-to-br from-background/98 via-background/95 to-background/98" />
                 <div className="relative z-10 p-6 md:p-8">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-white">Search PingPe</h2>
+                    <h2 className="text-2xl font-bold text-foreground">Search PingPe</h2>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -118,12 +118,12 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
 
                   {/* Search Input */}
                   <div className="relative mb-6">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/70" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <Input
                       ref={inputRef}
                       type="text"
                       placeholder="Where do you want to go?"
-                      className="pl-12 pr-4 py-6 text-lg rounded-2xl bg-white/10 border-white/20 text-white placeholder:text-white/60"
+                      className="pl-12 pr-4 py-6 text-lg rounded-2xl bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground"
                     />
                   </div>
 
@@ -157,14 +157,14 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                       {recentSearches.length > 0 && (
                         <div>
                           <div className="flex items-center gap-2 mb-3">
-                            <Clock className="w-4 h-4 text-white/70" />
-                            <h3 className="font-semibold text-sm text-white">Recent Searches</h3>
+                            <Clock className="w-4 h-4 text-muted-foreground" />
+                            <h3 className="font-semibold text-sm text-foreground">Recent Searches</h3>
                           </div>
                           <div className="space-y-2">
                             {recentSearches.map((search, index) => (
                               <button
                                 key={index}
-                                className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-white"
+                                className="w-full text-left px-4 py-3 rounded-xl hover:bg-accent/50 transition-colors text-foreground"
                               >
                                 {search}
                               </button>
@@ -176,14 +176,14 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                       {/* Popular Destinations */}
                       <div>
                         <div className="flex items-center gap-2 mb-3">
-                          <TrendingUp className="w-4 h-4 text-white/70" />
-                          <h3 className="font-semibold text-sm text-white">Popular Destinations</h3>
+                          <TrendingUp className="w-4 h-4 text-muted-foreground" />
+                          <h3 className="font-semibold text-sm text-foreground">Popular Destinations</h3>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                           {popularDestinations.map((destination, index) => (
                             <button
                               key={index}
-                              className="text-left px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-white"
+                              className="text-left px-4 py-3 rounded-xl hover:bg-accent/50 transition-colors text-foreground"
                             >
                             <div className="flex items-center gap-2">
                               <MapPin className="w-4 h-4 text-primary" />
@@ -196,27 +196,27 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                   </TabsContent>
 
                     <TabsContent value="stays">
-                      <p className="text-white/70 text-center py-8">
+                      <p className="text-muted-foreground text-center py-8">
                         Search for accommodations...
                       </p>
                     </TabsContent>
 
                     <TabsContent value="experiences">
-                      <p className="text-white/70 text-center py-8">
+                      <p className="text-muted-foreground text-center py-8">
                         Search for experiences...
                       </p>
                     </TabsContent>
 
                     <TabsContent value="transport">
-                      <p className="text-white/70 text-center py-8">
+                      <p className="text-muted-foreground text-center py-8">
                         Search for transportation...
                       </p>
                     </TabsContent>
                 </Tabs>
 
                   {/* Keyboard Hint */}
-                  <div className="text-center text-sm text-white/70">
-                    Press <kbd className="px-2 py-1 bg-white/10 rounded">ESC</kbd> to close
+                  <div className="text-center text-sm text-muted-foreground">
+                    Press <kbd className="px-2 py-1 bg-accent/20 rounded">ESC</kbd> to close
                   </div>
                 </div>
               </div>
