@@ -26,27 +26,25 @@ export default function About() {
         />
 
         {/* Story Section */}
-        <ParallaxSection backgroundImage="/demo-content/gallery-1.jpg" speed={0.5} overlay="dark">
-          <section className="py-20">
-            <div className="container mx-auto px-4">
-              <div className="max-w-4xl mx-auto">
-                <ScrollReveal direction="up">
-                  <h2 className="font-display text-3xl font-bold text-foreground mb-6">Our Story</h2>
-                  <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
-                    <p>
-                      PingPe was born from a simple idea: travel should be more than just visiting places—it should be about creating meaningful connections and unforgettable experiences.
-                    </p>
-                    <p>
-                      Founded in 2024, we started with a vision to connect travelers with authentic local experiences, unique accommodations, and seamless transportation options. Today, we're proud to serve thousands of travelers and work with hundreds of hosts and partners worldwide.
-                    </p>
-                    <p>
-                      Our platform brings together stays, experiences, events, and transportation in one place, making it easier than ever to plan your perfect trip.
-                    </p>
-                  </div>
-                </ScrollReveal>
-              </div>
+        <ParallaxSection backgroundImage="/demo-content/gallery-1.jpg" speed={0.5} overlay="dark" className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <ScrollReveal direction="up">
+                <h2 className="font-display text-3xl font-bold text-foreground mb-6">Our Story</h2>
+                <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
+                  <p>
+                    PingPe was born from a simple idea: travel should be more than just visiting places—it should be about creating meaningful connections and unforgettable experiences.
+                  </p>
+                  <p>
+                    Founded in 2024, we started with a vision to connect travelers with authentic local experiences, unique accommodations, and seamless transportation options. Today, we're proud to serve thousands of travelers and work with hundreds of hosts and partners worldwide.
+                  </p>
+                  <p>
+                    Our platform brings together stays, experiences, events, and transportation in one place, making it easier than ever to plan your perfect trip.
+                  </p>
+                </div>
+              </ScrollReveal>
             </div>
-          </section>
+          </div>
         </ParallaxSection>
 
         {/* Statistics Section */}
@@ -95,62 +93,60 @@ export default function About() {
         </section>
 
         {/* Values Section */}
-        <ParallaxSection backgroundImage="/demo-content/gallery-2.jpg" speed={0.3} overlay="dark">
-          <section className="py-20">
-            <div className="container mx-auto px-4">
-              <ScrollReveal direction="up">
-                <h2 className="font-display text-3xl font-bold text-center text-foreground mb-12">
-                  Our Values
-                </h2>
+        <ParallaxSection backgroundImage="/demo-content/gallery-2.jpg" speed={0.3} overlay="dark" className="py-20">
+          <div className="container mx-auto px-4">
+            <ScrollReveal direction="up">
+              <h2 className="font-display text-3xl font-bold text-center text-foreground mb-12">
+                Our Values
+              </h2>
+            </ScrollReveal>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              <ScrollReveal direction="up" delay={0.1}>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Community First</h3>
+                  <p className="text-muted-foreground">
+                    We believe in building strong communities of travelers and hosts.
+                  </p>
+                </div>
               </ScrollReveal>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-                <ScrollReveal direction="up" delay={0.1}>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="w-8 h-8 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Community First</h3>
-                    <p className="text-muted-foreground">
-                      We believe in building strong communities of travelers and hosts.
-                    </p>
+              <ScrollReveal direction="up" delay={0.2}>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Target className="w-8 h-8 text-primary" />
                   </div>
-                </ScrollReveal>
-                <ScrollReveal direction="up" delay={0.2}>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Target className="w-8 h-8 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Authenticity</h3>
-                    <p className="text-muted-foreground">
-                      We curate genuine experiences that reflect local culture and traditions.
-                    </p>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Authenticity</h3>
+                  <p className="text-muted-foreground">
+                    We curate genuine experiences that reflect local culture and traditions.
+                  </p>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal direction="up" delay={0.3}>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Heart className="w-8 h-8 text-primary" />
                   </div>
-                </ScrollReveal>
-                <ScrollReveal direction="up" delay={0.3}>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Heart className="w-8 h-8 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Sustainability</h3>
-                    <p className="text-muted-foreground">
-                      We're committed to responsible travel that benefits local communities.
-                    </p>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Sustainability</h3>
+                  <p className="text-muted-foreground">
+                    We're committed to responsible travel that benefits local communities.
+                  </p>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal direction="up" delay={0.4}>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Award className="w-8 h-8 text-primary" />
                   </div>
-                </ScrollReveal>
-                <ScrollReveal direction="up" delay={0.4}>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Award className="w-8 h-8 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Excellence</h3>
-                    <p className="text-muted-foreground">
-                      We strive for excellence in every aspect of our service.
-                    </p>
-                  </div>
-                </ScrollReveal>
-              </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Excellence</h3>
+                  <p className="text-muted-foreground">
+                    We strive for excellence in every aspect of our service.
+                  </p>
+                </div>
+              </ScrollReveal>
             </div>
-          </section>
+          </div>
         </ParallaxSection>
 
         {/* Team Section */}
