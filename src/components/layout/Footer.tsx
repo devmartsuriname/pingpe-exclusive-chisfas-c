@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import logo from "@/assets/logo.png";
 
 export function Footer() {
   const footerSections = [
@@ -81,16 +82,15 @@ export function Footer() {
         <div className="pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Logo & Copyright */}
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold">P</span>
-              </div>
-              <div>
-                <p className="font-display font-bold">PingPe</p>
-                <p className="text-xs text-muted-foreground">
-                  © 2025 PingPe. All rights reserved.
-                </p>
-              </div>
+            <div className="flex items-center space-x-3">
+              <img 
+                src={logo}
+                alt="PingPe Jungle Resort"
+                className="h-10 w-auto object-contain"
+              />
+              <p className="text-xs text-muted-foreground">
+                © 2025 PingPe. All rights reserved.
+              </p>
             </div>
 
             {/* Language Selector (placeholder) */}

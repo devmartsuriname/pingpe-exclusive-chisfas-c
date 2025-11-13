@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import logo from "@/assets/logo.png";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -111,22 +112,14 @@ export function Header() {
       <div className="container mx-auto px-4 h-full">
         <div className="flex items-center justify-between h-full">
           {/* Logo with Scale Animation */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <motion.div 
-              className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center"
-              whileHover={{ scale: 1.05, rotate: 5 }}
+          <Link to="/" className="flex items-center group">
+            <motion.img 
+              src={logo}
+              alt="PingPe Jungle Resort"
+              className="h-10 md:h-12 w-auto object-contain"
+              whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              <span className="text-primary-foreground font-bold text-xl">P</span>
-            </motion.div>
-            <div className="flex flex-col">
-              <span className="font-display text-xl font-bold text-foreground leading-none group-hover:text-primary transition-colors">
-                PingPe
-              </span>
-              <span className="text-[10px] text-muted-foreground leading-none">
-                Jungle Resort
-              </span>
-            </div>
+            />
           </Link>
 
           {/* Desktop Navigation - Center with Enhanced Hover */}
