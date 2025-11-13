@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ChevronRight, Home } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -31,12 +32,25 @@ export const PageHero = ({ title, subtitle, backgroundImage, breadcrumbItems }: 
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], prefersReducedMotion ? [1, 1] : [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 0.5], prefersReducedMotion ? ["0%", "0%"] : ["0%", "20%"]);
 
+  // Kenburns effect (subtle zoom independent of scroll)
+  const kenburnsAnimation = prefersReducedMotion
+    ? {}
+    : {
+        scale: [1, 1.05, 1],
+        transition: {
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut" as const,
+        },
+      };
+
   return (
     <section ref={ref} className="relative h-[400px] flex items-center justify-center overflow-hidden">
-      {/* Parallax Background Image */}
+      {/* Parallax Background Image with Kenburns */}
       <motion.div 
         className="absolute inset-0"
         style={{ y: backgroundY, scale: backgroundScale }}
+        animate={kenburnsAnimation}
       >
         <OptimizedImage
           src={backgroundImage}
@@ -97,10 +111,11 @@ export const PageHero = ({ title, subtitle, backgroundImage, breadcrumbItems }: 
             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
             className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto drop-shadow-md"
           >
-            {subtitle}
+          {subtitle}
           </motion.p>
         )}
       </motion.div>
+      <ScrollIndicator />
     </section>
   );
 };

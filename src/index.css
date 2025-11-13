@@ -332,6 +332,33 @@ All colors MUST be HSL.
       box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.6);
     }
   }
+
+  @keyframes scroll-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+  }
+
+  @keyframes scroll-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.6);
+    }
+  }
+
+  @keyframes kenburns {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
 }
 
 /* ============= BUTTON ANIMATION UTILITIES ============= */
@@ -341,4 +368,29 @@ All colors MUST be HSL.
 
 .animate-button-glow {
   animation: button-glow-pulse 2s ease-in-out infinite;
+}
+
+/* ============= SCROLL INDICATOR UTILITIES ============= */
+.animate-scroll-bounce {
+  animation: scroll-bounce 1.5s ease-in-out infinite;
+}
+
+.animate-scroll-glow {
+  animation: scroll-glow 2s ease-in-out infinite;
+}
+
+/* ============= HERO ANIMATION UTILITIES ============= */
+.kenburns-effect {
+  animation: kenburns 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ============= SEARCH MODAL UTILITIES ============= */
+.search-modal-backdrop {
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.search-modal-content {
+  will-change: transform, opacity;
 }

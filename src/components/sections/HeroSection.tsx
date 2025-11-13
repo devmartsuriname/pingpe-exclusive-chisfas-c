@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface HeroSectionProps {
   content: {
@@ -21,27 +24,46 @@ export function HeroSection({ content }: HeroSectionProps) {
     ctaLink = "#",
   } = content;
 
+  const prefersReducedMotion = useReducedMotion();
+
+  const kenburnsAnimation = prefersReducedMotion
+    ? {}
+    : {
+        scale: [1, 1.05, 1],
+        transition: {
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut" as const,
+        },
+      };
+
   return (
     <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
       {backgroundImage ? (
         <>
-          <OptimizedImage
-            src={backgroundImage}
-            alt={title}
-            priority={true}
-            width={1920}
-            height={600}
-            sizes="100vw"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          <motion.div
+            className="absolute inset-0"
+            animate={kenburnsAnimation}
+          >
+            <OptimizedImage
+              src={backgroundImage}
+              alt={title}
+              priority={true}
+              width={1920}
+              height={600}
+              sizes="100vw"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
           <div className="absolute inset-0 bg-black/40" />
         </>
       ) : (
-        <div 
+        <motion.div
           className="absolute inset-0"
           style={{
             background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-foreground)) 100%)"
           }}
+          animate={kenburnsAnimation}
         />
       )}
       <div className="relative z-10 container mx-auto px-4 text-center text-white">
@@ -53,6 +75,7 @@ export function HeroSection({ content }: HeroSectionProps) {
           </a>
         </Button>
       </div>
+      <ScrollIndicator />
     </section>
   );
 }

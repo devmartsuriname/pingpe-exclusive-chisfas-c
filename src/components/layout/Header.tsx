@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, Bell, ChevronDown, User, LogOut, Shield } from "lucide-react";
+import { Menu, X, Bell, ChevronDown, User, LogOut, Shield, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { SearchModal } from "@/components/search/SearchModal";
 import { useSettings } from "@/admin/hooks/useSettings";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,6 +17,7 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [profile, setProfile] = useState<any>(null);
   const prefersReducedMotion = useReducedMotion();
   const { user, roles, signOut } = useAuth();
@@ -81,6 +83,19 @@ export function Header() {
     });
   };
 
+  // Keyboard shortcut for search (Cmd/Ctrl + K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <motion.header 
       className={cn(
@@ -135,6 +150,21 @@ export function Header() {
 
           {/* Desktop Actions - Right */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Search Button */}
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2" 
+              onClick={() => setIsSearchOpen(true)}
+              aria-label="Search"
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden lg:inline">Search</span>
+              <kbd className="hidden lg:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </Button>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="gap-2" aria-label="Select currency">
@@ -277,6 +307,26 @@ export function Header() {
                     </motion.div>
                   ))}
                 </motion.nav>
+
+                {/* Mobile Search Button */}
+                <motion.div
+                  className="px-4 mb-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                >
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start gap-2"
+                    onClick={() => {
+                      setIsSearchOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <Search className="w-4 h-4" />
+                    Search PingPe
+                  </Button>
+                </motion.div>
                 
                 {user ? (
                   <motion.div 
@@ -338,6 +388,9 @@ export function Header() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </motion.header>
   );
 }
