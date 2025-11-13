@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
@@ -9,14 +9,17 @@ import "leaflet/dist/leaflet.css";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
-const DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
+let DefaultIcon: L.Icon | undefined;
 
-L.Marker.prototype.options.icon = DefaultIcon;
+if (typeof window !== "undefined") {
+  DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  });
+  L.Marker.prototype.options.icon = DefaultIcon;
+}
 
 interface InteractiveMapProps {
   center?: [number, number];
@@ -29,17 +32,21 @@ export const InteractiveMap = ({
   zoom = 10,
   className = "h-[400px] rounded-lg",
 }: InteractiveMapProps) => {
-  useEffect(() => {
-    // Ensure Leaflet CSS is loaded
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-    document.head.appendChild(link);
+  const [isClient, setIsClient] = useState(false);
 
-    return () => {
-      document.head.removeChild(link);
-    };
+  useEffect(() => {
+    setIsClient(true);
   }, []);
+
+  if (!isClient) {
+    return (
+      <div className={className}>
+        <div className="h-full w-full rounded-lg border border-border shadow-lg bg-muted flex items-center justify-center">
+          <p className="text-muted-foreground">Loading map...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={className}>
