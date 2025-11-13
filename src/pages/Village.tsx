@@ -62,8 +62,8 @@ export default function Village() {
                   <div className="flex items-start gap-4 mb-8">
                     <Users className="h-8 w-8 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <h2 className="text-3xl font-bold mb-4">Maroon Heritage</h2>
-                      <p className="text-lg text-muted-foreground leading-relaxed">
+                      <h2 className="text-3xl font-bold mb-4 text-white">Maroon Heritage</h2>
+                      <p className="text-lg text-white/90 leading-relaxed">
                         Maroons are descendants of escaped slaves who originally came from West Africa. 
                         In the villages, they have successfully preserved the culture of their ancestors. 
                         This rich cultural heritage is visible in their language, traditions, crafts, 
