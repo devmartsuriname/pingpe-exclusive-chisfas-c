@@ -51,11 +51,27 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     });
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      createRipple(e);
+      if (!asChild) {
+        createRipple(e);
+      }
       onClick?.(e);
     };
 
     const Comp = asChild ? Slot : "button";
+    
+    // When asChild is true, Slot expects a single child, so don't add RippleContainer
+    if (asChild) {
+      return (
+        <Comp 
+          className={cn(buttonVariants({ variant, size, className }))} 
+          ref={ref} 
+          onClick={handleClick}
+          {...props}
+        />
+      );
+    }
+    
+    // When asChild is false, we can add ripple effect
     return (
       <Comp 
         className={cn(buttonVariants({ variant, size, className }), "relative overflow-hidden")} 
